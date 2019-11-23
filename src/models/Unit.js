@@ -1,18 +1,19 @@
 import randomInRange from '../helpers/randomInRange';
 
 export default class Unit {
-	constructor(count = 1, attack = 0, defense = 0, minDamage = 0, maxDamage = 0, isRanged = false) {
-		this.count = count;
-		this.attack = attack;
-		this.defense = defense;
-		this.minDamage = minDamage;
-		this.maxDamage = maxDamage;
+	constructor(count, attack, defense, minDamage, maxDamage, isRanged) {
+		this.count = count || 1;
+		this.attack = attack || 0;
+		this.defense = defense || 0;
+		this.minDamage = minDamage || 0;
+		this.maxDamage = maxDamage || 0;
+		this.isRanged = isRanged || false;
 	}
 
-	attackUnit(unit) {
+	attackUnit(hero, unit) {
 		const baseDamage = calculateBaseDamage(this.count, this.minDamage, this.maxDamage);
 		console.log('base damage: ', baseDamage);
-		const damageBonuses = calculateDamageBonuses(this.attack, unit.defense);
+		const damageBonuses = calculateDamageBonuses(this.attack, unit.defense, hero.skills.offense);
 		console.log('damage bonuses: ', damageBonuses);
 		const damageReductions = 1;
 
@@ -32,15 +33,16 @@ function calculateBaseDamage(unitCount, minDamage, maxDamage) {
 	return unitCount >= 10 ? Math.floor(totalDamage * (unitCount / 10)) : totalDamage;
 }
 
-function calculateDamageBonuses(attackersAttack, defendersDefense) {
-	const attackSkillBonus = calculateAttackSkillBonus(attackersAttack, defendersDefense);
+function calculateDamageBonuses(attackersAttack, defendersDefense, offenseLevel) {
+	const attackSkillBonus = calculateAttackSkillBonus(attackersAttack, defendersDefense, offenseLevel);
 
 	console.log('attack skill bonus: ', attackSkillBonus);
 	return 1 + attackSkillBonus;
 }
 
-function calculateAttackSkillBonus(attackersAttack, defendersDefense) {
-	const bonus =  0.05 * (attackersAttack - defendersDefense);
+function calculateAttackSkillBonus(attackersAttack, defendersDefense, offenceLevel) {
+	const offenceBonus = offenceLevel * 0.1;
+	const bonus =  0.05 * (attackersAttack - defendersDefense) + offenceBonus;
 
 	if(bonus < 0) return 0;
 

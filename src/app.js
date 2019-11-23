@@ -1,4 +1,10 @@
 import Unit from './models/Unit';
+import Hero from './models/Hero';
+
+const christian = new Hero(0, 0, {
+    archery: 3,
+    offense: 3
+});
 
 const pikeman = new Unit(1, 4, 5, 1, 3);
 const tenPikeman = new Unit(10, 4, 5, 1, 3);
@@ -7,5 +13,5 @@ const tenArchers = new Unit(10, 6, 3, 2, 3, true);
 
 const peasant = new Unit(1, 1, 1, 1, 1);
 
-pikeman.attackUnit(peasant);
-tenPikeman.attackUnit(peasant);
+pikeman.attackUnit(christian, peasant);
+tenPikeman.attackUnit(christian, peasant);
