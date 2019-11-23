@@ -1,7 +1,7 @@
 import randomInRange from '../helpers/randomInRange';
 
 export default class Unit {
-	constructor(count = 1, attack = 0, defense = 0, minDamage = 0, maxDamage = 0) {
+	constructor(count = 1, attack = 0, defense = 0, minDamage = 0, maxDamage = 0, isRanged = false) {
 		this.count = count;
 		this.attack = attack;
 		this.defense = defense;
