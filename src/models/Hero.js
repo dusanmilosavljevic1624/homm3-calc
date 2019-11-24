@@ -1,17 +1,22 @@
 export default class Hero {
-	constructor(attack, defense, level, speciality, skills) {
+	constructor(name, attack, defense, level, speciality, skills) {
+		this.name = name;
 		this.attack = attack;
 		this.defense = defense;
 		this.level = level;
-		this.specialty = speciality;
+		this.speciality = speciality;
 		this.skills = skills;
 	}
 
 	get hasOffenseSpeciality() {
-		return this.specialty === 'offense';
+		return this.speciality === 'offense';
 	}
 
 	get hasArcherySpeciality() {
-		return this.specialty === 'archery';
+		return this.speciality === 'archery';
+	}
+
+	get hasArmorerSpeciality() {
+		return this.speciality === 'armorer';
 	}
 }

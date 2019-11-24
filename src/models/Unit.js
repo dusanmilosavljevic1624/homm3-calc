@@ -10,20 +10,28 @@ export default class Unit {
 		this.isRanged = isRanged || false;
 	}
 
-	attackUnit(hero, unit, isRangedAttack) {
+	attackUnit(attacker, defender, unit, isRangedAttack) {
 		const baseDamage = calculateBaseDamage(this.count, this.minDamage, this.maxDamage);
 		console.log('base damage: ', baseDamage);
-		const damageReductions = 1;
+		console.log('attacker: ', attacker);
+		console.log('defender: ', defender);
+
 
 		const attackSkillBonus = calculateAttackSkillBonus(this.attack, unit.defense);
-		const offenseBonus = calculateAttackModifierBonus(hero.skills.offense, hero.hasOffenseSpeciality, hero.level);
+		const offenseBonus = calculateDamageModifierBonus(attacker.skills.offense, attacker.hasOffenseSpeciality, attacker.level);
 		console.log('offense bonus: ', offenseBonus);
-		const archeryBonus = calculateAttackModifierBonus(hero.skills.archery, hero.hasArcherySpeciality, hero.level);
+		const archeryBonus = calculateDamageModifierBonus(attacker.skills.archery, attacker.hasArcherySpeciality, attacker.level);
 		console.log('archery bonus: ', archeryBonus);
+		const attackModifierBonus = isRangedAttack ? archeryBonus : offenseBonus;
 
-		const attackModifierSpecialityBonus = isRangedAttack ? archeryBonus : offenseBonus;
+		const damageBonuses = 1 + attackSkillBonus + attackModifierBonus;
 
-		const damageBonuses = 1 + attackSkillBonus + attackModifierSpecialityBonus;
+		const defenseSkillReduction = calculateDefenseSkillReduction(this.attack, unit.defense);
+		console.log('defense skill reduction: ', defenseSkillReduction);
+		const defenseModifierReduction = calculateDefenseModifierReduction(defender.skills.armorer, defender.hasArmorerSpeciality, defender.level);
+		console.log('defense modifier reduction: ', defenseModifierReduction);
+
+		const damageReductions = 1 - defenseSkillReduction - defenseModifierReduction;
 
 		console.log('total damage: ', baseDamage * damageBonuses * damageReductions);
 		return baseDamage * damageBonuses * damageReductions;
@@ -49,11 +57,26 @@ function calculateAttackSkillBonus(attackersAttack, defendersDefense) {
 	return bonus > 3 ? 3 : bonus;
 }
 
-function calculateAttackModifierBonus(modifierLevel, modifierSpeciality, heroLevel) {
+function calculateDamageModifierBonus(modifierLevel = 0, modifierSpeciality, heroLevel) {
 	const levelBonus = modifierLevel * 0.1;
 	const specialityBonus = modifierSpeciality ? 0.05 * heroLevel + 1 : 1;
 
 	return modifierSpeciality ? levelBonus * specialityBonus : levelBonus;
+}
+
+function calculateDefenseModifierReduction(modifierLevel = 0, modifierSpeciality, heroLevel) {
+	const levelBonus = modifierLevel * 0.05;
+	const specialityBonus = modifierSpeciality ? 0.05 * heroLevel + 1 : 0;
+
+	return modifierSpeciality ? levelBonus * specialityBonus : levelBonus;
+}
+
+function calculateDefenseSkillReduction(attackSkill, defenseSkill) {
+	const reduction = 0.025 * (defenseSkill - attackSkill);
+
+	if(reduction > 0.7) return 0.7;
+
+	return reduction < 0 ? 0 : reduction; 
 }
 
 function calculateSingleUnitDamage(minDamage, maxDamage) {
