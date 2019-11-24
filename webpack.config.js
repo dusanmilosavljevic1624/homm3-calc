@@ -7,5 +7,5 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     watch: true,
-    development: true
+    mode: 'development'
 };

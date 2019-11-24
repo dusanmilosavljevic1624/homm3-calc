@@ -13,7 +13,7 @@ export default class Unit {
 	attackUnit(hero, unit) {
 		const baseDamage = calculateBaseDamage(this.count, this.minDamage, this.maxDamage);
 		console.log('base damage: ', baseDamage);
-		const damageBonuses = calculateDamageBonuses(this.attack, unit.defense, hero.skills.offense);
+		const damageBonuses = calculateDamageBonuses(this.attack, unit.defense, hero.skills.offense, hero.hasOffenseSpeciality, hero.level);
 		console.log('damage bonuses: ', damageBonuses);
 		const damageReductions = 1;
 
@@ -33,20 +33,28 @@ function calculateBaseDamage(unitCount, minDamage, maxDamage) {
 	return unitCount >= 10 ? Math.floor(totalDamage * (unitCount / 10)) : totalDamage;
 }
 
-function calculateDamageBonuses(attackersAttack, defendersDefense, offenseLevel) {
-	const attackSkillBonus = calculateAttackSkillBonus(attackersAttack, defendersDefense, offenseLevel);
+function calculateDamageBonuses(attackersAttack, defendersDefense, offenseLevel, hasOffenseSpeciality, heroLevel) {
+	const attackSkillBonus = calculateAttackSkillBonus(attackersAttack, defendersDefense);
+	const offenseBonus = calculateOffenseBonus(offenseLevel, hasOffenseSpeciality, heroLevel);
 
-	console.log('attack skill bonus: ', attackSkillBonus);
-	return 1 + attackSkillBonus;
+	console.log('attack skill bonus: ', attackSkillBonus + offenseBonus);
+	return 1 + attackSkillBonus + offenseBonus;
 }
 
-function calculateAttackSkillBonus(attackersAttack, defendersDefense, offenceLevel) {
-	const offenceBonus = offenceLevel * 0.1;
-	const bonus =  0.05 * (attackersAttack - defendersDefense) + offenceBonus;
+function calculateAttackSkillBonus(attackersAttack, defendersDefense) {
+	const bonus =  0.05 * (attackersAttack - defendersDefense);
 
 	if(bonus < 0) return 0;
 
 	return bonus > 3 ? 3 : bonus;
+}
+
+function calculateOffenseBonus(offenseLevel = 0, offenseSpeciality = false, heroLevel = 1) {
+	const levelBonus = offenseLevel * 0.1;
+	const specialityBonus = offenseSpeciality ? 0.05 * heroLevel + 1 : 1;
+
+	console.log('offense bonus: ', offenseSpeciality ? levelBonus * specialityBonus : levelBonus);
+	return offenseSpeciality ? levelBonus * specialityBonus : levelBonus;
 }
 
 function calculateSingleUnitDamage(minDamage, maxDamage) {

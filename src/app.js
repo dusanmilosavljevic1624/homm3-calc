@@ -1,7 +1,7 @@
 import Unit from './models/Unit';
 import Hero from './models/Hero';
 
-const christian = new Hero(0, 0, {
+const christian = new Hero(0, 0, 20, 'offense', {
     archery: 3,
     offense: 3
 });
