@@ -38,8 +38,14 @@ export default class Unit {
 	}
 }
 
-function calculateBaseDamage(unitCount, minDamage, maxDamage, isBlessed) {
-	if(isBlessed) return unitCount * maxDamage;
+function calculateBaseDamage(unitCount, minDamage, maxDamage, blessLevel = 0) {
+	if(blessLevel === 1) {
+		return unitCount * maxDamage;
+	}
+
+	if(blessLevel > 1) {
+		return unitCount * (maxDamage + 1);
+	}
 
 	let totalDamage = 0;
 	let counter = unitCount > 10 ? 10 : unitCount;
@@ -87,8 +93,8 @@ function calculateDefenseSkillReduction(attackSkill, defenseSkill) {
 	return reduction < 0 ? 0 : reduction; 
 }
 
-function calculateShieldSpellReduction(spellLevel) {
-	if(!spellLevel) return 0;
+function calculateShieldSpellReduction(spellLevel = 0) {
+	if(spellLevel === 0) return 0;
 	return spellLevel > 1 ? 0.3 : 0.15;
 }
 

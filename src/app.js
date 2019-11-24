@@ -13,10 +13,10 @@ const kyrre = new Hero('Kyrre', 0, 0, 20, 'armorer', {
 });
 
 const pikeman = new Unit('Pikeman', 1, 1, 4, 5, 1, 3);
-const blessedPikeman = new Unit('Pikeman', 1, 1, 4, 5, 1, 3, false, { bless: true });
+const blessedPikeman = new Unit('Pikeman', 1, 1, 4, 5, 1, 3, false, { bless: 2 });
 
 const peasant = new Unit('Peasant', 1, 1, 1, 5, 1, 1);
-const shieldedPeasant = new Unit('Peasant', 1, 1, 1, 5, 1, 1, false, { shield: true });
+const shieldedPeasant = new Unit('Peasant', 1, 1, 1, 5, 1, 1, false, { shield: 2 });
 
 blessedPikeman.attackUnit(christian, kyrre, peasant);
 blessedPikeman.attackUnit(kyrre, christian, peasant);
