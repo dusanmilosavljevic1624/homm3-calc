@@ -10,4 +10,8 @@ export default class Hero {
 	get hasOffenseSpeciality() {
 		return this.specialty === 'offense';
 	}
+
+	get hasArcherySpeciality() {
+		return this.specialty === 'archery';
+	}
 }

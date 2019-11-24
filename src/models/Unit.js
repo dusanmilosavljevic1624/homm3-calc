@@ -10,12 +10,20 @@ export default class Unit {
 		this.isRanged = isRanged || false;
 	}
 
-	attackUnit(hero, unit) {
+	attackUnit(hero, unit, isRangedAttack) {
 		const baseDamage = calculateBaseDamage(this.count, this.minDamage, this.maxDamage);
 		console.log('base damage: ', baseDamage);
-		const damageBonuses = calculateDamageBonuses(this.attack, unit.defense, hero.skills.offense, hero.hasOffenseSpeciality, hero.level);
-		console.log('damage bonuses: ', damageBonuses);
 		const damageReductions = 1;
+
+		const attackSkillBonus = calculateAttackSkillBonus(this.attack, unit.defense);
+		const offenseBonus = calculateAttackModifierBonus(hero.skills.offense, hero.hasOffenseSpeciality, hero.level);
+		console.log('offense bonus: ', offenseBonus);
+		const archeryBonus = calculateAttackModifierBonus(hero.skills.archery, hero.hasArcherySpeciality, hero.level);
+		console.log('archery bonus: ', archeryBonus);
+
+		const attackModifierSpecialityBonus = isRangedAttack ? archeryBonus : offenseBonus;
+
+		const damageBonuses = 1 + attackSkillBonus + attackModifierSpecialityBonus;
 
 		console.log('total damage: ', baseDamage * damageBonuses * damageReductions);
 		return baseDamage * damageBonuses * damageReductions;
@@ -33,14 +41,6 @@ function calculateBaseDamage(unitCount, minDamage, maxDamage) {
 	return unitCount >= 10 ? Math.floor(totalDamage * (unitCount / 10)) : totalDamage;
 }
 
-function calculateDamageBonuses(attackersAttack, defendersDefense, offenseLevel, hasOffenseSpeciality, heroLevel) {
-	const attackSkillBonus = calculateAttackSkillBonus(attackersAttack, defendersDefense);
-	const offenseBonus = calculateOffenseBonus(offenseLevel, hasOffenseSpeciality, heroLevel);
-
-	console.log('attack skill bonus: ', attackSkillBonus + offenseBonus);
-	return 1 + attackSkillBonus + offenseBonus;
-}
-
 function calculateAttackSkillBonus(attackersAttack, defendersDefense) {
 	const bonus =  0.05 * (attackersAttack - defendersDefense);
 
@@ -55,6 +55,21 @@ function calculateOffenseBonus(offenseLevel = 0, offenseSpeciality = false, hero
 
 	console.log('offense bonus: ', offenseSpeciality ? levelBonus * specialityBonus : levelBonus);
 	return offenseSpeciality ? levelBonus * specialityBonus : levelBonus;
+}
+
+function calculateArcheryBonus(archeryLevel = 0, archerySpeciality = false, heroLevel = 1) {
+	const levelBonus = offenseLevel * 0.1;
+	const specialityBonus = offenseSpeciality ? 0.05 * heroLevel + 1 : 1;
+
+	console.log('offense bonus: ', offenseSpeciality ? levelBonus * specialityBonus : levelBonus);
+	return offenseSpeciality ? levelBonus * specialityBonus : levelBonus;
+}
+
+function calculateAttackModifierBonus(modifierLevel, modifierSpeciality, heroLevel) {
+	const levelBonus = modifierLevel * 0.1;
+	const specialityBonus = modifierSpeciality ? 0.05 * heroLevel + 1 : 1;
+
+	return modifierSpeciality ? levelBonus * specialityBonus : levelBonus;
 }
 
 function calculateSingleUnitDamage(minDamage, maxDamage) {
