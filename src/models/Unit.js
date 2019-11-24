@@ -2,7 +2,7 @@ import randomInRange from '../helpers/randomInRange';
 import logAttack from '../helpers/logAttack';
 
 export default class Unit {
-	constructor(name, count, level, attack, defense, minDamage, maxDamage, isRanged, spells) {
+	constructor(name, count, level, attack, defense, minDamage, maxDamage, health, isRanged, spells) {
 		this.name = name;
 		this.count = count || 1;
 		this.level = level || 1;
@@ -10,6 +10,7 @@ export default class Unit {
 		this.defense = defense || 0;
 		this.minDamage = minDamage || 0;
 		this.maxDamage = maxDamage || 0;
+		this.health = health || 1;
 		this.isRanged = isRanged || false;
 		this.spells = spells || {};
 	}

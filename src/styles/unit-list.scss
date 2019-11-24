@@ -1,0 +1,38 @@
+#unit-list {
+	background-color: #352222d1;
+	color: #ccc;
+
+	p {
+		margin-bottom: 0;
+		font-size: 12px;
+	}
+}
+
+.unit-list-item {
+	border: 2px solid rosybrown;
+	padding: 0;
+}
+
+.unit-list-item-header {
+	padding: 3px 0;
+	border-bottom: 2px solid rosybrown;
+	font-weight: bold;
+}
+
+.unit-list-item-body {
+	justify-content: space-evenly;
+
+	img {
+		align-self: center;
+	}
+}
+
+.unit-list-item-info {
+	padding: 10px 0;
+	min-width: 100px;
+	text-align: left;
+
+	p span {
+		float: right;	
+	}
+}
