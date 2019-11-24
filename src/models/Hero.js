@@ -19,4 +19,8 @@ export default class Hero {
 	get hasArmorerSpeciality() {
 		return this.speciality === 'armorer';
 	}
+
+	get hasBlessSpeciality() {
+		return this.speciality === 'bless';
+	}
 }

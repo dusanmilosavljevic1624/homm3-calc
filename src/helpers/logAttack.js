@@ -7,11 +7,14 @@ export default (attacker, defender, attackingUnit, defendingUnit, damage) => {
 
 	console.log(`
 		${attacker.name} - ${attackingUnit.count} x ${attackingUnit.name}
+		SPECIALITY - ${attacker.speciality}
 		SPELLS - ${attackerSpells.length > 0 ? attackerSpells : 'None'}
 		SKILLS - ${attackerSkills.length > 0 ? attackerSkills : 'None'}
 		===ATTACKS===
 		${defender.name} - ${defendingUnit.count} x ${defendingUnit.name}
+		SPECIALITY - ${defender.speciality}
+		SPELLS - ${defenderSpells.length > 0 ? defenderSpells : 'None'}
 		SKILLS - ${defenderSkills.length > 0 ? defenderSkills : 'None'}
-		FOR ${damage} DAMAGE
+		FOR ${Number(damage).toPrecision(4)} DAMAGE
 	`);
 };

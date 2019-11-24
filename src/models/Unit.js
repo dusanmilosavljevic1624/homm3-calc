@@ -2,9 +2,10 @@ import randomInRange from '../helpers/randomInRange';
 import logAttack from '../helpers/logAttack';
 
 export default class Unit {
-	constructor(name, count, attack, defense, minDamage, maxDamage, isRanged, spells) {
+	constructor(name, count, level, attack, defense, minDamage, maxDamage, isRanged, spells) {
 		this.name = name;
 		this.count = count || 1;
+		this.level = level || 1;
 		this.attack = attack || 0;
 		this.defense = defense || 0;
 		this.minDamage = minDamage || 0;
@@ -20,13 +21,14 @@ export default class Unit {
 		const offenseBonus = calculateDamageModifierBonus(attacker.skills.offense, attacker.hasOffenseSpeciality, attacker.level);
 		const archeryBonus = calculateDamageModifierBonus(attacker.skills.archery, attacker.hasArcherySpeciality, attacker.level);
 		const attackModifierBonus = isRangedAttack ? archeryBonus : offenseBonus;
+		const blessSpecialityBonus = calculateBlessSpecialityBonus(this.spells.bless, attacker.hasBlessSpeciality, attacker.level, this.level);
 
-		const damageBonuses = 1 + attackSkillBonus + attackModifierBonus;
+		const damageBonuses = 1 + attackSkillBonus + attackModifierBonus + blessSpecialityBonus;
 
 		const defenseSkillReduction = calculateDefenseSkillReduction(this.attack, unit.defense);
 		const defenseModifierReduction = calculateDefenseModifierReduction(defender.skills.armorer, defender.hasArmorerSpeciality, defender.level);
-
-		const damageReductions = 1 - defenseSkillReduction - defenseModifierReduction;
+		const shieldSpellReduction = calculateShieldSpellReduction(unit.spells.shield);
+		const damageReductions = 1 - defenseSkillReduction - defenseModifierReduction - shieldSpellReduction;
 
 		const damage = baseDamage * damageBonuses * damageReductions; 
 
@@ -57,6 +59,12 @@ function calculateAttackSkillBonus(attackersAttack, defendersDefense) {
 	return bonus > 3 ? 3 : bonus;
 }
 
+function calculateBlessSpecialityBonus(isBlessed, hasBlessSpeciality, heroLevel, unitLevel) {
+	if(!isBlessed || !hasBlessSpeciality) return 0;
+
+	return 0.03 * heroLevel / unitLevel;
+}
+
 function calculateDamageModifierBonus(modifierLevel = 0, modifierSpeciality, heroLevel) {
 	const levelBonus = modifierLevel * 0.1;
 	const specialityBonus = modifierSpeciality ? 0.05 * heroLevel + 1 : 1;
@@ -77,6 +85,11 @@ function calculateDefenseSkillReduction(attackSkill, defenseSkill) {
 	if(reduction > 0.7) return 0.7;
 
 	return reduction < 0 ? 0 : reduction; 
+}
+
+function calculateShieldSpellReduction(spellLevel) {
+	if(!spellLevel) return 0;
+	return spellLevel > 1 ? 0.3 : 0.15;
 }
 
 function calculateSingleUnitDamage(minDamage, maxDamage) {
