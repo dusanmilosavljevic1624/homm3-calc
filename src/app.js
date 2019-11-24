@@ -12,25 +12,16 @@ const kyrre = new Hero('Kyrre', 0, 0, 20, 'armorer', {
     armorer: 3
 });
 
-const pikeman = new Unit(1, 4, 5, 1, 3);
-const tenPikeman = new Unit(10, 4, 5, 1, 3);
-const archer = new Unit(1, 6, 3, 2, 3, true);
-const tenArchers = new Unit(10, 6, 3, 2, 3, true);
+const pikeman = new Unit('Pikeman', 1, 4, 5, 1, 3);
+const tenPikeman = new Unit('Pikeman', 10, 4, 5, 1, 3);
+const blessedPikeman = new Unit('Pikeman', 1, 4, 5, 1, 3, false, { bless: true, shield: true });
 
-const peasant = new Unit(1, 1, 5, 1, 1);
+const peasant = new Unit('Peasant', 1, 1, 5, 1, 1);
 
-console.log('================================');
-console.log('======CHRISTIAN======');
-pikeman.attackUnit(christian, kyrre, peasant);
+blessedPikeman.attackUnit(christian, kyrre, peasant);
 
-console.log('================================');
-console.log('======KYRRE======');
-pikeman.attackUnit(kyrre, christian, peasant);
+blessedPikeman.attackUnit(kyrre, christian, peasant);
 
-console.log('================================');
-console.log('======CHRISTIAN======');
 tenPikeman.attackUnit(christian, kyrre, peasant);
 
-console.log('================================');
-console.log('======KYRRE======');
 tenPikeman.attackUnit(kyrre, christian, peasant, true);

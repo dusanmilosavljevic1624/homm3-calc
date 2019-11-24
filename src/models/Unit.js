@@ -1,44 +1,44 @@
 import randomInRange from '../helpers/randomInRange';
+import logAttack from '../helpers/logAttack';
 
 export default class Unit {
-	constructor(count, attack, defense, minDamage, maxDamage, isRanged) {
+	constructor(name, count, attack, defense, minDamage, maxDamage, isRanged, spells) {
+		this.name = name;
 		this.count = count || 1;
 		this.attack = attack || 0;
 		this.defense = defense || 0;
 		this.minDamage = minDamage || 0;
 		this.maxDamage = maxDamage || 0;
 		this.isRanged = isRanged || false;
+		this.spells = spells || {};
 	}
 
 	attackUnit(attacker, defender, unit, isRangedAttack) {
-		const baseDamage = calculateBaseDamage(this.count, this.minDamage, this.maxDamage);
-		console.log('base damage: ', baseDamage);
-		console.log('attacker: ', attacker);
-		console.log('defender: ', defender);
-
+		const baseDamage = calculateBaseDamage(this.count, this.minDamage, this.maxDamage, this.spells.bless);
 
 		const attackSkillBonus = calculateAttackSkillBonus(this.attack, unit.defense);
 		const offenseBonus = calculateDamageModifierBonus(attacker.skills.offense, attacker.hasOffenseSpeciality, attacker.level);
-		console.log('offense bonus: ', offenseBonus);
 		const archeryBonus = calculateDamageModifierBonus(attacker.skills.archery, attacker.hasArcherySpeciality, attacker.level);
-		console.log('archery bonus: ', archeryBonus);
 		const attackModifierBonus = isRangedAttack ? archeryBonus : offenseBonus;
 
 		const damageBonuses = 1 + attackSkillBonus + attackModifierBonus;
 
 		const defenseSkillReduction = calculateDefenseSkillReduction(this.attack, unit.defense);
-		console.log('defense skill reduction: ', defenseSkillReduction);
 		const defenseModifierReduction = calculateDefenseModifierReduction(defender.skills.armorer, defender.hasArmorerSpeciality, defender.level);
-		console.log('defense modifier reduction: ', defenseModifierReduction);
 
 		const damageReductions = 1 - defenseSkillReduction - defenseModifierReduction;
 
-		console.log('total damage: ', baseDamage * damageBonuses * damageReductions);
-		return baseDamage * damageBonuses * damageReductions;
+		const damage = baseDamage * damageBonuses * damageReductions; 
+
+		logAttack(attacker, defender, this, unit, damage);
+
+		return damage;
 	}
 }
 
-function calculateBaseDamage(unitCount, minDamage, maxDamage) {
+function calculateBaseDamage(unitCount, minDamage, maxDamage, isBlessed) {
+	if(isBlessed) return unitCount * maxDamage;
+
 	let totalDamage = 0;
 	let counter = unitCount > 10 ? 10 : unitCount;
 
