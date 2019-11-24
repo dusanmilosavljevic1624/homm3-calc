@@ -49,22 +49,6 @@ function calculateAttackSkillBonus(attackersAttack, defendersDefense) {
 	return bonus > 3 ? 3 : bonus;
 }
 
-function calculateOffenseBonus(offenseLevel = 0, offenseSpeciality = false, heroLevel = 1) {
-	const levelBonus = offenseLevel * 0.1;
-	const specialityBonus = offenseSpeciality ? 0.05 * heroLevel + 1 : 1;
-
-	console.log('offense bonus: ', offenseSpeciality ? levelBonus * specialityBonus : levelBonus);
-	return offenseSpeciality ? levelBonus * specialityBonus : levelBonus;
-}
-
-function calculateArcheryBonus(archeryLevel = 0, archerySpeciality = false, heroLevel = 1) {
-	const levelBonus = offenseLevel * 0.1;
-	const specialityBonus = offenseSpeciality ? 0.05 * heroLevel + 1 : 1;
-
-	console.log('offense bonus: ', offenseSpeciality ? levelBonus * specialityBonus : levelBonus);
-	return offenseSpeciality ? levelBonus * specialityBonus : levelBonus;
-}
-
 function calculateAttackModifierBonus(modifierLevel, modifierSpeciality, heroLevel) {
 	const levelBonus = modifierLevel * 0.1;
 	const specialityBonus = modifierSpeciality ? 0.05 * heroLevel + 1 : 1;
