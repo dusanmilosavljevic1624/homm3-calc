@@ -1,10 +1,7 @@
-import units from '../data/units';
-
-class UnitsView {
-	constructor(elementId) {
+export default class UnitsView {
+	showUnits(units) {
 		this.units = units;
-
-		this.init(elementId);
+		this.createUnitList();
 	}
 
 	createUnitList() {
@@ -45,8 +42,5 @@ class UnitsView {
 
 	init(elementId) {
 		this.containerElement = document.getElementById(elementId);
-		this.createUnitList();
 	}
 }
-
-export default new UnitsView('units', units);

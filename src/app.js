@@ -1,10 +1,14 @@
 import './styles/index.scss';
 
-import Unit from './models/Unit';
-import Hero from './models/Hero';
-
 import UnitsView from './views/units';
+import TownsView from './views/towns';
 
 document.addEventListener('DOMContentLoaded', () => {
-	UnitsView.init('units');
+	const unitsView = new UnitsView();
+	const townsView = new TownsView();
+
+	unitsView.init('units');
+	townsView.init('towns', unitsView.showUnits.bind(unitsView));
+
+	unitsView.showUnits(townsView.activeTown.units);
 });
