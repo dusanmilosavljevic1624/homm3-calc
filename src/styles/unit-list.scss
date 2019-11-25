@@ -33,3 +33,33 @@
 		float: right;	
 	}
 }
+
+.unit-list-item-body {
+	position: relative;
+}
+
+.unit-list-item .select-overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	opacity: 0;
+	transition: all .5s ease-in-out;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	button {
+		margin-bottom: 10px;
+		background:linear-gradient(to right, #FCF6BA, #BF953F);
+		border: 1px solid #BF953F;
+		color: #000;
+		font-weight: bold;
+	}
+}

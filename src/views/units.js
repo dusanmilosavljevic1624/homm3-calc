@@ -1,7 +1,10 @@
+import unitService from '../services/unitService';
+
 export default class UnitsView {
-	showUnits(units) {
-		this.units = units;
+	showUnits(town) {
+		this.units = unitService.getTownUnits(town);
 		this.createUnitList();
+		this.bindListeners();
 	}
 
 	createUnitList() {
@@ -24,7 +27,13 @@ export default class UnitsView {
 				</div>
 
 				<div class="d-flex flex-row unit-list-item-body">
+					<div class="select-overlay">
+						<button class="btn unit-selector" data-slug="${unit.slug}" data-position="attacker">ATTACKER</button>					
+						<button class="btn unit-selector" data-slug="${unit.slug}" data-position="defender">DEFENDER</button>					
+					</div>
+
 					<img src="./img/castle/${unit.name.replace(' ', '_')}.gif" />
+
 					<div class="unit-list-item-info">
 						<p>Attack: <span>${unit.attack}</span><p>
 						<p>Defense: <span>${unit.defense}</span><p>
@@ -40,7 +49,18 @@ export default class UnitsView {
 		`;
 	}
 
-	init(elementId) {
+	bindListeners() {
+		const buttons = document.getElementsByClassName('unit-selector');
+
+		for(let i = 0; i < buttons.length; i++) {
+			const { onUnitSelected } = this;
+			const { position, slug } = buttons[i].dataset;
+			buttons[i].onclick = onUnitSelected.bind(null, { position, slug });
+		}
+	}
+
+	init(elementId, onUnitSelected) {
 		this.containerElement = document.getElementById(elementId);
+		this.onUnitSelected = onUnitSelected;
 	}
 }

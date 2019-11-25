@@ -8,7 +8,7 @@ export default class TownsView {
 
 	createTownHtml(town) {
 		return `
-			<div class="town-list-item" data-town="${town.slug}">
+			<div class="town-list-item" data-town="${town.slug.toUpperCase()}">
 				<img src="./img/${town.img}" />
 			</div>
 		`;
@@ -26,22 +26,22 @@ export default class TownsView {
 		`;
 	}
 
-	bindListeners(onTownSelect) {
+	bindListeners(onTownSelect, onSelectUnit) {
 		const townListItems = document.getElementsByClassName('town-list-item');
 
 		for(let i =0 ; i < townListItems.length; i += 1) {
 			townListItems[i].onclick = () => {
 				const { town } = townListItems[i].dataset;
 
-				this.activeTown = this.towns[town.toUpperCase()];
-				onTownSelect(this.activeTown.units);
+				onTownSelect(town.toUpperCase(), onSelectUnit);
 			}
 		}
 	}
 
-	init(containerId, onTownSelect) {
+	init(containerId, onTownSelect, onSelectUnit) {
 		this.containerEl = document.getElementById(containerId);
 		this.containerEl.innerHTML = this.createTownsHtml();
 		this.bindListeners(onTownSelect);
+		onTownSelect('CASTLE');
 	}
 }

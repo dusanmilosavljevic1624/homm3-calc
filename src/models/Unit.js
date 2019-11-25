@@ -2,7 +2,7 @@ import randomInRange from '../helpers/randomInRange';
 import logAttack from '../helpers/logAttack';
 
 export default class Unit {
-	constructor({name, count, level, attack, defense, minDamage, maxDamage, health, isRanged, spells}) {
+	constructor({name, count, level, attack, defense, minDamage, maxDamage, health, speed, growth, aiValue, cost, isRanged, spells}) {
 		this.name = name;
 		this.count = count || 1;
 		this.level = level || 1;
@@ -11,6 +11,10 @@ export default class Unit {
 		this.minDamage = minDamage || 0;
 		this.maxDamage = maxDamage || 0;
 		this.health = health || 1;
+		this.speed = speed || 1;
+		this.growth = growth || 1;
+		this.aiValue = aiValue || 1;
+		this.cost = cost || 1;
 		this.isRanged = isRanged || false;
 		this.spells = spells || {};
 	}
@@ -18,6 +22,10 @@ export default class Unit {
 	get image() {
 		return `./img/castle/${this.name.replace(' ', '_')}.gif`;
 	}
+
+	get slug() {
+		return this.name.replace(' ', '_').toUpperCase();
+	} 
 
 	attackUnit(attacker, defender, unit, isRangedAttack) {
 		const baseDamage = calculateBaseDamage(this.count, this.minDamage, this.maxDamage, this.spells.bless);

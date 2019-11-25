@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	unitsView.init('units');
 	damageCalculatorView.init('damage-calculator');
-	townsView.init('towns', unitsView.showUnits.bind(unitsView));
+	unitsView.onUnitSelected = damageCalculatorView.selectUnit.bind(damageCalculatorView);
 
-	unitsView.showUnits(townsView.activeTown.units);
+	townsView.init('towns', unitsView.showUnits.bind(unitsView));
 });
