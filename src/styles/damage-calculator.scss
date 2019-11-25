@@ -1,0 +1,25 @@
+#attacker, #defender {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 10px 0;    
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+#results {
+  width: 100%;
+}

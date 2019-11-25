@@ -2,7 +2,7 @@ import randomInRange from '../helpers/randomInRange';
 import logAttack from '../helpers/logAttack';
 
 export default class Unit {
-	constructor(name, count, level, attack, defense, minDamage, maxDamage, health, isRanged, spells) {
+	constructor({name, count, level, attack, defense, minDamage, maxDamage, health, isRanged, spells}) {
 		this.name = name;
 		this.count = count || 1;
 		this.level = level || 1;
@@ -13,6 +13,10 @@ export default class Unit {
 		this.health = health || 1;
 		this.isRanged = isRanged || false;
 		this.spells = spells || {};
+	}
+
+	get image() {
+		return `./img/castle/${this.name.replace(' ', '_')}.gif`;
 	}
 
 	attackUnit(attacker, defender, unit, isRangedAttack) {
@@ -35,7 +39,21 @@ export default class Unit {
 
 		logAttack(attacker, defender, this, unit, damage);
 
-		return damage;
+		return {
+			attackSkillBonus,
+			offenseBonus,
+			archeryBonus,
+			attackModifierBonus,
+			blessSpecialityBonus,
+			totalBonus: damageBonuses,
+
+			defenseSkillReduction,
+			defenseModifierReduction,
+			shieldSpellReduction,
+			totalReduction: damageReductions,
+
+			damage
+		};
 	}
 }
 
