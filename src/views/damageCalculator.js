@@ -1,10 +1,8 @@
-import DUNGEON_UNITS from '../data/units/dungeon';
-import INFERNO_UNITS from '../data/units/inferno';
-
 import Unit from '../models/Unit';
 import Hero from '../models/Hero';
 
 import unitService from '../services/unitService';
+import spellService from '../services/spellService';
 
 export default class DamageCalculator {
   init(containerEl) {
@@ -28,23 +26,7 @@ export default class DamageCalculator {
     this.containerEl.innerHTML = this.createUnitsHtml();
   }
 
-  createResultsHtml() {
-    const damageInfo = this.attackerUnit.attackUnit(
-      this.attackerHero,
-      this.defenderHero,
-      this.defenderUnit,
-      false
-    );
-
-    return `
-      <div id="results" class="text-center">
-        <p>Damage done: ${Number(damageInfo.damage).toFixed(2)}</p>
-        <p>Damage bonus: ${Number(damageInfo.totalBonus).toFixed(2)}</p>
-        <p>Damage reduction: ${Number(damageInfo.totalReduction).toFixed(2)}</p>
-      </div>
-    `
-  }
-
+  
   createUnitsHtml() {
     return `
       <div class="row text-center">
@@ -54,6 +36,15 @@ export default class DamageCalculator {
         ${this.createResultsHtml()}
       </div>
     `;
+  }
+
+  createSpellsHtml(spellType) {
+    const spells = spellService.getSpellsByType(spellType);
+
+    return Object.keys(spells).reduce((acc, spellKey) => {
+      const { image } = spells[spellKey];
+      return acc += `<div class="spell"><img src="./img/spells/${image}" /></div>`
+    }, '');
   }
 
   createUnitHtml(position, unit) {
@@ -71,7 +62,28 @@ export default class DamageCalculator {
             <p>Health: ${unit.health}</p>
           </div>
         </div>
+
+        <div class="spells">
+          ${this.createSpellsHtml(position)}
+        </div>
       </div>
     `;
+  }
+
+  createResultsHtml() {
+    const damageInfo = this.attackerUnit.attackUnit(
+      this.attackerHero,
+      this.defenderHero,
+      this.defenderUnit,
+      false
+    );
+
+    return `
+      <div id="results" class="text-center">
+        <p>Damage done: ${Number(damageInfo.damage).toFixed(2)}</p>
+        <p>Damage bonus: ${Number(damageInfo.totalBonus).toFixed(2)}</p>
+        <p>Damage reduction: ${Number(damageInfo.totalReduction).toFixed(2)}</p>
+      </div>
+    `
   }
 }

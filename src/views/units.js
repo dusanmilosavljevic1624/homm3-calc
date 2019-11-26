@@ -55,6 +55,7 @@ export default class UnitsView {
 		for(let i = 0; i < buttons.length; i++) {
 			const { onUnitSelected } = this;
 			const { position, slug } = buttons[i].dataset;
+
 			buttons[i].onclick = onUnitSelected.bind(null, { position, slug });
 		}
 	}

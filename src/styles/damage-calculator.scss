@@ -18,6 +18,16 @@
       margin: 0;
     }
   }
+
+  .spells {
+    display: flex;
+    justify-content: center;
+
+    .spell {
+      padding: 10px;
+      cursor: pointer;
+    }
+  }
 }
 
 #results {
