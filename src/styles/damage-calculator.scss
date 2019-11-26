@@ -26,6 +26,14 @@
     .spell {
       padding: 10px;
       cursor: pointer;
+
+      &.active img, &:hover img {
+        filter: grayscale(0);
+      }
+
+      img {
+        filter: grayscale(100%);
+      }
     }
   }
 }

@@ -9,8 +9,6 @@ export default class TownsView {
 	createTownHtml(town) {
 		let selectedClass = '';
 
-		console.log('active town: ', this.activeTown);
-
 		if(this.activeTown.slug === town.slug) {
 			selectedClass = 'selected';
 		} 

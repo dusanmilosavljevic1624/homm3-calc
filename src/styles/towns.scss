@@ -6,6 +6,7 @@
 #towns {
 	.town-list-item {
 		position: relative;
+		cursor: pointer;
 
 		&.selected:after {
 			content: '✓';
@@ -19,7 +20,7 @@
 			align-items: center;
 			color: #BF953F;
 			font-size: 30px;
-			background: rgba(0, 0, 0, .4);
+			background: rgba(0, 0, 0, .6);
 		}
 	}
 

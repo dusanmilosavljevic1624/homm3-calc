@@ -1,4 +1,3 @@
-import Unit from '../models/Unit';
 import Hero from '../models/Hero';
 
 import unitService from '../services/unitService';
@@ -6,14 +5,15 @@ import spellService from '../services/spellService';
 
 export default class DamageCalculator {
   init(containerEl) {
-    this.attackerUnit = new Unit(unitService.getUnit('INFERNAL_TROGLODYTE'));
+    this.attackerUnit = unitService.getUnit('INFERNAL_TROGLODYTE');
     this.attackerHero = new Hero('Christian', 0, 0, 1, 'armorer', { 'armorer': 3 });
 
     this.defenderHero = new Hero('Ciele', 0, 0, 1, 'offense', { 'offense': 3 });
-    this.defenderUnit = new Unit(unitService.getUnit('IMP'));
+    this.defenderUnit = unitService.getUnit('IMP');
 
     this.containerEl = document.getElementById(containerEl); 
     this.containerEl.innerHTML = this.createUnitsHtml();
+    this.bindListeners();
   }
 
   selectUnit(unitInfo) {
@@ -24,9 +24,31 @@ export default class DamageCalculator {
     }
 
     this.containerEl.innerHTML = this.createUnitsHtml();
+    this.bindListeners();
   }
 
-  
+  selectSpell(position, spell) {
+    if(position === 'attacker') {
+
+      if(this.attackerUnit.spells[spell]) {
+        this.attackerUnit.spells[spell] = null;
+      } else {
+        this.attackerUnit.spells[spell] = 3;
+      }
+    }
+
+    if(position === 'defender') {
+      if(this.defenderUnit.spells[spell]) {
+        this.defenderUnit.spells[spell] = null;
+      } else {
+        this.defenderUnit.spells[spell] = 3;
+      }
+    }
+
+    this.containerEl.innerHTML = this.createUnitsHtml();
+    this.bindListeners();
+  }
+
   createUnitsHtml() {
     return `
       <div class="row text-center">
@@ -38,12 +60,21 @@ export default class DamageCalculator {
     `;
   }
 
-  createSpellsHtml(spellType) {
-    const spells = spellService.getSpellsByType(spellType);
+  createSpellsHtml(position, unitSpells) {
+    const spells = spellService.getSpellsByType(position);
 
     return Object.keys(spells).reduce((acc, spellKey) => {
-      const { image } = spells[spellKey];
-      return acc += `<div class="spell"><img src="./img/spells/${image}" /></div>`
+      const { image, slug } = spells[spellKey];
+      const isActive = !!unitSpells[slug];
+      const activeClass = isActive ? 'active' : '';
+
+      const spellHtml = `
+        <div class="spell ${activeClass}" data-position="${position}" data-spell="${slug}">
+          <img src="./img/spells/${image}"/>
+        </div>
+      `;
+
+      return acc += spellHtml;
     }, '');
   }
 
@@ -64,10 +95,21 @@ export default class DamageCalculator {
         </div>
 
         <div class="spells">
-          ${this.createSpellsHtml(position)}
+          ${this.createSpellsHtml(position, unit.spells)}
         </div>
       </div>
     `;
+  }
+
+  bindListeners() {
+    const spells = document.getElementsByClassName('spell');
+
+    for(let i = 0; i < spells.length; i++) {
+      const button = spells[i];
+      const { spell, position } = button.dataset;
+
+      button.onclick = this.selectSpell.bind(this, position, spell);
+    }
   }
 
   createResultsHtml() {
