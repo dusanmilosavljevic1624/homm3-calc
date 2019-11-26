@@ -7,8 +7,16 @@ export default class TownsView {
 	}
 
 	createTownHtml(town) {
+		let selectedClass = '';
+
+		console.log('active town: ', this.activeTown);
+
+		if(this.activeTown.slug === town.slug) {
+			selectedClass = 'selected';
+		} 
+		
 		return `
-			<div class="town-list-item" data-town="${town.slug.toUpperCase()}">
+			<div class="town-list-item ${selectedClass}" data-town="${town.slug.toUpperCase()}">
 				<img src="./img/${town.img}" />
 			</div>
 		`;
@@ -34,6 +42,9 @@ export default class TownsView {
 				const { town } = townListItems[i].dataset;
 
 				onTownSelect(town.toUpperCase(), onSelectUnit);
+				this.activeTown = this.towns[town.toUpperCase()];
+				this.containerEl.innerHTML = this.createTownsHtml();
+				this.bindListeners(onTownSelect, onSelectUnit);
 			}
 		}
 	}
