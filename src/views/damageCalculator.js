@@ -2,6 +2,7 @@ import Hero from '../models/Hero';
 
 import unitService from '../services/unitService';
 import spellService from '../services/spellService';
+import damageService from '../services/damageService';
 
 export default class DamageCalculator {
   init(containerEl) {
@@ -198,12 +199,14 @@ export default class DamageCalculator {
   }
 
   createResultsHtml() {
-    const damageInfo = this.attackerUnit.attackUnit(
+    const damageInfo = damageService.calculateTotalDamage(
       this.attackerHero,
       this.defenderHero,
-      this.defenderUnit,
-      false
+      this.attackerUnit,
+      this.defenderUnit
     );
+
+    console.log('info: ', damageInfo);
 
     return `
       <div id="results" class="text-center">
