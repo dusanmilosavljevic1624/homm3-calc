@@ -17,6 +17,10 @@
     p {
       margin: 0;
     }
+
+    .stat-bonus {
+      color: lightgreen;
+    }
   }
 
   .spells {
@@ -33,6 +37,36 @@
 
       img {
         filter: grayscale(100%);
+      }
+    }
+  }
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rosybrown;
+  padding: 10px 0;
+
+  .stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    button {
+      background: linear-gradient(to right, #FCF6BA, #BF953F);
+      border: none;
+      padding: 0 3px;
+      font-weight: bold;
+    }
+
+    p {
+      margin: 0 0 5px 0;
+
+      span {
+        display: inline-block;
+        width: 100px;
       }
     }
   }

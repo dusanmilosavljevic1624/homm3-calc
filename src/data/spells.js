@@ -27,12 +27,12 @@ export default {
     name: 'Stone Skin',
     image: 'Stone_Skin.png',
     type: 'defender',
-    slug: 'stone-skin'
+    slug: 'stoneskin'
   },
   AIR_SHIELD: {
     name: 'Air shield',
     image: 'Air_Shield.png',
     type: 'defender',
-    slug: 'air-shield'
+    slug: 'airshield'
   }
 }
