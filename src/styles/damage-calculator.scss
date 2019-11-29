@@ -49,6 +49,7 @@
   padding: 10px 0;
 
   .stats {
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,6 +68,19 @@
       span {
         display: inline-block;
         width: 100px;
+      }
+    }
+  }
+
+  .spells {
+    img {
+      margin: 0 15px;
+      width: 50px;
+      filter: grayscale(100%);
+      cursor: pointer;
+
+      &.active {
+        filter: grayscale(0);
       }
     }
   }

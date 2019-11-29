@@ -39,6 +39,20 @@ export default class DamageCalculator {
     this.bindListeners();
   }
 
+  selectSkill(skill, level, position) {
+    const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
+    const skillSlug = skill.toLowerCase();
+
+    if(activeHero.skills[skillSlug] === Number(level)) {
+      activeHero.skills[skillSlug] = null;
+    } else {
+      activeHero.skills[skillSlug] = Number(level);
+    }
+
+    this.containerEl.innerHTML = this.createUnitsHtml();
+    this.bindListeners();
+  }
+
   selectSpell(position, spell) {
     if(position === 'attacker') {
 
@@ -71,8 +85,43 @@ export default class DamageCalculator {
           ${this.createHeroStatHtml(hero, 'Defense', position)}
           ${this.createHeroStatHtml(hero, 'Level', position)}
         </div>
+
+        <div class="spells">
+          ${this.createHeroSkillHtml(hero, position)}
+        </div>
       </div>
     `;
+  }
+
+  createHeroSkillHtml(hero, position) {
+    const skill = position === 'attacker' ? 'Offense' : 'Armorer';
+
+    const skillLevelMap = {
+      1: 'Basic',
+      2: 'Advanced',
+      3: 'Expert'
+    };
+
+    const heroSkillLevel = hero.skills[skill.toLowerCase()];
+
+    const createHeroSkillImage = (skill, level, isActive) => {
+      const activeClass = isActive ? 'active' : '';
+      return `
+        <img
+          data-position=${position}
+          data-skill=${skill}
+          data-level=${level}
+          class="hero-skill-btn ${activeClass}"
+          src="./img/skills/${skillLevelMap[level]}_${skill}.png" />`;
+    };
+
+    let skillHtml = '';
+
+    for(let i = 0; i < Object.keys(skillLevelMap).length; i++) {
+      skillHtml += createHeroSkillImage(skill, i+1, i + 1 === heroSkillLevel);
+    }
+
+    return skillHtml;
   }
 
   createHeroStatHtml(hero, stat, position) {
@@ -182,6 +231,7 @@ export default class DamageCalculator {
   bindListeners() {
     const spells = document.getElementsByClassName('spell');
     const statButtons = document.getElementsByClassName('hero-stat-btn');
+    const skillButtons = document.getElementsByClassName('hero-skill-btn');
 
     for(let i = 0; i < spells.length; i++) {
       const button = spells[i];
@@ -195,6 +245,13 @@ export default class DamageCalculator {
       const { stat, amount, position } = statButton.dataset;
       
       statButton.onclick = this.updateHeroStat.bind(this, position, stat, amount);
+    }
+
+    for(let i = 0; i < skillButtons.length; i++) {
+      const skillButton = skillButtons[i];
+      const { skill, level, position } = skillButton.dataset;
+
+      skillButton.onclick = this.selectSkill.bind(this, skill, level, position);
     }
   }
 
