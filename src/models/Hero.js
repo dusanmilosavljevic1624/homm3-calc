@@ -8,6 +8,26 @@ export default class Hero {
 		this.skills = skills;
 	}
 
+	get offenseBonus() {
+		if(!this.skills.offense) return 0;
+
+		return this.skills.offense * 0.1;
+	}
+
+	get offenseSpecialityBonus() {
+		if(this.hasOffenseSpeciality) return 0.05 * this.offenseBonus * this.level;
+	}
+
+	get armorerBonus() {
+		if(!this.skills.armorer) return 0;
+
+		return this.skills.armorer * 0.05;
+	}
+
+	get armorerSpecialityBonus() {
+		if(this.hasArmorerSpeciality) return 0.05 * this.armorerBonus * this.level;
+	}
+
 	get hasOffenseSpeciality() {
 		return this.speciality === 'offense';
 	}

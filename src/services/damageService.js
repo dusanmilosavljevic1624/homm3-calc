@@ -1,90 +1,57 @@
-import randomInRange from '../helpers/randomInRange';
-
 class DamageService {
-  calculateTotalDamage(attacker, defender, attackingUnit, defendingUnit, isRangedAttack) {
-		const baseDamage = this.calculateBaseDamage(attackingUnit.count, attackingUnit.minDamage, attackingUnit.maxDamage, attackingUnit.spells.bless);
+  detailedTotalDamageCalculation(attackingHero, defendingHero, attackingUnit, defendingUnit) {
+    const totalAttack = attackingHero.attack + attackingUnit.totalAttackSkill;
+    const totalDefense = defendingHero.defense + defendingUnit.totalDefenseSkill;
 
-		const attackSkillBonus = this.calculateAttackSkillBonus(attacker.attack, attackingUnit.totalAttackSkill, defender.defense, defendingUnit.totalDefenseSkill);
-		const offenseBonus = this.calculateDamageModifierBonus(attacker.skills.offense, attacker.hasOffenseSpeciality, attacker.level);
-		const archeryBonus = this.calculateDamageModifierBonus(attacker.skills.archery, attacker.hasArcherySpeciality, attacker.level);
-		const attackModifierBonus = isRangedAttack ? archeryBonus : offenseBonus;
-		const blessSpecialityBonus = this.calculateBlessSpecialityBonus(attackingUnit.spells.bless, attacker.hasBlessSpeciality, attacker.level, attackingUnit.level);
+    const { minBaseDamage, maxBaseDamage } = attackingUnit;
 
-		const damageBonuses = 1 + attackSkillBonus + attackModifierBonus + blessSpecialityBonus;
+    const attackSkillBonus = this.calculateAttackSkillBonus(totalAttack, totalDefense);
+    const offenseBonus = attackingHero.offenseBonus;
+    const offenseSpecialityBonus = attackingHero.offenseSpecialityBonus;
 
-		const defenseSkillReduction = this.calculateDefenseSkillReduction(attackingUnit.attack, defender.defense, defendingUnit.totalDefenseSkill);
-		const defenseModifierReduction = this.calculateDefenseModifierReduction(defender.skills.armorer, defender.hasArmorerSpeciality, defender.level);
-		const shieldSpellReduction = this.calculateShieldSpellReduction(defendingUnit.spells.shield);
-		const damageReductions = 1 - defenseSkillReduction - defenseModifierReduction - shieldSpellReduction;
+    const defenseSkillReduction = this.calculateDefenseSkillReduction(totalAttack, totalDefense);
+    const armorerReduction = defendingHero.armorerBonus;
+    const armorerSpecialityBonus = defendingHero.armorerSpecialityBonus
+    const shieldSpellReduction = this.calculateShieldSpellReduction(defendingUnit.spells.shield ? 3 : 0);
 
-    const damage = baseDamage * damageBonuses * damageReductions;
-    
+    const minTotalDamage = minBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
+    const maxTotalDamage = maxBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
+
+    const kills = this.calculateKills(minTotalDamage, maxTotalDamage, defendingUnit.health);
+
     return {
-			attackSkillBonus,
-			offenseBonus,
-			archeryBonus,
-			attackModifierBonus,
-			blessSpecialityBonus,
-			totalBonus: damageBonuses,
-
-			defenseSkillReduction,
-			defenseModifierReduction,
-			shieldSpellReduction,
-			totalReduction: damageReductions,
-
-			damage
-		};
+      minTotalDamage,
+      maxTotalDamage,
+      kills,
+      attackSkillBonus,
+      offenseBonus,
+      offenseSpecialityBonus,
+      defenseSkillReduction,
+      armorerReduction,
+      armorerSpecialityBonus
+    };
   }
 
-  calculateBaseDamage(unitCount, minDamage, maxDamage, blessLevel = 0) {
-    if(blessLevel === 1) {
-      return unitCount * maxDamage;
+  calculateKills(minTotalDamage, maxTotalDamage, unitHealth) {
+    const minKills = Math.floor(minTotalDamage / unitHealth);
+    const maxKills = Math.floor(maxTotalDamage / unitHealth);
+
+    return {
+      min: minKills,
+      max: maxKills
     }
-  
-    if(blessLevel > 1) {
-      return unitCount * (maxDamage + 1);
-    }
-  
-    let totalDamage = 0;
-    let counter = unitCount > 10 ? 10 : unitCount;
-  
-    for(let i = 0; i < counter; i++) {
-      totalDamage += this.calculateSingleUnitDamage(minDamage, maxDamage);
-    }
-  
-    return unitCount >= 10 ? Math.floor(totalDamage * (unitCount / 10)) : totalDamage;
   }
   
-  calculateAttackSkillBonus(attackersHeroAttack, attackersAttack, defendersHeroDefense, defendersDefense) {
-    const bonus =  0.05 * ((attackersHeroAttack + attackersAttack) - (defendersHeroDefense + defendersDefense));
+  calculateAttackSkillBonus(attack, defense) {
+    const bonus =  0.05 * (attack - defense);
   
     if(bonus < 0) return 0;
   
     return bonus > 3 ? 3 : bonus;
   }
-  
-  calculateBlessSpecialityBonus(isBlessed, hasBlessSpeciality, heroLevel, unitLevel) {
-    if(!isBlessed || !hasBlessSpeciality) return 0;
-  
-    return 0.03 * heroLevel / unitLevel;
-  }
-  
-  calculateDamageModifierBonus(modifierLevel = 0, modifierSpeciality, heroLevel) {
-    const levelBonus = modifierLevel * 0.1;
-    const specialityBonus = modifierSpeciality ? 0.05 * heroLevel + 1 : 1;
-  
-    return modifierSpeciality ? levelBonus * specialityBonus : levelBonus;
-  }
-  
-  calculateDefenseModifierReduction(modifierLevel = 0, modifierSpeciality, heroLevel) {
-    const levelBonus = modifierLevel * 0.05;
-    const specialityBonus = modifierSpeciality ? 0.05 * heroLevel + 1 : 0;
-  
-    return modifierSpeciality ? levelBonus * specialityBonus : levelBonus;
-  }
-  
-  calculateDefenseSkillReduction(attackSkill, heroDefense, defenseSkill) {
-    const reduction = 0.025 * ((heroDefense + defenseSkill) - attackSkill);
+
+  calculateDefenseSkillReduction(attack, defense) {
+    const reduction = 0.025 * (defense - attack);
   
     if(reduction > 0.7) return 0.7;
   
@@ -94,10 +61,6 @@ class DamageService {
   calculateShieldSpellReduction(spellLevel = 0) {
     if(spellLevel === 0) return 0;
     return spellLevel > 1 ? 0.3 : 0.15;
-  }
-  
-  calculateSingleUnitDamage(minDamage, maxDamage) {
-    return randomInRange(minDamage, maxDamage);
   }
 }
 

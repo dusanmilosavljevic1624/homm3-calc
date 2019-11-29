@@ -16,6 +16,22 @@ export default class Unit {
 		this.spells = spells || {};
 	}
 
+	get blessedBaseDamage() {
+		return this.maxDamage + 1;
+	}
+
+	get minBaseDamage() {
+		if(this.spells.bless) return this.blessedBaseDamage;
+
+		return this.minDamage < 1 ? 1 : this.minDamage;
+	}
+
+	get maxBaseDamage() {
+		if(this.spells.bless) return this.blessedBaseDamage;
+
+		return this.maxDamage;
+	}
+
 	get minTotalDamage() {
 		if(this.spells.bless) return this.spellDamageBonus + this.maxDamage;
 

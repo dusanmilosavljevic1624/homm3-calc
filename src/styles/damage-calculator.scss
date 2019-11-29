@@ -73,5 +73,29 @@
 }
 
 #results {
-  width: 100%;
+  display: grid;
+  margin: 40px auto 0 auto;
+  width: 80%;
+  grid-template-rows: 1fr 1fr;
+
+  #results-damage {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  #results-bonuses {
+    margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  h5, p {
+    margin: 0;
+    border: 1px solid rosybrown;
+  }
+
+  h5 {
+    line-height: 30px;
+  }
 }
