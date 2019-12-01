@@ -1,3 +1,5 @@
+import tippy from 'tippy.js';
+
 import './styles/index.scss';
 
 import UnitsView from './views/units';
@@ -14,4 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	unitsView.onUnitSelected = damageCalculatorView.selectUnit.bind(damageCalculatorView);
 
 	townsView.init('towns', unitsView.showUnits.bind(unitsView));
+
+	tippy('.btn', {
+		content: 'Ja sam tooltip'
+	});
 });
