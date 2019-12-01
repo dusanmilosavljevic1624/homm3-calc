@@ -3,6 +3,8 @@ import Hero from '../models/Hero';
 import unitService from '../services/unitService';
 import spellService from '../services/spellService';
 import damageService from '../services/damageService';
+import spellSpecialityService from '../services/spellSpecialityService';
+import unitSpecialityService from '../services/unitSpecialityService';
 
 export default class DamageCalculator {
   init(containerEl) {
@@ -89,8 +91,45 @@ export default class DamageCalculator {
         <div class="spells">
           ${this.createHeroSkillHtml(hero, position)}
         </div>
+
+        <div class="specialitys">
+          <p>Spells</p>
+          ${this.createHeroSpellSpecialityHtml(hero, position)}
+          <p>Units</p>
+          ${this.createHeroUnitSpecialityHtml(hero, position)}
+        </div>
       </div>
     `;
+  }
+
+  createHeroUnitSpecialityHtml(hero, position) {
+    const specialitys = unitSpecialityService.getSpecialitys();
+    console.log('specialitys: ', specialitys);
+    const createUnitSpecialityImage = (speciality) => `
+      <img
+        src="./img/castle/${speciality.image}"
+        class="hero-unit-speciality" />
+    `;
+
+    return Object.keys(specialitys).reduce((acc, specialityKey) => {
+      acc += createUnitSpecialityImage(specialitys[specialityKey]);
+      return acc;
+    }, '');
+  }
+
+  createHeroSpellSpecialityHtml(hero, position) {
+    const specialitys = spellSpecialityService.getSpecialitysByType(position);
+
+    const createSpellSpecialityImage = (speciality) => `
+      <img
+        src="./img/spells/${speciality.image}"
+        class="hero-spell-speciality" />
+    `;
+
+    return Object.keys(specialitys).reduce((acc, specialityKey) => {
+      acc += createSpellSpecialityImage(specialitys[specialityKey]);
+      return acc;
+    }, '');
   }
 
   createHeroSkillHtml(hero, position) {
