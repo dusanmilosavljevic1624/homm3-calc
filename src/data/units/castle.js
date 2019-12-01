@@ -14,7 +14,7 @@ export default {
 	},
 	HALBERDIER: {
 		name: 'Halberdier',
-		level: 1.1,
+		level: 1,
 		attack: 6,
 		defense: 5,
 		minDamage: 2,
@@ -40,7 +40,7 @@ export default {
 	},
 	MARKSMAN: {
 		name: 'Marksman',
-		level: 2.1,
+		level: 2,
 		attack: 6,
 		defense: 3,
 		minDamage: 2,
@@ -66,7 +66,7 @@ export default {
 	},
 	ROYAL_GRIFFIN: {
 		name: 'Royal Griffin',
-		level: 3.1,
+		level: 3,
 		attack: 9,
 		defense: 9,
 		minDamage: 3,
@@ -92,7 +92,7 @@ export default {
 	},
 	CRUSADER: {
 		name: 'Crusader',
-		level: 4.1,
+		level: 4,
 		attack: 12,
 		defense: 12,
 		minDamage: 7,
@@ -118,7 +118,7 @@ export default {
 	},
 	ZEALOT: {
 		name: 'Zealot',
-		level: 5.1,
+		level: 5,
 		attack: 12,
 		defense: 10,
 		minDamage: 10,
@@ -144,7 +144,7 @@ export default {
 	},
 	CHAMPION: {
 		name: 'Champion',
-		level: 6.1,
+		level: 6,
 		attack: 16,
 		defense: 16,
 		minDamage: 20,

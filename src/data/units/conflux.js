@@ -14,7 +14,7 @@ export default {
 	},
 	SPRITE: {
 		name: 'Sprite',
-		level: 1.1,
+		level: 1,
 		attack: 2,
 		defense: 2,
 		minDamage: 1,
@@ -40,7 +40,7 @@ export default {
 	},
 	STORM_ELEMENTAL: {
 		name: 'Storm Elemental',
-		level: 2.1,
+		level: 2,
 		attack: 9,
 		defense: 9,
 		minDamage: 2,
@@ -66,7 +66,7 @@ export default {
 	},
 	ICE_ELEMENTAL: {
 		name: 'Ice Elemental',
-		level: 3.1,
+		level: 3,
 		attack: 8,
 		defense: 10,
 		minDamage: 3,
@@ -92,7 +92,7 @@ export default {
 	},
 	ENERGY_ELEMENTAL: {
 		name: 'Energy Elemental',
-		level: 4.1,
+		level: 4,
 		attack: 12,
 		defense: 8,
 		minDamage: 4,
@@ -118,7 +118,7 @@ export default {
 	},
 	MAGMA_ELEMENTAL: {
 		name: 'Magma Elemental',
-		level: 5.1,
+		level: 5,
 		attack: 11,
 		defense: 11,
 		minDamage: 6,
@@ -144,7 +144,7 @@ export default {
 	},
 	MAGIC_ELEMENTAL: {
 		name: 'Magic Elemental',
-		level: 6.1,
+		level: 6,
 		attack: 15,
 		defense: 13,
 		minDamage: 15,

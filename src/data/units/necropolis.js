@@ -14,7 +14,7 @@ export default {
 	},
 	SKELETON_WARRIOR: {
 		name: 'Skeleton Warrior',
-		level: 1.1,
+		level: 1,
 		attack: 6,
 		defense: 6,
 		minDamage: 1,
@@ -40,7 +40,7 @@ export default {
 	},
 	ZOMBIE: {
 		name: 'Zombie',
-		level: 2.1,
+		level: 2,
 		attack: 5,
 		defense: 5,
 		minDamage: 2,
@@ -66,7 +66,7 @@ export default {
 	},
 	WRAITH: {
 		name: 'Wraith',
-		level: 3.1,
+		level: 3,
 		attack: 7,
 		defense: 7,
 		minDamage: 3,
@@ -92,7 +92,7 @@ export default {
 	},
 	VAMPIRE_LORD: {
 		name: 'Vampire Lord',
-		level: 4.1,
+		level: 4,
 		attack: 10,
 		defense: 10,
 		minDamage: 5,
@@ -118,7 +118,7 @@ export default {
 	},
 	POWER_LICH: {
 		name: 'Power Lich',
-		level: 5.1,
+		level: 5,
 		attack: 13,
 		defense: 10,
 		minDamage: 11,
@@ -144,7 +144,7 @@ export default {
 	},
 	DREAD_KNIGHT: {
 		name: 'Dread Knight',
-		level: 6.1,
+		level: 6,
 		attack: 18,
 		defense: 18,
 		minDamage: 15,

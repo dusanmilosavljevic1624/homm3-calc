@@ -3,7 +3,9 @@ class DamageService {
     const totalAttack = attackingHero.attack + attackingUnit.totalAttackSkill;
     const totalDefense = defendingHero.defense + defendingUnit.totalDefenseSkill;
 
-    const { minBaseDamage, maxBaseDamage } = attackingUnit;
+    let { minBaseDamage, maxBaseDamage } = attackingUnit;
+    minBaseDamage = minBaseDamage * this.calculateBlessSpecialityBonus(attackingHero, attackingUnit);
+    maxBaseDamage = maxBaseDamage * this.calculateBlessSpecialityBonus(attackingHero, attackingUnit);
 
     const attackSkillBonus = this.calculateAttackSkillBonus(totalAttack, totalDefense);
     const offenseBonus = attackingHero.offenseBonus;
@@ -30,6 +32,14 @@ class DamageService {
       armorerReduction,
       armorerSpecialityBonus
     };
+  }
+
+  calculateBlessSpecialityBonus(attackingHero, attackingUnit) {
+    if(attackingHero.hasBlessSpeciality && attackingUnit.spells.bless) {
+      return 1 + ((attackingHero.level / attackingUnit.level) * 0.03);
+    }
+
+    return 1;
   }
 
   calculateKills(minTotalDamage, maxTotalDamage, unitHealth) {

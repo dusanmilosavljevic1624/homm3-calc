@@ -7,7 +7,7 @@ import damageService from '../services/damageService';
 export default class DamageCalculator {
   init(containerEl) {
     this.attackerUnit = unitService.getUnit('INFERNAL_TROGLODYTE');
-    this.attackerHero = new Hero('Christian', 0, 0, 1, 'offense', { 'offense': 3 });
+    this.attackerHero = new Hero('Christian', 0, 0, 1, 'bless', { 'offense': 3 });
 
     this.defenderHero = new Hero('Ciele', 0, 0, 1, 'armorer', { 'armorer': 3 });
     this.defenderUnit = unitService.getUnit('IMP');

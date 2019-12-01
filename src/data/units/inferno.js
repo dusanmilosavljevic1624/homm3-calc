@@ -14,7 +14,7 @@ export default {
 	},
 	FAMILIAR: {
 		name: 'Familiar',
-		level: 1.1,
+		level: 1,
 		attack: 4,
 		defense: 4,
 		minDamage: 1,
@@ -40,7 +40,7 @@ export default {
 	},
 	MAGOG: {
 		name: 'Magog',
-		level: 2.1,
+		level: 2,
 		attack: 7,
 		defense: 4,
 		minDamage: 2,
@@ -66,7 +66,7 @@ export default {
 	},
 	CERBERUS: {
 		name: 'Cerberus',
-		level: 3.1,
+		level: 3,
 		attack: 10,
 		defense: 8,
 		minDamage: 2,
@@ -92,7 +92,7 @@ export default {
 	},
 	HORNED_DEMON: {
 		name: 'Horned demon',
-		level: 4.1,
+		level: 4,
 		attack: 10,
 		defense: 10,
 		minDamage: 7,
@@ -118,7 +118,7 @@ export default {
 	},
 	PIT_LORD: {
 		name: 'Pit lord',
-		level: 5.1,
+		level: 5,
 		attack: 13,
 		defense: 13,
 		minDamage: 13,
@@ -144,7 +144,7 @@ export default {
 	},
 	EFREET_SULTAN: {
 		name: 'Efreet sultan',
-		level: 6.1,
+		level: 6,
 		attack: 16,
 		defense: 14,
 		minDamage: 16,

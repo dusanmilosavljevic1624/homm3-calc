@@ -16,6 +16,8 @@ export default class Hero {
 
 	get offenseSpecialityBonus() {
 		if(this.hasOffenseSpeciality) return 0.05 * this.offenseBonus * this.level;
+		
+		return 0;
 	}
 
 	get armorerBonus() {

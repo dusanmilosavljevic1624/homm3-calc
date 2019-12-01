@@ -14,7 +14,7 @@ export default {
 	},
 	MASTER_GREMLIN: {
 		name: 'Master Gremlin',
-		level: 1.1,
+		level: 1,
 		attack: 4,
 		defense: 4,
 		minDamage: 1,
@@ -40,7 +40,7 @@ export default {
 	},
 	OBSIDIAN_GARGOYLE: {
 		name: 'Obsidian Gargoyle',
-		level: 2.1,
+		level: 2,
 		attack: 7,
 		defense: 7,
 		minDamage: 2,
@@ -66,7 +66,7 @@ export default {
 	},
 	IRON_GOLEM: {
 		name: 'Iron Golem',
-		level: 3.1,
+		level: 3,
 		attack: 9,
 		defense: 10,
 		minDamage: 4,
@@ -92,7 +92,7 @@ export default {
 	},
 	ARCH_MAGE: {
 		name: 'Arch Mage',
-		level: 4.1,
+		level: 4,
 		attack: 12,
 		defense: 9,
 		minDamage: 7,
@@ -118,7 +118,7 @@ export default {
 	},
 	MASTER_GENIE: {
 		name: 'Master Genie',
-		level: 5.1,
+		level: 5,
 		attack: 12,
 		defense: 12,
 		minDamage: 13,
@@ -144,7 +144,7 @@ export default {
 	},
 	NAGA_QUEEN: {
 		name: 'Naga Queen',
-		level: 6.1,
+		level: 6,
 		attack: 16,
 		defense: 13,
 		minDamage: 30,

@@ -14,7 +14,7 @@ export default {
 	},
 	HOBGOBLIN: {
 		name: 'Hobgoblin',
-		level: 1.1,
+		level: 1,
 		attack: 5,
 		defense: 3,
 		minDamage: 1,
@@ -40,7 +40,7 @@ export default {
 	},
 	WOLF_RAIDER: {
 		name: 'Wolf Raider',
-		level: 2.1,
+		level: 2,
 		attack: 8,
 		defense: 5,
 		minDamage: 3,
@@ -66,7 +66,7 @@ export default {
 	},
 	ORC_CHIEFTAIN: {
 		name: 'Orc Chieftain',
-		level: 3.1,
+		level: 3,
 		attack: 8,
 		defense: 4,
 		minDamage: 2,
@@ -92,7 +92,7 @@ export default {
 	},
 	OGRE_MAGE: {
 		name: 'Ogre Mage',
-		level: 4.1,
+		level: 4,
 		attack: 13,
 		defense: 7,
 		minDamage: 6,
@@ -118,7 +118,7 @@ export default {
 	},
 	THUNDERBIRD: {
 		name: 'Thunderbird',
-		level: 5.1,
+		level: 5,
 		attack: 13,
 		defense: 11,
 		minDamage: 11,
@@ -144,7 +144,7 @@ export default {
 	},
 	CYCLOPS_KING: {
 		name: 'Cyclops King',
-		level: 6.1,
+		level: 6,
 		attack: 17,
 		defense: 13,
 		minDamage: 16,
@@ -170,7 +170,7 @@ export default {
 	},
 	ANCIENT_BEHEMOTH: {
 		name: 'Ancient Behemoth',
-		level: 6.1,
+		level: 6,
 		attack: 19,
 		defense: 19,
 		minDamage: 30,

@@ -14,7 +14,7 @@ export default {
 	},
 	CENTAUR_CAPTAIN: {
 		name: 'Centaur Captain',
-		level: 1.1,
+		level: 1,
 		attack: 6,
 		defense: 3,
 		minDamage: 2,
@@ -40,7 +40,7 @@ export default {
 	},
 	BATTLE_DWARF: {
 		name: 'Battle Dwarf',
-		level: 2.1,
+		level: 2,
 		attack: 7,
 		defense: 7,
 		minDamage: 2,
@@ -66,7 +66,7 @@ export default {
 	},
 	GRAND_ELF: {
 		name: 'Grand Elf',
-		level: 3.1,
+		level: 3,
 		attack: 9,
 		defense: 5,
 		minDamage: 3,
@@ -92,7 +92,7 @@ export default {
 	},
 	SILVER_PEGASUS: {
 		name: 'Silver Pegasus',
-		level: 4.1,
+		level: 4,
 		attack: 9,
 		defense: 10,
 		minDamage: 5,
@@ -118,7 +118,7 @@ export default {
 	},
 	DENDROID_SOLDIER: {
 		name: 'Dendroid Soldier',
-		level: 5.1,
+		level: 5,
 		attack: 9,
 		defense: 12,
 		minDamage: 10,
@@ -144,7 +144,7 @@ export default {
 	},
 	WAR_UNICORN: {
 		name: 'War Unicorn',
-		level: 6.1,
+		level: 6,
 		attack: 15,
 		defense: 14,
 		minDamage: 18,

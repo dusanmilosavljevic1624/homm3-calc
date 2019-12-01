@@ -14,7 +14,7 @@ export default {
 	},
 	INFERNAL_TROGLODYTE: {
 		name: 'Infernal Troglodyte',
-		level: 1.1,
+		level: 1,
 		attack: 5,
 		defense: 4,
 		minDamage: 1,
@@ -40,7 +40,7 @@ export default {
 	},
 	HARPY_HAG: {
 		name: 'Harpy Hag',
-		level: 2.1,
+		level: 2,
 		attack: 6,
 		defense: 6,
 		minDamage: 1,
@@ -66,7 +66,7 @@ export default {
 	},
 	EVIL_EYE: {
 		name: 'Evil Eye',
-		level: 3.1,
+		level: 3,
 		attack: 10,
 		defense: 8,
 		minDamage: 3,
@@ -92,7 +92,7 @@ export default {
 	},
 	MEDUSA_QUEEN: {
 		name: 'Medusa Queen',
-		level: 4.1,
+		level: 4,
 		attack: 10,
 		defense: 10,
 		minDamage: 6,
@@ -118,7 +118,7 @@ export default {
 	},
 	MINOTAUR_KING: {
 		name: 'Minotaur King',
-		level: 5.1,
+		level: 5,
 		attack: 15,
 		defense: 15,
 		minDamage: 12,
@@ -144,7 +144,7 @@ export default {
 	},
 	SCORPICORE: {
 		name: 'Scorpicore',
-		level: 6.1,
+		level: 6,
 		attack: 16,
 		defense: 14,
 		minDamage: 14,

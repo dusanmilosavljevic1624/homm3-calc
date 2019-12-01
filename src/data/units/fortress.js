@@ -14,7 +14,7 @@ export default {
 	},
 	GNOLL_MARAUDER: {
 		name: 'Gnoll Marauder',
-		level: 1.1,
+		level: 1,
 		attack: 4,
 		defense: 6,
 		minDamage: 2,
@@ -40,7 +40,7 @@ export default {
 	},
 	LIZARD_WARRIOR: {
 		name: 'Lizard Warrior',
-		level: 2.1,
+		level: 2,
 		attack: 6,
 		defense: 8,
 		minDamage: 2,
@@ -66,7 +66,7 @@ export default {
 	},
 	DRAGON_FLY: {
 		name: 'Dragon Fly',
-		level: 3.1,
+		level: 3,
 		attack: 8,
 		defense: 10,
 		minDamage: 2,
@@ -92,7 +92,7 @@ export default {
 	},
 	GREATER_BASILISK: {
 		name: 'Greater Basilisk',
-		level: 4.1,
+		level: 4,
 		attack: 12,
 		defense: 12,
 		minDamage: 6,
@@ -118,7 +118,7 @@ export default {
 	},
 	MIGHTY_GORGON: {
 		name: 'Mighty Gorgon',
-		level: 5.1,
+		level: 5,
 		attack: 11,
 		defense: 16,
 		minDamage: 12,
@@ -144,7 +144,7 @@ export default {
 	},
 	WYVERN_MONARCH: {
 		name: 'Wyvern Monarch',
-		level: 6.1,
+		level: 6,
 		attack: 14,
 		defense: 14,
 		minDamage: 18,
