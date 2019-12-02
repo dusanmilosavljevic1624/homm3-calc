@@ -1,11 +1,13 @@
+import tippy from 'tippy.js';
+
 import Hero from '../models/Hero';
+import HeroView from './hero';
 
 import unitService from '../services/unitService';
 import spellService from '../services/spellService';
 import damageService from '../services/damageService';
 import spellSpecialityService from '../services/spellSpecialityService';
 import unitSpecialityService from '../services/unitSpecialityService';
-import tippy from 'tippy.js';
 
 export default class DamageCalculator {
   init(containerEl) {
@@ -15,6 +17,22 @@ export default class DamageCalculator {
     this.defenderHero = new Hero('Ciele', 0, 0, 1, 'armorer', { 'armorer': 3 });
     this.defenderUnit = unitService.getUnit('IMP');
 
+    this.attackerHeroView = new HeroView({
+      hero: this.attackerHero,
+      skill: 'Offense',
+      containerElId: 'attacker-hero',
+      onStatUpdate: this.updateHeroStat.bind(this, 'attacker'),
+      onSkillSelect: this.selectSkill.bind(this, 'attacker')
+    });
+
+    this.defenderHeroView = new HeroView({
+      hero: this.defenderHero,
+      skill: 'Armorer',
+      containerElId: 'defender-hero',
+      onStatUpdate: this.updateHeroStat.bind(this, 'defender'),
+      onSkillSelect: this.selectSkill.bind(this, 'defender')
+    });
+    
     this.containerEl = document.getElementById(containerEl); 
     this.containerEl.innerHTML = this.createUnitsHtml();
     this.bindListeners();
@@ -32,17 +50,15 @@ export default class DamageCalculator {
   }
 
   updateHeroStat(position, stat, amount) {
-    if(position === 'attacker') {
-      this.attackerHero[stat] += Number(amount);
-    } else if(position === 'defender') {
-      this.defenderHero[stat] += Number(amount);
-    }
+    const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
+
+    activeHero[stat] += Number(amount);
 
     this.containerEl.innerHTML = this.createUnitsHtml();
     this.bindListeners();
   }
 
-  selectSkill(skill, level, position) {
+  selectSkill(position, skill, level) {
     const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
     const skillSlug = skill.toLowerCase();
 
@@ -65,152 +81,17 @@ export default class DamageCalculator {
     this.containerEl.innerHTML = this.createUnitsHtml();
     this.bindListeners();
   }
-
-  createHeroHtml(position, hero) {
-    return `
-      <div class="hero text-center">
-        <h3>Hero</h3>
-
-        <div class="stats">
-          ${this.createHeroStatHtml(hero, 'Attack', position)}
-          ${this.createHeroStatHtml(hero, 'Defense', position)}
-          ${this.createHeroStatHtml(hero, 'Level', position)}
-        </div>
-
-        <div class="spells">
-          ${this.createHeroSkillHtml(hero, position)}
-        </div>
-
-        <div class="specialitys">
-          <div id="speciality-container">
-          <img id="speciality-drawer-test" src="./img/skills/Expert_Offense.png" />
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  showSpecialityDrawer(element) {
-    let drawerElement = document.createElement('div');
-    drawerElement.id = 'speciality-drawer';
-
-    drawerElement.innerHTML = `
-      <p>Spells</p>
-      ${this.createHeroSpellSpecialityHtml()}
-      <p>Units</p>
-      <div class="unit-specialtys">
-        ${this.createHeroUnitSpecialityHtml()}
-      </div>
-    `; 
-
-    document.getElementById(element).appendChild(drawerElement);
-
-    tippy('.hero-unit-speciality');
-  }
-
-  createHeroUnitSpecialityHtml(hero, position) {
-    const specialitys = unitSpecialityService.getSpecialitys();
-
-    const createUnitSpecialityImage = (speciality) => `
-      <img
-        src="./img/castle/${speciality.image}"
-        class="hero-unit-speciality"
-        data-tippy-content="${speciality.name}" />
-    `;
-
-    return Object.keys(specialitys).reduce((acc, specialityKey) => {
-      acc += createUnitSpecialityImage(specialitys[specialityKey]);
-      return acc;
-    }, '');
-  }
-
-  createHeroSpellSpecialityHtml(hero, position) {
-    const specialitys = spellSpecialityService.getSpecialitys();
-
-    const createSpellSpecialityImage = (speciality) => `
-      <img
-        src="./img/spells/${speciality.image}"
-        class="hero-spell-speciality" />
-    `;
-
-    return Object.keys(specialitys).reduce((acc, specialityKey) => {
-      acc += createSpellSpecialityImage(specialitys[specialityKey]);
-      return acc;
-    }, '');
-  }
-
-  createHeroSkillHtml(hero, position) {
-    const skill = position === 'attacker' ? 'Offense' : 'Armorer';
-
-    const skillLevelMap = {
-      1: 'Basic',
-      2: 'Advanced',
-      3: 'Expert'
-    };
-
-    const heroSkillLevel = hero.skills[skill.toLowerCase()];
-
-    const createHeroSkillImage = (skill, level, isActive) => {
-      const activeClass = isActive ? 'active' : '';
-      return `
-        <img
-          data-position=${position}
-          data-skill=${skill}
-          data-level=${level}
-          class="hero-skill-btn ${activeClass}"
-          src="./img/skills/${skillLevelMap[level]}_${skill}.png" />`;
-    };
-
-    let skillHtml = '';
-
-    for(let i = 0; i < Object.keys(skillLevelMap).length; i++) {
-      skillHtml += createHeroSkillImage(skill, i+1, i + 1 === heroSkillLevel);
-    }
-
-    return skillHtml;
-  }
-
-  createHeroStatHtml(hero, stat, position) {
-    const statSlug = stat.toLowerCase();
-
-    return `
-      <p>
-        <span>
-          ${stat}: ${hero[statSlug]}
-        </span>
-
-        ${this.createHeroStatButtonHtml(statSlug, 1, position)}
-        ${this.createHeroStatButtonHtml(statSlug, -1, position)}
-        ${this.createHeroStatButtonHtml(statSlug, 5, position)}
-        ${this.createHeroStatButtonHtml(statSlug, -5, position)}
-      </p>
-    `
-  }
-
-  createHeroStatButtonHtml(statSlug, amount, position) {
-    const isPositive = amount > 0;
-
-    return `
-      <button
-        class="btn hero-stat-btn"
-        data-stat="${statSlug}"
-        data-amount="${amount}"
-        data-position="${position}">
-        ${isPositive ? '+' : '-' }${Math.abs(amount)}
-      </button>
-    `;
-  }
-
+  
   createUnitsHtml() {
     return `
       <div class="row text-center">
         <div class="col-md-6">
-          ${this.createHeroHtml('attacker', this.attackerHero)}
+          ${this.attackerHeroView.generateHtml()}
           ${this.createUnitHtml('attacker', this.attackerUnit)}
         </div>
 
         <div class="col-md-6">
-          ${this.createHeroHtml('defender', this.defenderHero)}
+          ${this.defenderHeroView.generateHtml()}
           ${this.createUnitHtml('defender', this.defenderUnit)}
         </div>
 
@@ -275,11 +156,6 @@ export default class DamageCalculator {
 
   bindListeners() {
     const spells = document.getElementsByClassName('spell');
-    const statButtons = document.getElementsByClassName('hero-stat-btn');
-    const skillButtons = document.getElementsByClassName('hero-skill-btn');
-    const specialityDrawerToggler = document.getElementById('speciality-drawer-test');
-
-    specialityDrawerToggler.onclick = this.showSpecialityDrawer.bind(this, 'speciality-container');
 
     for(let i = 0; i < spells.length; i++) {
       const button = spells[i];
@@ -288,19 +164,8 @@ export default class DamageCalculator {
       button.onclick = this.selectSpell.bind(this, position, spell);
     }
 
-    for(let i = 0; i < statButtons.length; i++) {
-      const statButton = statButtons[i];
-      const { stat, amount, position } = statButton.dataset;
-      
-      statButton.onclick = this.updateHeroStat.bind(this, position, stat, amount);
-    }
-
-    for(let i = 0; i < skillButtons.length; i++) {
-      const skillButton = skillButtons[i];
-      const { skill, level, position } = skillButton.dataset;
-
-      skillButton.onclick = this.selectSkill.bind(this, skill, level, position);
-    }
+    this.attackerHeroView.bindListeners();
+    this.defenderHeroView.bindListeners();
   }
 
   createResultsHtml() {
