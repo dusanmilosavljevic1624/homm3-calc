@@ -43,7 +43,7 @@ export default class Unit {
 	}
 
 	get image() {
-		return `./img/castle/${this.name.replace(' ', '_')}.gif`;
+		return `./img/${this.name.replace(' ', '_')}.gif`;
 	}
 
 	get slug() {

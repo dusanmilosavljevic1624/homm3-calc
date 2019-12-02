@@ -32,7 +32,7 @@ export default class UnitsView {
 						<button class="btn unit-selector" data-slug="${unit.slug}" data-position="defender">DEFENDER</button>					
 					</div>
 
-					<img src="./img/castle/${unit.name.replace(' ', '_')}.gif" />
+					<img src="./img/${unit.name.replace(' ', '_')}.gif" />
 
 					<div class="unit-list-item-info">
 						<p>Attack: <span>${unit.attack}</span><p>

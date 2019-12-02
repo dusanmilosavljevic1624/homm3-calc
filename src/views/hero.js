@@ -2,6 +2,9 @@ import tippy from 'tippy.js';
 
 import spellSpecialityService from '../services/spellSpecialityService';
 import unitSpecialityService from '../services/unitSpecialityService';
+import specialtyService from '../services/specialityService';
+
+import SpecialityDrawerView from './specialtys';
 
 export default class HeroView {
   constructor(viewData) {
@@ -19,6 +22,11 @@ export default class HeroView {
     this.hasGeneratedHtml = false;
     this.onStatUpdate = onStatUpdate;
     this.onSkillSelect = onSkillSelect;
+
+    this.specialityDrawer = new SpecialityDrawerView({
+      parentElId: 'speciality-container',
+      containerElId: 'speciality-drawer-test'
+    });
   }
 
   createHeroStatButtonHtml(statSlug, amount) {
@@ -66,7 +74,7 @@ export default class HeroView {
           data-skill=${skill}
           data-level=${level}
           class="hero-skill-btn ${activeClass}"
-          src="./img/skills/${skillLevelMap[level]}_${skill}.png"
+          src="./img/${skillLevelMap[level]}_${skill}.png"
         />`;
     };
 
@@ -79,61 +87,12 @@ export default class HeroView {
     return skillHtml;
   }
 
-  createHeroUnitSpecialityHtml(hero, position) {
-    const specialitys = unitSpecialityService.getSpecialitys();
-
-    const createUnitSpecialityImage = (speciality) => `
-      <img
-        src="./img/castle/${speciality.image}"
-        class="hero-unit-speciality"
-        data-tippy-content="${speciality.name}" />
-    `;
-
-    return Object.keys(specialitys).reduce((acc, specialityKey) => {
-      acc += createUnitSpecialityImage(specialitys[specialityKey]);
-      return acc;
-    }, '');
-  }
-
-  createHeroSpellSpecialityHtml(hero, position) {
-    const specialitys = spellSpecialityService.getSpecialitys();
-
-    const createSpellSpecialityImage = (speciality) => `
-      <img
-        src="./img/spells/${speciality.image}"
-        class="hero-spell-speciality" />
-    `;
-
-    return Object.keys(specialitys).reduce((acc, specialityKey) => {
-      acc += createSpellSpecialityImage(specialitys[specialityKey]);
-      return acc;
-    }, '');
-  }
-
-  showSpecialityDrawer(element) {
-    const drawerElement = document.createElement('div');
-    drawerElement.id = 'speciality-drawer';
-
-    drawerElement.innerHTML = `
-      <p>Spells</p>
-      ${this.createHeroSpellSpecialityHtml()}
-      <p>Units</p>
-      <div class="unit-specialtys">
-        ${this.createHeroUnitSpecialityHtml()}
-      </div>
-    `; 
-
-    document.getElementById(element).appendChild(drawerElement);
-
-    tippy('.hero-unit-speciality');
-  }
-
   bindStatListeners() {
     const btnSelector = `#${this.containerElId} .hero-stat-btn`; 
     const statButtons = document.querySelectorAll(btnSelector);
 
     for(let i = 0; i < statButtons.length; i++) {
-      statButtons[i].onclick = event => {
+      statButtons[i].onclick = event => { 
         const { onStatUpdate } = this;
         const { stat, amount } = statButtons[i].dataset;
         
@@ -157,8 +116,9 @@ export default class HeroView {
   }
 
   bindSpecialityDrawerListeners() {
-    const specialityDrawerToggler = document.getElementById('speciality-drawer-test');
-    specialityDrawerToggler.onclick = this.showSpecialityDrawer.bind(this, 'speciality-container');
+    const drawerSelector = `#${this.containerElId} .active-specialty`;
+    const specialityDrawerToggler = document.querySelector(drawerSelector);
+    specialityDrawerToggler.onclick = this.specialityDrawer.toggle.bind(this.specialityDrawer);
   }
 
   bindListeners() {
@@ -168,6 +128,7 @@ export default class HeroView {
   }
 
   generateHtml() {
+    const speciality = specialtyService.getSpeciality(this.hero.speciality);
     this.hasGeneratedHtml = true;
 
     return `
@@ -185,9 +146,18 @@ export default class HeroView {
         </div>
 
         <div class="specialitys">
-          <div id="speciality-container">
-          <img id="speciality-drawer-test" src="./img/skills/Expert_Offense.png" />
+          <div class="active-specialty">
+            <div class="image-container">
+              <img id="speciality-drawer-test" class="img-fluid" src="./img/${speciality.image}" />
+            </div>
+
+            <div class="content">
+              <p>Speciality</p>
+              <p>${speciality.name}<p>
+            </div>
           </div>
+   
+          <div id="speciality-container"></div>
         </div>
       </div>
     `;

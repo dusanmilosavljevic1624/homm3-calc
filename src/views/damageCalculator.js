@@ -110,7 +110,7 @@ export default class DamageCalculator {
 
       const spellHtml = `
         <div class="spell ${activeClass}" data-position="${position}" data-spell="${slug}">
-          <img src="./img/spells/${image}"/>
+          <img src="./img/${image}"/>
         </div>
       `;
 
