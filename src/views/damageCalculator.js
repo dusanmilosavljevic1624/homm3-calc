@@ -5,6 +5,7 @@ import spellService from '../services/spellService';
 import damageService from '../services/damageService';
 import spellSpecialityService from '../services/spellSpecialityService';
 import unitSpecialityService from '../services/unitSpecialityService';
+import tippy from 'tippy.js';
 
 export default class DamageCalculator {
   init(containerEl) {
@@ -56,23 +57,11 @@ export default class DamageCalculator {
   }
 
   selectSpell(position, spell) {
-    if(position === 'attacker') {
+    const activeUnit = position === 'attacker' ? this.attackerUnit : this.defenderUnit;
+    const isSpellActive = activeUnit.spells[spell];
 
-      if(this.attackerUnit.spells[spell]) {
-        this.attackerUnit.spells[spell] = null;
-      } else {
-        this.attackerUnit.spells[spell] = 3;
-      }
-    }
-
-    if(position === 'defender') {
-      if(this.defenderUnit.spells[spell]) {
-        this.defenderUnit.spells[spell] = null;
-      } else {
-        this.defenderUnit.spells[spell] = 3;
-      }
-    }
-
+    activeUnit.spells[spell] = isSpellActive ? null : 3;
+    
     this.containerEl.innerHTML = this.createUnitsHtml();
     this.bindListeners();
   }
@@ -93,22 +82,40 @@ export default class DamageCalculator {
         </div>
 
         <div class="specialitys">
-          <p>Spells</p>
-          ${this.createHeroSpellSpecialityHtml(hero, position)}
-          <p>Units</p>
-          ${this.createHeroUnitSpecialityHtml(hero, position)}
+          <div id="speciality-container">
+          <img id="speciality-drawer-test" src="./img/skills/Expert_Offense.png" />
+          </div>
         </div>
       </div>
     `;
   }
 
+  showSpecialityDrawer(element) {
+    let drawerElement = document.createElement('div');
+    drawerElement.id = 'speciality-drawer';
+
+    drawerElement.innerHTML = `
+      <p>Spells</p>
+      ${this.createHeroSpellSpecialityHtml()}
+      <p>Units</p>
+      <div class="unit-specialtys">
+        ${this.createHeroUnitSpecialityHtml()}
+      </div>
+    `; 
+
+    document.getElementById(element).appendChild(drawerElement);
+
+    tippy('.hero-unit-speciality');
+  }
+
   createHeroUnitSpecialityHtml(hero, position) {
     const specialitys = unitSpecialityService.getSpecialitys();
-    console.log('specialitys: ', specialitys);
+
     const createUnitSpecialityImage = (speciality) => `
       <img
         src="./img/castle/${speciality.image}"
-        class="hero-unit-speciality" />
+        class="hero-unit-speciality"
+        data-tippy-content="${speciality.name}" />
     `;
 
     return Object.keys(specialitys).reduce((acc, specialityKey) => {
@@ -118,7 +125,7 @@ export default class DamageCalculator {
   }
 
   createHeroSpellSpecialityHtml(hero, position) {
-    const specialitys = spellSpecialityService.getSpecialitysByType(position);
+    const specialitys = spellSpecialityService.getSpecialitys();
 
     const createSpellSpecialityImage = (speciality) => `
       <img
@@ -207,7 +214,6 @@ export default class DamageCalculator {
           ${this.createUnitHtml('defender', this.defenderUnit)}
         </div>
 
-
         ${this.createResultsHtml()}
       </div>
     `;
@@ -271,6 +277,9 @@ export default class DamageCalculator {
     const spells = document.getElementsByClassName('spell');
     const statButtons = document.getElementsByClassName('hero-stat-btn');
     const skillButtons = document.getElementsByClassName('hero-skill-btn');
+    const specialityDrawerToggler = document.getElementById('speciality-drawer-test');
+
+    specialityDrawerToggler.onclick = this.showSpecialityDrawer.bind(this, 'speciality-container');
 
     for(let i = 0; i < spells.length; i++) {
       const button = spells[i];
