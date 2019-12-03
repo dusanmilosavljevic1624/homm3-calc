@@ -1,13 +1,9 @@
-import tippy from 'tippy.js';
-
 import Hero from '../models/Hero';
 import HeroView from './hero';
 
 import unitService from '../services/unitService';
 import spellService from '../services/spellService';
 import damageService from '../services/damageService';
-import spellSpecialityService from '../services/spellSpecialityService';
-import unitSpecialityService from '../services/unitSpecialityService';
 
 export default class DamageCalculator {
   init(containerEl) {
@@ -22,7 +18,8 @@ export default class DamageCalculator {
       skill: 'Offense',
       containerElId: 'attacker-hero',
       onStatUpdate: this.updateHeroStat.bind(this, 'attacker'),
-      onSkillSelect: this.selectSkill.bind(this, 'attacker')
+      onSkillSelect: this.selectSkill.bind(this, 'attacker'),
+      onSpecialtySelect: this.selectSpecialty.bind(this, 'attacker')
     });
 
     this.defenderHeroView = new HeroView({
@@ -30,7 +27,8 @@ export default class DamageCalculator {
       skill: 'Armorer',
       containerElId: 'defender-hero',
       onStatUpdate: this.updateHeroStat.bind(this, 'defender'),
-      onSkillSelect: this.selectSkill.bind(this, 'defender')
+      onSkillSelect: this.selectSkill.bind(this, 'defender'),
+      onSpecialtySelect: this.selectSpecialty.bind(this, 'defender')
     });
     
     this.containerEl = document.getElementById(containerEl); 
@@ -78,6 +76,15 @@ export default class DamageCalculator {
 
     activeUnit.spells[spell] = isSpellActive ? null : 3;
     
+    this.containerEl.innerHTML = this.createUnitsHtml();
+    this.bindListeners();
+  }
+
+  selectSpecialty(position, speciality) {
+    const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
+
+    activeHero.speciality = speciality;
+
     this.containerEl.innerHTML = this.createUnitsHtml();
     this.bindListeners();
   }

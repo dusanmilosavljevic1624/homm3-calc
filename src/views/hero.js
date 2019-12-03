@@ -13,7 +13,8 @@ export default class HeroView {
       skill,
       containerElId,
       onStatUpdate,
-      onSkillSelect
+      onSkillSelect,
+      onSpecialtySelect
     } = viewData;
 
     this.hero = hero;
@@ -22,11 +23,17 @@ export default class HeroView {
     this.hasGeneratedHtml = false;
     this.onStatUpdate = onStatUpdate;
     this.onSkillSelect = onSkillSelect;
+    this.onSpecialtySelect = onSpecialtySelect;
 
     this.specialityDrawer = new SpecialityDrawerView({
-      parentElId: 'speciality-container',
-      containerElId: 'speciality-drawer-test'
+      parentElId: this.containerElId,
+      onSpecialtySelected: this.selectSpecialty.bind(this)
     });
+  }
+
+  selectSpecialty(specialty) {
+    const { onSpecialtySelect } = this;
+    onSpecialtySelect(specialty);
   }
 
   createHeroStatButtonHtml(statSlug, amount) {

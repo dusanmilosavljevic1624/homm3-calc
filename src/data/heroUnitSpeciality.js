@@ -11,7 +11,7 @@ export default {
   },
   BEHEMOTHS: {
     image: 'Ancient_Behemoth.gif',
-    slug: 'ancient_behemoths',
+    slug: 'behemoths',
     name: 'Ancient Behemoths'
   },
   BEHOLDERS: {
@@ -29,7 +29,7 @@ export default {
     slug: 'cavaliers',
     name: 'Cavaliers'
   },
-  CYCLOPS: {
+  CYCLOPSES: {
     image: 'Cyclops.gif',
     slug: 'cyclopses',
     name: 'Cyclopses'
