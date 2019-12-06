@@ -1,32 +1,10 @@
+import SpellSpecialty from '../models/SpellSpecialty';
+
 export default {
-  BLESS: {
-    name: 'Bless',
-    image: 'Bless.png',
-    type: 'attacker',
-    slug: 'bless'
-  },
-  SHIELD: {
-    name: 'Shield',
-    image: 'Shield.png',
-    type: 'defender',
-    slug: 'shield'
-  },
-  BLOODLUST: {
-    name: 'Bloodlust',
-    image: 'Bloodlust.png',
-    type: 'attacker',
-    slug: 'bloodlust'
-  },
-  PRECISION: {
-    name: 'Precision',
-    image: 'Precision.png',
-    type: 'attacker',
-    slug: 'precision'
-  },
-  STONE_SKIN: {
-    name: 'Stone Skin',
-    image: 'Stone_Skin.png',
-    type: 'defender',
-    slug: 'stoneskin'
-  }
+  BLESS: new SpellSpecialty('bless', 'Bless', 'Bless.png', 'attacker'),
+  SHIELD: new SpellSpecialty('shield', 'Shield', 'Shield.png', 'defender'),
+  BLOODLUST: new SpellSpecialty('bloodlust', 'Bloodlust', 'Bloodlust.png', 'attacker'),
+  PRECISION: new SpellSpecialty('precision', 'Precision', 'Precision.png', 'attacker'),
+  STONE_SKIN: new SpellSpecialty('stone_skin', 'Stone Skin', 'Stone_Skin.png', 'defender'),
+  AIR_SHIELD: new SpellSpecialty('air_shield', 'Air Shield', 'Air_Shield.png', 'defender')
 }

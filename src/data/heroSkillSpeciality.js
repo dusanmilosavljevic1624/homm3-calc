@@ -1,12 +1,6 @@
+import SkillSpecialty from '../models/Specialty';
+
 export default {
-  OFFENSE: {
-    name: 'Offense',
-    image: 'Basic_Offense.png',
-    slug: 'offense'
-  },
-  ARMORER: {
-    name: 'Armorer',
-    image: 'Basic_Armorer.png',
-    slug: 'armorer'
-  }
+  OFFENSE: new SkillSpecialty('offense', 'Offense', 'Basic_Offense.png'),
+  ARMORER: new SkillSpecialty('armorer', 'Armorer', 'Basic_Armorer.png')
 }
