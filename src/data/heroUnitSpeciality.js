@@ -1,252 +1,60 @@
+import FlatScalingUnitSpecialty from '../models/FlatScalingUnitSpecialty';
+import LevelScalingUnitSpecialty from '../models/LevelScalingUnitSpecialty';
+
+/*
+  LevelScalingUnitSpecialty: { slug, name, image, scalingLevelStarts }
+  FlatScalingUnitSpecialty: { slug, name, image, scalingStats }
+*/
+
 export default {
-  ARCHERS: {
-    image: 'Archer.gif',
-    slug: 'archers',
-    name: 'Archers'
-  },
-  BASILISKS: {
-    image: 'Basilisk.gif',
-    slug: 'basilisks',
-    name: 'Basilisks'
-  },
-  BEHEMOTHS: {
-    image: 'Ancient_Behemoth.gif',
-    slug: 'behemoths',
-    name: 'Ancient Behemoths'
-  },
-  BEHOLDERS: {
-    image: 'Beholder.gif',
-    slug: 'beholders',
-    name: 'Beholders'
-  },
-  BLACK_KNIGHTS: {
-    image: 'Black_Knight.gif',
-    slug: 'black_knights',
-    name: 'Black Knights'
-  },
-  CAVALIERS: {
-    image: 'Cavalier.gif',
-    slug: 'cavaliers',
-    name: 'Cavaliers'
-  },
-  CYCLOPSES: {
-    image: 'Cyclops.gif',
-    slug: 'cyclopses',
-    name: 'Cyclopses'
-  },
-  DEMONS: {
-    image: 'Demon.gif',
-    slug: 'demons',
-    name: 'Demons'
-  },
-  DENDROIDS: {
-    image: 'Dendroid_Guard.gif',
-    slug: 'dendroids',
-    name: 'Dendroids'
-  },
-  DEVILS: {
-    image: 'Devil.gif',
-    slug: 'devils',
-    name: 'Devils'
-  },
-  DRAGONS: {
-    image: 'Black_Dragon.gif',
-    slug: 'dragons',
-    name: 'Dragons'
-  },
-  DWARVES: {
-    image: 'Dwarf.gif',
-    slug: 'dwarves',
-    name: 'Dwarves'
-  },
-  EARTH_ELEMENTALS: {
-    image: 'Earth_Elemental.gif',
-    slug: 'earth_elementals',
-    name: 'Earth Elementals'
-  },
-  EFREETI: {
-    image: 'Efreet.gif',
-    slug: 'efreeti',
-    name: 'Efreeti'
-  },
-  ELVES: {
-    image: 'Wood_Elf.gif',
-    slug: 'elves',
-    name: 'Elves'
-  },
-  FIRE_ELEMENTALS: {
-    image: 'Fire_Elemental.gif',
-    slug: 'fire_elementals',
-    name: 'Fire Elementals'
-  },
-  GARGOYLES: {
-    image: 'Stone_Gargoyle.gif',
-    slug: 'gargoyles',
-    name: 'Gargoyles'
-  },
-  GENIES: {
-    image: 'Genie.gif',
-    slug: 'genies',
-    name: 'Genies'
-  },
-  GNOLLS: {
-    image: 'Gnoll.gif',
-    slug: 'gnolls',
-    name: 'Gnolls'
-  },
-  GOBLINS: {
-    image: 'Goblin.gif',
-    slug: 'goblins',
-    name: 'Goblins'
-  },
-  GOGS: {
-    image: 'Gog.gif',
-    slug: 'gogs',
-    name: 'Gogs'
-  },
-  GOLEMS: {
-    image: 'Stone_Golem.gif',
-    slug: 'golems',
-    name: 'Golems'
-  },
-  GORGONS: {
-    image: 'Gorgon.gif',
-    slug: 'gorgons',
-    name: 'Gorgons'
-  },
-  GRIFFINS: {
-    image: 'Griffin.gif',
-    slug: 'griffins',
-    name: 'Griffins'
-  },
-  HARPIES: {
-    image: 'Harpy.gif',
-    slug: 'harpies',
-    name: 'Harpies'
-  },
-  IMPS: {
-    image: 'Imp.gif',
-    slug: 'imps',
-    name: 'Imps'
-  },
-  LICHES: {
-    image: 'Lich.gif',
-    slug: 'liches',
-    name: 'Liches'
-  },
-  LIZARDMEN: {
-    image: 'Lizardman.gif',
-    slug: 'lizardmen',
-    name: 'Lizardmen'
-  },
-  MAGI: {
-    image: 'Mage.gif',
-    slug: 'magi',
-    name: 'Magi'
-  },
-  MANTICORES: {
-    image: 'Manticore.gif',
-    slug: 'manticores',
-    name: 'Manticores'
-  },
-  MINOTAURS: {
-    image: 'Minotaur.gif',
-    slug: 'minotaurs',
-    name: 'Minotaurs'
-  },
-  MONKS: {
-    image: 'Monk.gif',
-    slug: 'monks',
-    name: 'Monks'
-  },
-  NAGAS: {
-    image: 'Naga.gif',
-    slug: 'nagas',
-    name: 'Nagas'
-  },
-  OGRES: {
-    image: 'Ogre.gif',
-    slug: 'ogres',
-    name: 'Ogres'
-  },
-  ORCS: {
-    image: 'Orc.gif',
-    slug: 'orcs',
-    name: 'Orcs'
-  },
-  PEGASI: {
-    image: 'Pegasus.gif',
-    slug: 'pegasi',
-    name: 'Pegasi'
-  },
-  PIT_FIENDS: {
-    image: 'Pit_Fiend.gif',
-    slug: 'pit_fiends',
-    name: 'Pit Fiends'
-  },
-  PSYCHIC_ELEMENTAL: {
-    image: 'Psychic_Elemental.gif',
-    slug: 'psychic_elementals',
-    name: 'Psychic Elementals'
-  },
-  ROCS: {
-    image: 'Roc.gif',
-    slug: 'rocs',
-    name: 'Rocs'
-  },
-  SERPENT_FLIES: {
-    image: 'Serpent_Fly.gif',
-    slug: 'serpent_flies',
-    name: 'Serpent flies'
-  },
-  SKELETONS: {
-    image: 'Skeleton.gif',
-    slug: 'skeletons',
-    name: 'Skeletons'
-  },
-  SWORDSMEN: {
-    image: 'Swordsman.gif',
-    slug: 'swordsmen',
-    name: 'Swordsmen'
-  },
-  TROGLODYTES: {
-    image: 'Troglodyte.gif',
-    slug: 'troglodytes',
-    name: 'Troglodytes'
-  },
-  UNICORNS: {
-    image: 'Unicorn.gif',
-    slug: 'unicorns',
-    name: 'Unicorns'
-  },
-  VAMPIRES: {
-    image: 'Vampire.gif',
-    slug: 'vampires',
-    name: 'Vampires'
-  },
-  WALKING_DEAD: {
-    image: 'Walking_Dead.gif',
-    slug: 'walking_dead',
-    name: 'Walking dead'
-  },
-  WATER_ELEMENTALS: {
-    image: 'Water_Elemental.gif',
-    slug: 'water_elementals',
-    name: 'Water Elementals'
-  },
-  WIGHTS: {
-    image: 'Wight.gif',
-    slug: 'wights',
-    name: 'Wights'
-  },
-  WOLF_RIDERS: {
-    image: 'Wolf_Rider.gif',
-    slug: 'wolf_riders',
-    name: 'Wolf Riders'
-  },
-  WYVERNS: {
-    image: 'Wyvern.gif',
-    slug: 'wyverns',
-    name: 'Wyverns'
-  }
+  ARCHERS: new LevelScalingUnitSpecialty('archers', 'Archers', 'Archer.gif', 2),
+  BASILISKS: new LevelScalingUnitSpecialty('basilisks', 'Basilisks', 'Basilisk.gif', 4),
+  BEHEMOTHS: new FlatScalingUnitSpecialty('behemoths', 'Behemoths', 'Behemoth.gif', { attack: 5, defense: 5, minDamage: 10, maxDamage: 10 }),
+  BEHOLDERS: new LevelScalingUnitSpecialty('beholders', 'Beholders', 'Beholder.gif', 2),
+  BLACK_KNIGHTS: new LevelScalingUnitSpecialty('black_knights', 'Black Knights', 'Black_Knight.gif', 6),
+  CAVALIERS: new LevelScalingUnitSpecialty('cavaliers', 'Cavaliers', 'Cavalier.gif', 6),
+  CYCLOPS: new LevelScalingUnitSpecialty('cyclops', 'Cyclops', 'Cyclops.gif', 6),
+  DEMONS: new LevelScalingUnitSpecialty('demons', 'Demons', 'Demon.gif', 4),
+  DENDROIDS: new LevelScalingUnitSpecialty('dendroids', 'Dendroids', 'Dendroid_Guard.gif', 5), 
+  DEVILS: new FlatScalingUnitSpecialty('devils', 'Devils', 'Devil.gif', { attack: 4, defense: 2, speed: 1 }),
+  DRAGONS: new FlatScalingUnitSpecialty('dragons', 'Dragons', 'Black_Dragon.gif', { attack: 5, defense: 5 }),
+  DWARVES: new LevelScalingUnitSpecialty('dwarves', 'Dwarves', 'Dwarf.gif', 2),
+  EARTH_ELEMENTALS: new FlatScalingUnitSpecialty('earth_elementals', 'Earth Elementals', 'Earth_Elemental.gif', { attack: 2, defense: 1, minDamage: 5, maxDamage: 5 }),
+  EFREETI: new LevelScalingUnitSpecialty('efreeti', 'Efreeti', 'Efreet.gif', 6),
+  ELVES: new LevelScalingUnitSpecialty('elves', 'Elves', 'Wood_Elf.gif', 3),
+  FIRE_ELEMENTALS: new FlatScalingUnitSpecialty('fire_elementals', 'Fire Elementals', 'Fire_Elemental.gif', { attack: 1, defense: 2, minDamage: 2, maxDamage: 2 }),
+  GARGOYLES: new LevelScalingUnitSpecialty('gargoyles', 'Gargoyles', 'Stone_Gargoyle.gif', 2),
+  GENIES: new LevelScalingUnitSpecialty('genies', 'Genies', 'Genie.gif', 5),
+  GNOLLS: new LevelScalingUnitSpecialty('gnolls', 'Gnolls', 'Gnoll.gif', 1),
+  GOBLINS: new LevelScalingUnitSpecialty('goblins', 'Goblins', 'Goblin.gif', 1),
+  GOGS: new LevelScalingUnitSpecialty('gogs', 'Gogs', 'Gog.gif', 2),
+  GOLEMS: new LevelScalingUnitSpecialty('golems', 'Golems', 'Stone_Golem.gif', 3),
+  GORGONS: new LevelScalingUnitSpecialty('gorgons', 'Gorgons', 'Gorgon.gif', 5),
+  GRIFFINS: new LevelScalingUnitSpecialty('griffins', 'Griffins', 'Griffin.gif', 3),
+  HARPIES: new LevelScalingUnitSpecialty('harpies', 'Harpies', 'Harpy.gif', 2),
+  HELL_HOUNDS: new LevelScalingUnitSpecialty('hell_hounds', 'Hell Hounds', 'Hell_Hound.gif', 3),
+  IMPS: new LevelScalingUnitSpecialty('imps', 'Imps', 'Imp.gif', 1),
+  LICHES: new LevelScalingUnitSpecialty('liches', 'Liches', 'Lich.gif', 5),
+  LIZARDMEN: new LevelScalingUnitSpecialty('lizardmen', 'Lizardmen', 'Lizardman.gif', 2),
+  MAGI: new LevelScalingUnitSpecialty('magi', 'Magi', 'Mage.gif', 4),
+  MANTICORES: new LevelScalingUnitSpecialty('manticores', 'Manticores', 'Manticore.gif', 6),
+  MINOTAURS: new LevelScalingUnitSpecialty('minotaurs', 'Minotaurs', 'Minotaur.gif', 5),
+  MONKS: new LevelScalingUnitSpecialty('monks', 'Monks', 'Monk.gif', 5),
+  NAGAS: new LevelScalingUnitSpecialty('nagas', 'Nagas', 'Naga.gif', 6),
+  OGRES: new LevelScalingUnitSpecialty('ogres', 'Ogres', 'Ogre.gif', 4),
+  PEGASI: new LevelScalingUnitSpecialty('pegasi', 'Pegasi', 'Pegasus.gif', 4),
+  PIT_FIENDS: new LevelScalingUnitSpecialty('pit_fiends', 'Pit Fiends', 'Pit_Fiend.gif', 5),
+  PSYCHIC_ELEMENTALS: new FlatScalingUnitSpecialty('psychic_elementals', 'Psychic Elementals', 'Psychic_Elemental.gif', { attack: 3, defense: 3 }),
+  ROCS: new LevelScalingUnitSpecialty('rocs', 'Rocs', 'Roc.gif', 5),
+  SERPENT_FLIES: new LevelScalingUnitSpecialty('serpent_flies', 'Serpent Flies', 'Serpent_Fly.gif', 3),
+  SKELETONS: new LevelScalingUnitSpecialty('skeletons', 'Skeletons', 'Skeleton.gif', 1),
+  SWORDSMEN: new LevelScalingUnitSpecialty('swordsmen', 'Swordsmen', 'Swordsman.gif', 4),
+  TROGLODYTES: new LevelScalingUnitSpecialty('troglodytes', 'Troglodytes', 'Troglodyte.gif', 1),
+  UNICORNS: new LevelScalingUnitSpecialty('unicorns', 'Unicorns', 'Unicorn.gif', 6),
+  VAMPIRES: new LevelScalingUnitSpecialty('vampires', 'Vampires', 'Vampire.gif', 4),
+  WALKING_DEAD: new LevelScalingUnitSpecialty('walking_dead', 'Walking Dead', 'Walking_Dead.gif', 2),
+  WATER_ELEMENTALS: new FlatScalingUnitSpecialty('water_elementals', 'Water Elementals', 'Water_Elemental.gif', { attack: 2 }),
+  WIGHTS: new LevelScalingUnitSpecialty('wights', 'Wights', 'Wight.gif', 3),
+  WOLF_RIDERS: new LevelScalingUnitSpecialty('wolf_riders', 'Wolf Riders', 'Wolf_Rider.gif', 2),
+  WYWERNS: new LevelScalingUnitSpecialty('wyverns', 'Wyverns', 'Wyvern.gif', 6)
 }
