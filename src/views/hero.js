@@ -163,7 +163,7 @@ export default class HeroView {
           ${this.createHeroStatHtml('Level')}
         </div>
 
-        <div class="spells">
+        <div class="skills">
           ${this.createHeroSkillHtml()}
         </div>
 

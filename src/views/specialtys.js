@@ -87,8 +87,13 @@ export default class SpecialtysView {
     drawerElement.id = 'speciality-drawer';
 
     drawerElement.innerHTML = `
+      <p>Skills</p>
+      <div class="skill-specialtys"></
       <p>Spells</p>
-      ${this.createHeroSpellSpecialityHtml()}
+      <div class="spell-specialtys">
+        ${this.createHeroSpellSpecialityHtml()}
+      </div>
+
       <p>Units</p>
       <div class="unit-specialtys">
         ${this.createHeroUnitSpecialityHtml()}

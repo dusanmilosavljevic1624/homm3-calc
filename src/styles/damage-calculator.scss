@@ -72,7 +72,7 @@
     }
   }
 
-  .spells {
+  .skills {
     display: flex;
     border-top: 1px solid rosybrown;
 
@@ -153,7 +153,22 @@
       top: calc(100% + 2px);
       left: 0;
       right: 0;
+      padding: 5px;
       background-color: #352222d1;
+      overflow-y: scroll;
+
+      p {
+        margin-bottom: 10px;
+      }
+
+      .spell-specialtys {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        margin-bottom: 10px;
+        row-gap: 10px;
+      }
 
       .hero-spell-speciality {
         margin: 0 5px;
@@ -162,7 +177,6 @@
       .unit-specialtys {
         display: grid;
         max-height: 300px;
-        overflow-y: scroll;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         align-items: center;
         justify-content: center;
