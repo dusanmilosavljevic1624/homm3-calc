@@ -1,3 +1,5 @@
+import tippy from 'tippy.js';
+
 import unitService from '../services/unitService';
 
 export default class UnitsView {
@@ -28,8 +30,8 @@ export default class UnitsView {
 
 				<div class="d-flex flex-row unit-list-item-body">
 					<div class="select-overlay">
-						<button class="btn unit-selector" data-slug="${unit.slug}" data-position="attacker">ATTACKER</button>					
-						<button class="btn unit-selector" data-slug="${unit.slug}" data-position="defender">DEFENDER</button>					
+						<button class="btn unit-selector" data-tippy-content="Set ${unit.name} as attacker" data-slug="${unit.slug}" data-position="attacker">ATTACKER</button>					
+						<button class="btn unit-selector" data-tippy-content="Set ${unit.name} as defender" data-slug="${unit.slug}" data-position="defender">DEFENDER</button>					
 					</div>
 
 					<img src="./img/${unit.name.replace(' ', '_')}.gif" />
@@ -58,6 +60,8 @@ export default class UnitsView {
 
 			buttons[i].onclick = onUnitSelected.bind(null, { position, slug });
 		}
+
+		tippy('.unit-selector');
 	}
 
 	init(elementId, onUnitSelected) {

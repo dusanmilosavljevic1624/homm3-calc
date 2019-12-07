@@ -4,6 +4,7 @@ import HeroView from './hero';
 import unitService from '../services/unitService';
 import spellService from '../services/spellService';
 import damageService from '../services/damageService';
+import tippy from 'tippy.js';
 
 export default class DamageCalculator {
   init(containerEl) {
@@ -57,7 +58,6 @@ export default class DamageCalculator {
   }
 
   selectSkill(position, skill, level) {
-    console.log('skill: ', skill);
     const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
     const skillSlug = skill.toLowerCase();
 
@@ -115,9 +115,14 @@ export default class DamageCalculator {
       const { image, slug } = spells[spellKey];
       const isActive = !!unitSpells[slug];
       const activeClass = isActive ? 'active' : '';
+      const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
 
       const spellHtml = `
-        <div class="spell ${activeClass}" data-position="${position}" data-spell="${slug}">
+        <div
+          class="spell ${activeClass}"
+          data-position="${position}"
+          data-spell="${slug}"
+          data-tippy-content="${tooltipPrefix} ${slug}">
           <img src="./img/${image}"/>
         </div>
       `;
@@ -178,6 +183,8 @@ export default class DamageCalculator {
 
     this.attackerHeroView.bindListeners();
     this.defenderHeroView.bindListeners();
+
+    tippy('.spell');
   }
 
   createResultsHtml() {

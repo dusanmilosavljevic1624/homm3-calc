@@ -1,10 +1,7 @@
-import tippy from 'tippy.js';
-
-import spellSpecialityService from '../services/spellSpecialityService';
-import unitSpecialityService from '../services/unitSpecialityService';
 import specialtyService from '../services/specialityService';
 
 import SpecialityDrawerView from './specialtys';
+import tippy from 'tippy.js';
 
 export default class HeroView {
   constructor(viewData) {
@@ -38,12 +35,14 @@ export default class HeroView {
 
   createHeroStatButtonHtml(statSlug, amount) {
     const isPositive = amount > 0;
+    const prefix = isPositive ? 'Increase' : 'Decrease';
 
     return `
       <button
         class="btn hero-stat-btn"
         data-stat="${statSlug}"
-        data-amount="${amount}">
+        data-amount="${amount}"
+        data-tippy-content="${prefix} ${statSlug} by ${Math.abs(amount)}">
         ${isPositive ? '+' : '-' }${Math.abs(amount)}
       </button>
     `;
@@ -75,12 +74,14 @@ export default class HeroView {
 
     const createHeroSkillImage = (skill, level, isActive) => {
       const activeClass = isActive ? 'active' : '';
+      const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
 
       return `
         <img
           data-skill=${skill}
           data-level=${level}
           class="hero-skill-btn ${activeClass}"
+          data-tippy-content="${tooltipPrefix} ${skillLevelMap[level]} ${skill}"
           src="./img/${skillLevelMap[level]}_${skill}.png"
         />`;
     };
@@ -91,7 +92,6 @@ export default class HeroView {
       imagesHtml += createHeroSkillImage(this.skill, i+1, i + 1 === heroSkillLevel);
     }
 
-    console.log('skill: ', this.skill);
     return `
       <div class="skills-container">
         ${imagesHtml}
@@ -99,11 +99,9 @@ export default class HeroView {
 
       <div class="skill-info">
         <p>${this.skill}</p>
-        <p>${skillLevelMap[heroSkillLevel]}</p>
+        <p>${skillLevelMap[heroSkillLevel] || 'None'}</p>
       </div>
-    `
-
-    return skillHtml;
+    `;
   }
 
   bindStatListeners() {
@@ -118,6 +116,8 @@ export default class HeroView {
         onStatUpdate(stat, amount);
       }
     }
+
+    tippy('.hero-stat-btn');
   }
 
   bindSkillListeners() {
@@ -132,12 +132,15 @@ export default class HeroView {
         onSkillSelect(skill, level);
       }
     }
+
+    tippy('.hero-skill-btn');
   }
 
   bindSpecialityDrawerListeners() {
     const drawerSelector = `#${this.containerElId} .active-specialty`;
     const specialityDrawerToggler = document.querySelector(drawerSelector);
     specialityDrawerToggler.onclick = this.specialityDrawer.toggle.bind(this.specialityDrawer);
+    tippy('.active-specialty');
   }
 
   bindListeners() {
@@ -165,7 +168,7 @@ export default class HeroView {
         </div>
 
         <div class="specialitys">
-          <div class="active-specialty">
+          <div class="active-specialty" data-tippy-content="Change specialty">
             <div class="image-container">
               <img id="speciality-drawer-test" class="img-fluid" src="./img/${speciality.image}" />
             </div>
