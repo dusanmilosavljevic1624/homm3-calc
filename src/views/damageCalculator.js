@@ -57,6 +57,7 @@ export default class DamageCalculator {
   }
 
   selectSkill(position, skill, level) {
+    console.log('skill: ', skill);
     const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
     const skillSlug = skill.toLowerCase();
 

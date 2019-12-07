@@ -73,10 +73,30 @@
   }
 
   .spells {
-    margin-bottom: 15px;
+    display: flex;
+    border-top: 1px solid rosybrown;
+
+    .skills-container {
+      padding: 10px;
+    }
+
+    .skill-info {
+      padding: 10px 0;
+      border-left: 1px solid rosybrown;
+      padding: 10px;
+
+      p {
+        text-align: left;
+        margin-bottom: 0;
+
+        &:first-of-type {
+          color: rosybrown;
+        }
+      }
+    }
 
     img {
-      margin: 0 15px;
+      margin-right: 5px;
       width: 50px;
       filter: grayscale(100%);
       cursor: pointer;

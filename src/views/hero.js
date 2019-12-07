@@ -85,11 +85,23 @@ export default class HeroView {
         />`;
     };
 
-    let skillHtml = '';
+    let imagesHtml = '';
 
     for(let i = 0; i < Object.keys(skillLevelMap).length; i++) {
-      skillHtml += createHeroSkillImage(this.skill, i+1, i + 1 === heroSkillLevel);
+      imagesHtml += createHeroSkillImage(this.skill, i+1, i + 1 === heroSkillLevel);
     }
+
+    console.log('skill: ', this.skill);
+    return `
+      <div class="skills-container">
+        ${imagesHtml}
+      </div>
+
+      <div class="skill-info">
+        <p>${this.skill}</p>
+        <p>${skillLevelMap[heroSkillLevel]}</p>
+      </div>
+    `
 
     return skillHtml;
   }
