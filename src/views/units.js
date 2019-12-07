@@ -34,7 +34,9 @@ export default class UnitsView {
 						<button class="btn unit-selector" data-tippy-content="Set ${unit.name} as defender" data-slug="${unit.slug}" data-position="defender">DEFENDER</button>					
 					</div>
 
-					<img src="./img/${unit.name.replace(' ', '_')}.gif" />
+					<div class="unit-image">
+						<img src="./img/${unit.name.replace(' ', '_')}.gif" />
+					</div>
 
 					<div class="unit-list-item-info">
 						<p>Attack: <span>${unit.attack}</span><p>
