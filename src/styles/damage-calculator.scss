@@ -170,7 +170,28 @@
         row-gap: 10px;
       }
 
-      .hero-spell-speciality {
+      .skill-specialtys {
+        margin-bottom: 10px;
+      }
+
+      .hero-skill-specialty,
+      .hero-spell-specialty,
+      .hero-unit-specialty {
+        cursor: pointer;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+
+      .hero-skill-specialty {
+        width: 60px;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+
+      .hero-spell-specialty {
         margin: 0 5px;
       }
 
@@ -182,15 +203,9 @@
         justify-content: center;
         justify-items: center;
 
-        .hero-unit-speciality {
-          cursor: pointer;
+        .hero-unit-specialty {
           max-height: 70px;
           padding: 5px 0;
-          transition: all .3s ease-in-out;
-
-          &:hover {
-            transform: scale(1.2);
-          }
         }
       }
     }

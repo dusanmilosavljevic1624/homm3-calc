@@ -2,6 +2,7 @@ import tippy from 'tippy.js';
 
 import unitSpecialityService from '../services/unitSpecialityService';
 import spellSpecialityService from '../services/spellSpecialityService';
+import skillSpecialtyService from '../services/skillSpecialityService';
 
 export default class SpecialtysView {
   constructor(drawerData) {
@@ -9,6 +10,7 @@ export default class SpecialtysView {
 
     this.unitSpecialitys = unitSpecialityService.getSpecialitys();
     this.spellSpecialitys = spellSpecialityService.getSpecialitys();
+    this.skillSpecialtys = skillSpecialtyService.getSpecialitys();
 
     this.createdHtml = false;
     this.shown = false;
@@ -33,6 +35,23 @@ export default class SpecialtysView {
       this.shown = true;
     }
   }
+  
+  createSkillSpecialtyHtml() {
+    const specialtys = this.skillSpecialtys;
+
+    const createSkillSpecialityImage = (speciality) => `
+      <img
+        src="./img/${speciality.image}"
+        data-specialty="${speciality.slug}"
+        class="hero-specialty hero-skill-specialty"
+        data-tippy-content="Select ${speciality.name}" />
+    `;
+
+    return Object.keys(specialtys).reduce((acc, specialtyKey) => {
+      acc += createSkillSpecialityImage(specialtys[specialtyKey]);
+      return acc;
+    }, '');
+  }
 
   createHeroUnitSpecialityHtml() {
     const specialitys = this.unitSpecialitys;
@@ -40,9 +59,9 @@ export default class SpecialtysView {
     const createUnitSpecialityImage = (speciality) => `
       <img
         src="./img/${speciality.image}"
-        class="hero-specialty hero-unit-speciality"
+        class="hero-specialty hero-unit-specialty"
         data-specialty="${speciality.slug}"
-        data-tippy-content="${speciality.name}" />
+        data-tippy-content="Select ${speciality.name}" />
     `;
 
     return Object.keys(specialitys).reduce((acc, specialityKey) => {
@@ -58,7 +77,8 @@ export default class SpecialtysView {
       <img
         src="./img/${speciality.image}"
         data-specialty="${speciality.slug}"
-        class="hero-specialty hero-spell-speciality" />
+        class="hero-specialty hero-spell-specialty"
+        data-tippy-content="Select ${speciality.name}" />
     `;
 
     return Object.keys(specialitys).reduce((acc, specialityKey) => {
@@ -88,7 +108,10 @@ export default class SpecialtysView {
 
     drawerElement.innerHTML = `
       <p>Skills</p>
-      <div class="skill-specialtys"></
+      <div class="skill-specialtys">
+        ${this.createSkillSpecialtyHtml()}
+      </div>
+
       <p>Spells</p>
       <div class="spell-specialtys">
         ${this.createHeroSpellSpecialityHtml()}
@@ -103,7 +126,9 @@ export default class SpecialtysView {
     const selector = `#${this.parentElId} #${this.containerElId}`;
     document.querySelector(selector).appendChild(drawerElement);
 
-    tippy('.hero-unit-speciality');
+    tippy('.hero-skill-specialty');
+    tippy('.hero-unit-specialty');
+    tippy('.hero-spell-specialty');
     this.createdHtml = true;
     this.shown = true;
     this.bindEvents();
