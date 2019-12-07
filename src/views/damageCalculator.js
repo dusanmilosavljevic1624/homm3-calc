@@ -127,7 +127,11 @@ export default class DamageCalculator {
 
   createUnitHtml(position, unit) {
     const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
-  
+    const activeUnit = position === 'attacker' ? this.attackerUnit : this.defenderUnit;
+
+    const specialtyAttackBonus = damageService.calculateSpecialtyAttackBonus(activeHero, activeUnit);
+    const specialtyDefenseBonus = damageService.calculateSpecialtyDefenseBonus(activeHero, activeUnit);
+
     const createStatHtml = (title, baseDmg, buffedDmg) => {
       const isBuffed = buffedDmg > baseDmg;
 
@@ -146,8 +150,8 @@ export default class DamageCalculator {
           <img src="${unit.image}" />
 
           <div class="stats">
-            ${createStatHtml('Attack', unit.attack, (unit.totalAttackSkill + activeHero.attack))}
-            ${createStatHtml('Defense', unit.defense, (unit.totalDefenseSkill + activeHero.defense))}
+            ${createStatHtml('Attack', unit.attack, (unit.totalAttackSkill + activeHero.attack + specialtyAttackBonus))}
+            ${createStatHtml('Defense', unit.defense, (unit.totalDefenseSkill + activeHero.defense + specialtyDefenseBonus))}
             ${createStatHtml('Min Damage', unit.minDamage, unit.minTotalDamage)}
             ${createStatHtml('Max Damage', unit.maxDamage, unit.maxTotalDamage)}
             <p>Health: ${unit.health}</p>

@@ -1,8 +1,8 @@
 import UnitSpecialty from '../models/UnitSpecialty';
 
 export default class FlatScalingUnitSpecialty extends UnitSpecialty {
-  constructor(slug, name, image, scalingStats) {
-    super(slug, name, image, 'flat');
+  constructor(slug, name, image, scalingStats, affectedUnits) {
+    super(slug, name, image, 'flat', affectedUnits);
     this.scalingStats = scalingStats;
   }
 }

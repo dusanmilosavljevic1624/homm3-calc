@@ -1,7 +1,16 @@
+import unitSpecialtyService from './unitSpecialityService';
+import specialityService from './specialityService';
+
 class DamageService {
   detailedTotalDamageCalculation(attackingHero, defendingHero, attackingUnit, defendingUnit) {
-    const totalAttack = attackingHero.attack + attackingUnit.totalAttackSkill;
-    const totalDefense = defendingHero.defense + defendingUnit.totalDefenseSkill;
+    const attackerSpecialtyAttackBonus = this.calculateSpecialtyAttackBonus(attackingHero, attackingUnit);
+    const defenderSpecialtyAttackBonus = this.calculateSpecialtyAttackBonus(defendingHero, defendingUnit);
+
+    const attackerSpecialtyDefenseBonus = this.calculateSpecialtyDefenseBonus(attackingHero, attackingUnit);
+    const defenderSpecialtyDefenseBonus = this.calculateSpecialtyDefenseBonus(defendingHero, defendingUnit);
+
+    const totalAttack = attackingHero.attack + attackingUnit.totalAttackSkill + attackerSpecialtyAttackBonus;
+    const totalDefense = defendingHero.defense + defendingUnit.totalDefenseSkill + defenderSpecialtyDefenseBonus;
 
     let { minBaseDamage, maxBaseDamage } = attackingUnit;
     minBaseDamage = minBaseDamage * this.calculateBlessSpecialityBonus(attackingHero, attackingUnit);
@@ -25,6 +34,10 @@ class DamageService {
       minTotalDamage,
       maxTotalDamage,
       kills,
+      attackerSpecialtyAttackBonus,
+      attackerSpecialtyDefenseBonus,
+      defenderSpecialtyAttackBonus,
+      defenderSpecialtyDefenseBonus,
       attackSkillBonus,
       offenseBonus,
       offenseSpecialityBonus,
@@ -32,6 +45,56 @@ class DamageService {
       armorerReduction,
       armorerSpecialityBonus
     };
+  }
+
+  calculateSpecialtyAttackBonus(hero, unit) {
+    const { speciality: specialitySlug } = hero;
+    const { slug: unitSlug } = unit;
+
+    const specialty = specialityService.getSpeciality(specialitySlug);
+
+    if(specialty.type !== 'unit') return 0;
+
+    const affectsUnit = specialty.affectsUnit(unitSlug);
+    if(!affectsUnit) return 0;
+
+    if(specialty.scalingType === 'flat') {
+      return specialty.scalingStats.attack || 0;
+    }
+
+    if(specialty.scalingType === 'level') {
+      const { scalingStartLevel } = specialty;
+      if(hero.level <= scalingStartLevel) return 0;
+
+      const levelDifference = hero.level - scalingStartLevel;
+
+      return Math.ceil(unit.attack * (0.05 * (levelDifference)));
+    }
+  }
+
+  calculateSpecialtyDefenseBonus(hero, unit) {
+    const { speciality: specialitySlug } = hero;
+    const { slug: unitSlug } = unit;
+
+    const specialty = specialityService.getSpeciality(specialitySlug);
+
+    if(specialty.type !== 'unit') return 0;
+
+    const affectsUnit = specialty.affectsUnit(unitSlug);
+    if(!affectsUnit) return 0;
+
+    if(specialty.scalingType === 'flat') {
+      return specialty.scalingStats.defense || 0;
+    }
+
+    if(specialty.scalingType === 'level') {
+      const { scalingStartLevel } = specialty;
+      if(hero.level <= scalingStartLevel) return 0;
+
+      const levelDifference = hero.level - scalingStartLevel;
+
+      return Math.ceil(unit.attack * (0.05 * (levelDifference)));
+    }
   }
 
   calculateBlessSpecialityBonus(attackingHero, attackingUnit) {
