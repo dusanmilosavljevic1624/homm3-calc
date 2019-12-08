@@ -1,5 +1,6 @@
 import Hero from '../models/Hero';
 import HeroView from './hero';
+import ResultsView from './results';
 
 import unitService from '../services/unitService';
 import spellService from '../services/spellService';
@@ -33,7 +34,13 @@ export default class DamageCalculator {
     });
     
     this.containerEl = document.getElementById(containerEl); 
+
+    this.render();
+  }
+
+  render() {
     this.containerEl.innerHTML = this.createUnitsHtml();
+    this.renderResults();
     this.bindListeners();
   }
 
@@ -44,8 +51,7 @@ export default class DamageCalculator {
       this.defenderUnit = unitService.getUnit(unitInfo.slug);
     }
 
-    this.containerEl.innerHTML = this.createUnitsHtml();
-    this.bindListeners();
+    this.render();
   }
 
   updateHeroStat(position, stat, amount) {
@@ -53,8 +59,7 @@ export default class DamageCalculator {
 
     activeHero[stat] += Number(amount);
 
-    this.containerEl.innerHTML = this.createUnitsHtml();
-    this.bindListeners();
+    this.render();
   }
 
   selectSkill(position, skill, level) {
@@ -67,8 +72,7 @@ export default class DamageCalculator {
       activeHero.skills[skillSlug] = Number(level);
     }
 
-    this.containerEl.innerHTML = this.createUnitsHtml();
-    this.bindListeners();
+    this.render();
   }
 
   selectSpell(position, spell) {
@@ -77,8 +81,7 @@ export default class DamageCalculator {
 
     activeUnit.spells[spell] = isSpellActive ? null : 3;
     
-    this.containerEl.innerHTML = this.createUnitsHtml();
-    this.bindListeners();
+    this.render();
   }
 
   selectSpecialty(position, speciality) {
@@ -86,8 +89,7 @@ export default class DamageCalculator {
 
     activeHero.speciality = speciality;
 
-    this.containerEl.innerHTML = this.createUnitsHtml();
-    this.bindListeners();
+    this.render();
   }
   
   createUnitsHtml() {
@@ -103,7 +105,7 @@ export default class DamageCalculator {
           ${this.createUnitHtml('defender', this.defenderUnit)}
         </div>
 
-        ${this.createResultsHtml()}
+        <div id="results"></div>
       </div>
     `;
   }
@@ -192,7 +194,7 @@ export default class DamageCalculator {
     tippy('.spell');
   }
 
-  createResultsHtml() {
+  renderResults() {
     const detailedDamageInfo = damageService.detailedTotalDamageCalculation(
       this.attackerHero,
       this.defenderHero,
@@ -200,65 +202,7 @@ export default class DamageCalculator {
       this.defenderUnit
     );
 
-    const {
-      minTotalDamage,
-      maxTotalDamage,
-      kills,
-      attackSkillBonus,
-      offenseBonus,
-      offenseSpecialityBonus,
-      defenseSkillReduction,
-      armorerReduction,
-      armorerSpecialityBonus
-    } = detailedDamageInfo;
-
-    const minDamageText = Math.floor(minTotalDamage);
-    const maxDamageText = Math.floor(maxTotalDamage);
-    const averageDamage = Math.floor((detailedDamageInfo.minTotalDamage + detailedDamageInfo.maxTotalDamage) / 2);
-    const killsText = kills.min === kills.max ? `${kills.max}` : `${kills.min}-${kills.max}`;
-
-    const attackSkillBonusText = `${(attackSkillBonus * 100).toFixed(1)}`
-    const defenseSkillBonusText = `${(defenseSkillReduction * 100).toFixed(1)}`
-
-    const offenseBonusText = `${(offenseBonus * 100).toFixed(1)}`;
-    const offenseSpecialityBonusText = `${((offenseSpecialityBonus * 100)).toFixed(1)}%`;
-    const armorerReductionText = `${(armorerReduction * 100).toFixed(1)}`;
-    const armorerSpecialityBonusText = `${((armorerSpecialityBonus) * 100).toFixed(2)}%`
-    
-    const offenseSpecialityBonusHtml = `<p>Offense speciality: <span>${offenseSpecialityBonusText}</span></p>`;
-    const armorerSpecialityBonusHtml = `<p>Armorer speciality: <span>${armorerSpecialityBonusText}</span></p>`;
-
-    const totalOffenseBonus = (Math.abs(offenseSpecialityBonus) + Math.abs(offenseBonus)) * 100;
-    const totalOffenseBonusText = `${totalOffenseBonus.toFixed(1)}`;
-
-    const totalArmorerBonus = armorerReduction + armorerSpecialityBonus;
-    const totalArmorerBonusText = `${(totalArmorerBonus * 100).toFixed(2)}`;
-
-    return `
-      <div id="results" class="text-center">
-        <h5>Damage</h5>
-        <div id="results-damage">
-          <p>Range: ${minDamageText}-${maxDamageText}</p>
-          <p>Avg: <span>${averageDamage}</span></p>
-          <p>Kills: <span>${killsText}</span></p>
-        </div>
-
-        <div id="results-bonuses">
-        <h5>Bonuses</h5>
-        <h5>Reductions</h5>
-        <p>Attack skill: ${attackSkillBonusText}%</p>
-        <p>Defense skill: ${defenseSkillBonusText}%</p>
-
-        <p>Offense: <span>${offenseBonusText}%</span></p>
-        <p>Armorer: <span>${armorerReductionText}%</span></p>
-
-        ${offenseSpecialityBonusHtml}
-        ${armorerSpecialityBonusHtml}
-
-        <p>Offense total: <span>${totalOffenseBonusText}%</span></p>
-        <p>Armorer total: <span>${totalArmorerBonusText}%</span></p>
-        </div>
-      </div>
-    `;
+    this.resultsView = new ResultsView('results');
+    this.resultsView.render(detailedDamageInfo);
   }
 }
