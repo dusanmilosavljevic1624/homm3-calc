@@ -148,16 +148,21 @@ export default class DamageCalculator {
       `
     };
 
+    const buffedAttack = unit.totalAttackSkill + activeHero.attack + specialtyAttackBonus;
+    const buffedDefense = unit.totalDefenseSkill + activeHero.defense + specialtyDefenseBonus;
+
     return `
       <div id="${position}">
         <p>${position}: ${unit.name}</p>
 
         <div class="content">
-          <img src="${unit.image}" />
+          <div class="image-container">
+            <img src="${unit.image}" />
+          </div>
 
           <div class="stats">
-            ${createStatHtml('Attack', unit.attack, (unit.totalAttackSkill + activeHero.attack + specialtyAttackBonus))}
-            ${createStatHtml('Defense', unit.defense, (unit.totalDefenseSkill + activeHero.defense + specialtyDefenseBonus))}
+            ${createStatHtml('Attack', unit.attack, buffedAttack)}
+            ${createStatHtml('Defense', unit.defense, buffedDefense)}
             ${createStatHtml('Min Damage', unit.minDamage, unit.minTotalDamage)}
             ${createStatHtml('Max Damage', unit.maxDamage, unit.maxTotalDamage)}
             <p>Health: ${unit.health}</p>
