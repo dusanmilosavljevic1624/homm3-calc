@@ -13,6 +13,7 @@
     justify-content: space-evenly;
 
     .image-container {
+      position: relative;
       display: flex;
       align-content: center;
       justify-items: center;
@@ -22,6 +23,17 @@
         display: block;
         max-width: 90%;
         height: auto;
+      }
+
+      .unit-count-field {
+        position: absolute;
+        bottom: 15px;
+        right: -50px;
+        width: 50px;
+        color: #fff;
+        text-align: center;
+        background: rgb(2,0,36);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(82,82,125,1) 0%, rgba(32,30,69,1) 100%);
       }
     }
   }

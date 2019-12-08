@@ -159,6 +159,9 @@ export default class DamageCalculator {
 
         <div class="content">
           <div class="image-container">
+            <div class="unit-count">
+              <input class="unit-count-field" type="number" value="${unit.count}" max="9999" data-position="${position}" />
+            </div>
             <img src="${unit.image}" />
           </div>
 
@@ -186,6 +189,22 @@ export default class DamageCalculator {
       const { spell, position } = button.dataset;
 
       button.onclick = this.selectSpell.bind(this, position, spell);
+    }
+
+    const unitCounts = document.getElementsByClassName('unit-count-field');
+
+    for (let i = 0; i < unitCounts.length; i++) {
+      const field = unitCounts[i];
+      field.onchange = event => {
+        const { value, dataset } = event.target;
+        const { position } = dataset;
+
+        const activeUnit = position === 'attacker' ? this.attackerUnit : this.defenderUnit;
+
+        activeUnit.count = value;
+
+        this.render();
+      }
     }
 
     this.attackerHeroView.bindListeners();

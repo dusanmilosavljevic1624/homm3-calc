@@ -25,12 +25,14 @@ class DamageService {
     const armorerSpecialityBonus = defendingHero.armorerSpecialityBonus
     const shieldSpellReduction = this.calculateShieldSpellReduction(defendingUnit.spells.shield ? 3 : 0);
 
-    const minTotalDamage = minBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
-    const maxTotalDamage = maxBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
+    const minTotalDamage = attackingUnit.count * minBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
+    const maxTotalDamage = attackingUnit.count * maxBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
 
     const kills = this.calculateKills(minTotalDamage, maxTotalDamage, defendingUnit.health);
 
     return {
+      attackerCount: attackingUnit.count,
+      defenderCount: defendingUnit.count,
       minTotalDamage,
       maxTotalDamage,
       kills,
