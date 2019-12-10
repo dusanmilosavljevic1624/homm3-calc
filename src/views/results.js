@@ -108,13 +108,14 @@ function createResultsHeaderItem(damageDetails) {
   const maxDamageText = Math.floor(maxDamage);
   const averageDamageText = Math.floor(averageDamage).toPrecision();
 
-  const killsText = `${kills.min}-${kills.max}`;
+  const rangeText = minDamage === maxDamage ? `${maxDamageText}` : `${minDamageText}-${maxDamageText}`;
+  const killsText = kills.min === kills.max ? `${kills.max}` : `${kills.min}-${kills.max}`;
 
   return `
     <h5>${title}</h5>
 
     <div id="results-damage">
-      <p>Range: ${minDamageText}-${maxDamageText}</p>
+      <p>Range: ${rangeText}</p>
       <p>Avg: <span>${averageDamageText}</span></p>
       <p>Kills: <span>${killsText}</span></p>
     </div>
