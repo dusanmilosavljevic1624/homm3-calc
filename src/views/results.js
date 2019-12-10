@@ -100,7 +100,7 @@ function createResultsHeaderItem(damageDetails) {
   const { title, minDamage, maxDamage, averageDamage, kills } = damageDetails;
   const minDamageText = Math.floor(minDamage);
   const maxDamageText = Math.floor(maxDamage);
-  const averageDamageText = averageDamage.toPrecision(2);
+  const averageDamageText = Math.floor(averageDamage).toPrecision();
 
   const killsText = `${kills.min}-${kills.max}`;
 
