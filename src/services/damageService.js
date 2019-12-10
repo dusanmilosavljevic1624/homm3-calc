@@ -1,4 +1,3 @@
-import unitSpecialtyService from './unitSpecialityService';
 import specialityService from './specialityService';
 
 class DamageService {
@@ -17,25 +16,38 @@ class DamageService {
     maxBaseDamage = maxBaseDamage * this.calculateBlessSpecialityBonus(attackingHero, attackingUnit);
 
     const attackSkillBonus = this.calculateAttackSkillBonus(totalAttack, totalDefense);
-    const offenseBonus = attackingHero.offenseBonus;
-    const offenseSpecialityBonus = attackingHero.offenseSpecialityBonus;
+
+    const { offenseBonus, offenseSpecialityBonus, archeryBonus, archerySpecialtyBonus } = attackingHero;
 
     const defenseSkillReduction = this.calculateDefenseSkillReduction(totalAttack, totalDefense);
     const armorerReduction = defendingHero.armorerBonus;
     const armorerSpecialityBonus = defendingHero.armorerSpecialityBonus
     const shieldSpellReduction = this.calculateShieldSpellReduction(defendingUnit.spells.shield ? 3 : 0);
+    const airShieldSpellReduction = this.calculateAirShieldSpellReduction(defendingUnit.spells.airshieldma ? 3 : 0);
 
     const minTotalDamage = attackingUnit.count * minBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
     const maxTotalDamage = attackingUnit.count * maxBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
 
+    let minTotalRangedDamage = 0;
+    let maxTotalRangedDamage = 0;
+
+    if(attackingUnit.isRanged) {
+      minTotalRangedDamage = attackingUnit.count * minBaseDamage * (1 + attackSkillBonus + archeryBonus + archerySpecialtyBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - airShieldSpellReduction);
+      maxTotalRangedDamage = attackingUnit.count * maxBaseDamage * (1 + attackSkillBonus + archeryBonus + archerySpecialtyBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - airShieldSpellReduction);
+    }
+
     const kills = this.calculateKills(minTotalDamage, maxTotalDamage, defendingUnit.health);
+    const rangedKills = this.calculateKills(minTotalRangedDamage, maxTotalRangedDamage, defendingUnit.health);
 
     return {
       attackerCount: attackingUnit.count,
       defenderCount: defendingUnit.count,
       minTotalDamage,
       maxTotalDamage,
+      minTotalRangedDamage,
+      maxTotalRangedDamage,
       kills,
+      rangedKills,
       attackerSpecialtyAttackBonus,
       attackerSpecialtyDefenseBonus,
       defenderSpecialtyAttackBonus,
@@ -131,6 +143,11 @@ class DamageService {
     if(reduction > 0.7) return 0.7;
   
     return reduction < 0 ? 0 : reduction; 
+  }
+
+  calculateAirShieldSpellReduction(spellLevel = 0) {
+    if(spellLevel === 0) return 0;
+    return spellLevel > 1 ? 0.5 : 0.25;
   }
   
   calculateShieldSpellReduction(spellLevel = 0) {

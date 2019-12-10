@@ -59,11 +59,7 @@ export default class Unit {
 	}
 
 	get spellDamageBonus() {
-		if(this.spells.bless) {
-			return 1;
-		} else {
-			return 0;
-		}
+		return this.spells.bless ? 1 : 0;
 	}
 
 	get spellAttackBonus() {

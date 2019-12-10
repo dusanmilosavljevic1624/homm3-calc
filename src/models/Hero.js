@@ -20,6 +20,24 @@ export default class Hero {
 		return 0;
 	}
 
+	get archeryBonus() {
+		if(!this.skills.archery) return 0;
+
+		const archeryIncreaseMap = {
+			1: 0.1,
+			2: 0.25,
+			3: 0.5
+		};
+
+		return archeryIncreaseMap[this.skills.archery]; 
+	}
+
+	get archerySpecialtyBonus() {
+		if(this.hasArcherySpeciality) return 0.05 * this.archeryBonus * this.level;
+
+		return 0;
+	}
+
 	get armorerBonus() {
 		if(!this.skills.armorer) return 0;
 

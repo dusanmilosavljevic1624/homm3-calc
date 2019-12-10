@@ -7,8 +7,12 @@ export default class Results {
     const {
       minDamageText,
       maxDamageText,
+      minTotalRangedDamage,
+      maxTotalRangedDamage,
       averageDamage,
-      killsText,
+      averageRangedDamage,
+      kills,
+      rangedKills,
       attackSkillBonusText,
       defenseSkillBonusText,
       offenseBonusText,
@@ -19,14 +23,19 @@ export default class Results {
       totalArmorerBonusText
     } = formatDamageOutput(detailedDamageInfo);
 
-    this.containerEl.innerHTML = `
-      <h5>Damage</h5>
+    const headerData = {
+      minDamageText,
+      maxDamageText,
+      minTotalRangedDamage,
+      maxTotalRangedDamage,
+      averageDamage,
+      averageRangedDamage,
+      kills,
+      rangedKills
+    };
 
-      <div id="results-damage">
-        <p>Range: ${minDamageText}-${maxDamageText}</p>
-        <p>Avg: <span>${averageDamage}</span></p>
-        <p>Kills: <span>${killsText}</span></p>
-      </div>
+    this.containerEl.innerHTML = `
+      ${createResultsHeader(headerData)}
 
       <div id="results-bonuses">
         <h5>Bonuses</h5>
@@ -47,11 +56,73 @@ export default class Results {
   }
 }
 
+function createResultsHeader(detailedDamageInfo) {
+  const {
+    minDamageText,
+    maxDamageText,
+    averageDamage,
+    averageRangedDamage,
+    kills,
+    rangedKills,
+    minTotalRangedDamage,
+    maxTotalRangedDamage,
+  } = detailedDamageInfo;
+
+  const meleeHeaderData = {
+    title: 'Melee damage',
+    minDamage: minDamageText,
+    maxDamage: maxDamageText,
+    averageDamage,
+    kills
+  };
+
+  const rangedHeaderData = {
+    title: 'Ranged damage',
+    minDamage: minTotalRangedDamage,
+    maxDamage: maxTotalRangedDamage,
+    averageDamage: averageRangedDamage,
+    kills: rangedKills
+  };
+
+  const meleeHeader = createResultsHeaderItem(meleeHeaderData);
+  const rangedHeader = maxTotalRangedDamage > 0 ? createResultsHeaderItem(rangedHeaderData) : '';
+
+  const headerHtml = rangedHeader + meleeHeader;
+
+  return `
+    <div id="results-header">
+      ${headerHtml}
+    </div>
+  `;
+}
+
+function createResultsHeaderItem(damageDetails) {
+  const { title, minDamage, maxDamage, averageDamage, kills } = damageDetails;
+  const minDamageText = Math.floor(minDamage);
+  const maxDamageText = Math.floor(maxDamage);
+  const averageDamageText = averageDamage.toPrecision(2);
+
+  const killsText = `${kills.min}-${kills.max}`;
+
+  return `
+    <h5>${title}</h5>
+
+    <div id="results-damage">
+      <p>Range: ${minDamageText}-${maxDamageText}</p>
+      <p>Avg: <span>${averageDamageText}</span></p>
+      <p>Kills: <span>${killsText}</span></p>
+    </div>
+  `;
+}
+
 function formatDamageOutput(detailedDamageInfo) {
   const {
     minTotalDamage,
     maxTotalDamage,
     kills,
+    minTotalRangedDamage,
+    maxTotalRangedDamage,
+    rangedKills,
     attackSkillBonus,
     offenseBonus,
     offenseSpecialityBonus,
@@ -63,7 +134,8 @@ function formatDamageOutput(detailedDamageInfo) {
   const minDamageText = Math.floor(minTotalDamage);
   const maxDamageText = Math.floor(maxTotalDamage);
   const averageDamage = Math.floor((detailedDamageInfo.minTotalDamage + detailedDamageInfo.maxTotalDamage) / 2);
-  const killsText = kills.min === kills.max ? `${kills.max}` : `${kills.min}-${kills.max}`;
+
+  const averageRangedDamage = Math.floor((detailedDamageInfo.minTotalRangedDamage + detailedDamageInfo.maxTotalRangedDamage) / 2);
 
   const attackSkillBonusText = `${(attackSkillBonus * 100).toFixed(1)}`
   const defenseSkillBonusText = `${(defenseSkillReduction * 100).toFixed(1)}`
@@ -72,7 +144,7 @@ function formatDamageOutput(detailedDamageInfo) {
   const offenseSpecialityBonusText = `${((offenseSpecialityBonus * 100)).toFixed(1)}%`;
   const armorerReductionText = `${(armorerReduction * 100).toFixed(1)}`;
   const armorerSpecialityBonusText = `${((armorerSpecialityBonus) * 100).toFixed(2)}%`
-  
+
   const offenseSpecialityBonusHtml = `<p>Offense speciality: <span>${offenseSpecialityBonusText}</span></p>`;
   const armorerSpecialityBonusHtml = `<p>Armorer speciality: <span>${armorerSpecialityBonusText}</span></p>`;
 
@@ -81,12 +153,16 @@ function formatDamageOutput(detailedDamageInfo) {
 
   const totalArmorerBonus = armorerReduction + armorerSpecialityBonus;
   const totalArmorerBonusText = `${(totalArmorerBonus * 100).toFixed(2)}`;
-  
+
   return {
     minDamageText,
     maxDamageText,
+    minTotalRangedDamage,
+    maxTotalRangedDamage,
     averageDamage,
-    killsText,
+    averageRangedDamage,
+    kills,
+    rangedKills,
     attackSkillBonusText,
     defenseSkillBonusText,
     offenseBonusText,

@@ -250,10 +250,8 @@
 }
 
 #results {
-  display: grid;
   margin: 40px auto 0 auto;
   width: 80%;
-  grid-template-rows: 1fr 1fr;
 
   #results-damage {
     display: grid;
