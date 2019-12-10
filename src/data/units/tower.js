@@ -90,7 +90,8 @@ export default {
 		growth: 4,
 		aiValue: 570,
 		cost: 350,
-		isRanged: true
+		isRanged: true,
+		specials: ['no_melee_penalty']
 	},
 	ARCH_MAGE: {
 		name: 'Arch Mage',
@@ -104,7 +105,8 @@ export default {
 		growth: 4,
 		aiValue: 680,
 		cost: 450,
-		isRanged: true
+		isRanged: true,
+		specials: ['no_melee_penalty']
 	},
 	GENIE: {
 		name: 'Genie',
@@ -183,6 +185,7 @@ export default {
 		growth: 1,
 		aiValue: 7500,
 		cost: 5000,
-		isRanged: true
+		isRanged: true,
+		specials: ['no_melee_penalty']
 	}
 }

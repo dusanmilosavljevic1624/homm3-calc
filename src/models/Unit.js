@@ -1,5 +1,5 @@
 export default class Unit {
-	constructor({name, count, level, attack, defense, minDamage, maxDamage, health, speed, growth, aiValue, cost, isRanged, spells}) {
+	constructor({name, count, level, attack, defense, minDamage, maxDamage, health, speed, growth, aiValue, cost, isRanged, spells, specials}) {
 		this.name = name;
 		this.count = count || 1;
 		this.level = level || 1;
@@ -14,6 +14,7 @@ export default class Unit {
 		this.cost = cost || 1;
 		this.isRanged = isRanged || false;
 		this.spells = spells || {};
+		this.specials = specials || [];
 	}
 
 	get blessedBaseDamage() {
@@ -48,6 +49,13 @@ export default class Unit {
 
 	get slug() {
 		return this.name.replace(' ', '_').toUpperCase();
+	}
+
+	get meleePenalty() {
+		if(!this.isRanged) return 0;
+		if(this.specials.length > 0 && !this.specials.indexOf('no_melee_penalty') !== -1) return 0;
+
+		return 0.5;
 	}
 
 	get totalAttackSkill() {

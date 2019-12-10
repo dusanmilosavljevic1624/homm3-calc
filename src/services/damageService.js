@@ -24,9 +24,10 @@ class DamageService {
     const armorerSpecialityBonus = defendingHero.armorerSpecialityBonus
     const shieldSpellReduction = this.calculateShieldSpellReduction(defendingUnit.spells.shield ? 3 : 0);
     const airShieldSpellReduction = this.calculateAirShieldSpellReduction(defendingUnit.spells.airshieldma ? 3 : 0);
+    const meleePenaltyReduction = attackingUnit.meleePenalty;
 
-    const minTotalDamage = attackingUnit.count * minBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
-    const maxTotalDamage = attackingUnit.count * maxBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction);
+    const minTotalDamage = attackingUnit.count * minBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction) * (1 - meleePenaltyReduction);
+    const maxTotalDamage = attackingUnit.count * maxBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction) * (1 - meleePenaltyReduction);
 
     let minTotalRangedDamage = 0;
     let maxTotalRangedDamage = 0;
@@ -55,9 +56,12 @@ class DamageService {
       attackSkillBonus,
       offenseBonus,
       offenseSpecialityBonus,
+      archeryBonus: attackingHero.archeryBonus,
+      archerySpecialtyBonus: attackingHero.archerySpecialtyBonus,
       defenseSkillReduction,
       armorerReduction,
-      armorerSpecialityBonus
+      armorerSpecialityBonus,
+      meleePenaltyReduction
     };
   }
 

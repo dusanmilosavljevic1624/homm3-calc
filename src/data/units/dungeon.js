@@ -63,7 +63,8 @@ export default {
 		growth: 7,
 		aiValue: 336,
 		cost: 250,
-		isRanged: true
+		isRanged: true,
+		specials: ['no_meele_penalty']
 	},
 	EVIL_EYE: {
 		name: 'Evil Eye',
@@ -77,7 +78,8 @@ export default {
 		growth: 7,
 		aiValue: 367,
 		cost: 280,
-		isRanged: true
+		isRanged: true,
+		specials: ['no_meele_penalty']
 	},
 	MEDUSA: {
 		name: 'Medusa',
@@ -91,7 +93,8 @@ export default {
 		growth: 4,
 		aiValue: 517,
 		cost: 300,
-		isRanged: true
+		isRanged: true,
+		specials: ['no_melee_penalty']
 	},
 	MEDUSA_QUEEN: {
 		name: 'Medusa Queen',
@@ -105,7 +108,8 @@ export default {
 		growth: 4,
 		aiValue: 577,
 		cost: 330,
-		isRanged: true
+		isRanged: true,
+		specials: ['no_melee_penalty']
 	},
 	MINOTAUR: {
 		name: 'Minotaur',

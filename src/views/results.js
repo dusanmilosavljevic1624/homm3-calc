@@ -18,9 +18,12 @@ export default class Results {
       offenseBonusText,
       armorerReductionText,
       offenseSpecialityBonusHtml,
+      archeryBonus, 
+      archerySpecialtyBonus,
       armorerSpecialityBonusHtml,
       totalOffenseBonusText,
-      totalArmorerBonusText
+      totalArmorerBonusText,
+      meleePenaltyReduction
     } = formatDamageOutput(detailedDamageInfo);
 
     const headerData = {
@@ -51,6 +54,9 @@ export default class Results {
 
         <p>Offense total: <span>${totalOffenseBonusText}%</span></p>
         <p>Armorer total: <span>${totalArmorerBonusText}%</span></p>
+
+        <p>Archery bonus: <span>${archeryBonus * 100}%</span></p>
+        <p>Melee penalty: <span>${meleePenaltyReduction * 100}%</span></p>
       </div>
     `;
   }
@@ -126,9 +132,11 @@ function formatDamageOutput(detailedDamageInfo) {
     attackSkillBonus,
     offenseBonus,
     offenseSpecialityBonus,
+    archeryBonus,
     defenseSkillReduction,
     armorerReduction,
-    armorerSpecialityBonus
+    armorerSpecialityBonus,
+    meleePenaltyReduction
   } = detailedDamageInfo;
 
   const minDamageText = Math.floor(minTotalDamage);
@@ -170,10 +178,12 @@ function formatDamageOutput(detailedDamageInfo) {
     armorerReductionText,
     armorerSpecialityBonusText,
     offenseSpecialityBonusHtml,
+    archeryBonus,
     armorerSpecialityBonusHtml,
     totalOffenseBonus,
     totalOffenseBonusText,
     totalArmorerBonus,
-    totalArmorerBonusText
+    totalArmorerBonusText,
+    meleePenaltyReduction
   };
 }
