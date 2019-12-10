@@ -62,7 +62,8 @@ export default {
 		speed: 7,
 		growth: 7,
 		aiValue: 336,
-		cost: 250
+		cost: 250,
+		isRanged: true
 	},
 	EVIL_EYE: {
 		name: 'Evil Eye',
@@ -75,7 +76,8 @@ export default {
 		speed: 7,
 		growth: 7,
 		aiValue: 367,
-		cost: 280
+		cost: 280,
+		isRanged: true
 	},
 	MEDUSA: {
 		name: 'Medusa',
@@ -88,7 +90,8 @@ export default {
 		speed: 5,
 		growth: 4,
 		aiValue: 517,
-		cost: 300
+		cost: 300,
+		isRanged: true
 	},
 	MEDUSA_QUEEN: {
 		name: 'Medusa Queen',
@@ -101,7 +104,8 @@ export default {
 		speed: 6,
 		growth: 4,
 		aiValue: 577,
-		cost: 330
+		cost: 330,
+		isRanged: true
 	},
 	MINOTAUR: {
 		name: 'Minotaur',

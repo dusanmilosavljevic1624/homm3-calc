@@ -36,7 +36,8 @@ export default {
 		speed: 4,
 		growth: 10,
 		aiValue: 126,
-		cost: 100
+		cost: 100,
+		isRanged: true
 	},
 	MARKSMAN: {
 		name: 'Marksman',
@@ -49,7 +50,8 @@ export default {
 		speed: 4,
 		growth: 10,
 		aiValue: 184,
-		cost: 100
+		cost: 100,
+		isRanged: true
 	},
 	GRIFFIN: {
 		name: 'Griffin',
@@ -114,7 +116,8 @@ export default {
 		speed: 5,
 		growth: 3,
 		aiValue: 485,
-		cost: 400
+		cost: 400,
+		isRanged: true
 	},
 	ZEALOT: {
 		name: 'Zealot',
@@ -127,7 +130,8 @@ export default {
 		speed: 7,
 		growth: 3,
 		aiValue: 750,
-		cost: 450
+		cost: 450,
+		isRanged: true
 	},
 	CAVALIER: {
 		name: 'Cavalier',

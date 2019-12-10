@@ -5,6 +5,8 @@ class UnitService {
   constructor() {
     this.units = createUnitMap();
     this.townUnits = createTownMap();
+
+    console.log('units: ', this.units);
   }
 
   getUnit(unitSlug) {

@@ -36,7 +36,8 @@ export default {
 		speed: 4,
 		growth: 9,
 		aiValue: 15,
-		cost: 100
+		cost: 100,
+		isRanged: true
 	},
 	LIZARD_WARRIOR: {
 		name: 'Lizard Warrior',
@@ -49,7 +50,8 @@ export default {
 		speed: 5,
 		growth: 9,
 		aiValue: 156,
-		cost: 140
+		cost: 140,
+		isRanged: true
 	},
 	SERPENT_FLY: {
 		name: 'Serpent Fly',

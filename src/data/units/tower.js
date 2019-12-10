@@ -23,7 +23,8 @@ export default {
 		speed: 6,
 		growth: 14,
 		aiValue: 66,
-		cost: 40
+		cost: 40,
+		isRanged: true
 	},
 	STONE_GARGOYLE: {
 		name: 'Stone Gargoyle',
@@ -88,7 +89,8 @@ export default {
 		speed: 5,
 		growth: 4,
 		aiValue: 570,
-		cost: 350
+		cost: 350,
+		isRanged: true
 	},
 	ARCH_MAGE: {
 		name: 'Arch Mage',
@@ -101,7 +103,8 @@ export default {
 		speed: 7,
 		growth: 4,
 		aiValue: 680,
-		cost: 450
+		cost: 450,
+		isRanged: true
 	},
 	GENIE: {
 		name: 'Genie',
@@ -179,6 +182,7 @@ export default {
 		speed: 11,
 		growth: 1,
 		aiValue: 7500,
-		cost: 5000
+		cost: 5000,
+		isRanged: true
 	}
 }

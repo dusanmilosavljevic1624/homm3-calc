@@ -49,7 +49,8 @@ export default {
 		speed: 8,
 		growth: 6,
 		aiValue: 486,
-		cost: 275
+		cost: 275,
+		isRanged: true
 	},
 	WATER_ELEMENTAL: {
 		name: 'Water Elemental',
@@ -75,7 +76,8 @@ export default {
 		speed: 6,
 		growth: 6,
 		aiValue: 	380,
-		cost: 240
+		cost: 240,
+		isRanged: true
 	},
 	FIRE_ELEMENTAL: {
 		name: 'Fire Elemental',

@@ -62,7 +62,8 @@ export default {
 		speed: 6,
 		growth: 7,
 		aiValue: 234,
-		cost: 200
+		cost: 200,
+		isRanged: true
 	},
 	GRAND_ELF: {
 		name: 'Grand Elf',
@@ -75,7 +76,8 @@ export default {
 		speed: 7,
 		growth: 7,
 		aiValue: 331,
-		cost: 225
+		cost: 225,
+		isRanged: true
 	},
 	PEGASUS: {
 		name: 'Pegasus',

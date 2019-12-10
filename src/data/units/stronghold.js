@@ -62,7 +62,8 @@ export default {
 		speed: 4,
 		growth: 7,
 		aiValue: 192,
-		cost: 150
+		cost: 150,
+		isRanged: true
 	},
 	ORC_CHIEFTAIN: {
 		name: 'Orc Chieftain',
@@ -75,7 +76,8 @@ export default {
 		speed: 5,
 		growth: 7,
 		aiValue: 240,
-		cost: 165
+		cost: 165,
+		isRanged: true
 	},
 	OGRE: {
 		name: 'Ogre',
@@ -140,7 +142,8 @@ export default {
 		speed: 6,
 		growth: 2,
 		aiValue: 1266,
-		cost: 750
+		cost: 750,
+		isRanged: true
 	},
 	CYCLOPS_KING: {
 		name: 'Cyclops King',
@@ -153,7 +156,8 @@ export default {
 		speed: 8,
 		growth: 2,
 		aiValue: 1443,
-		cost: 1100
+		cost: 1100,
+		isRanged: true
 	},
 	BEHEMOTH: {
 		name: 'Behemoth',

@@ -36,7 +36,8 @@ export default {
 		speed: 4,
 		growth: 8,
 		aiValue: 159,
-		cost: 125
+		cost: 125,
+		isRanged: true
 	},
 	MAGOG: {
 		name: 'Magog',
@@ -49,7 +50,8 @@ export default {
 		speed: 6,
 		growth: 8,
 		aiValue: 240,
-		cost: 175
+		cost: 175,
+		isRanged: true
 	},
 	HELL_HOUND: {
 		name: 'Hell hound',

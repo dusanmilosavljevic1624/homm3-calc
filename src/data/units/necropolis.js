@@ -114,7 +114,8 @@ export default {
 		speed: 6,
 		growth: 3,
 		aiValue: 848,
-		cost: 550
+		cost: 550,
+		isRanged: true
 	},
 	POWER_LICH: {
 		name: 'Power Lich',
@@ -127,7 +128,8 @@ export default {
 		speed: 7,
 		growth: 3,
 		aiValue: 1079,
-		cost: 600
+		cost: 600,
+		isRanged: true
 	},
 	BLACK_KNIGHT: {
 		name: 'Black Knight',
