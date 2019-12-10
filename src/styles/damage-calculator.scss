@@ -104,9 +104,16 @@
 
   .skills {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 140px;
     border-top: 1px solid rosybrown;
 
-    .skills-container {
+    .skill {
+      display: flex;
+    }
+
+    .skill-images {
       padding: 10px;
     }
 

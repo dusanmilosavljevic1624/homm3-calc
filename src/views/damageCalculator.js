@@ -17,7 +17,7 @@ export default class DamageCalculator {
 
     this.attackerHeroView = new HeroView({
       hero: this.attackerHero,
-      skill: 'Offense',
+      skills: ['Offense', 'Archery'],
       containerElId: 'attacker-hero',
       onStatUpdate: this.updateHeroStat.bind(this, 'attacker'),
       onSkillSelect: this.selectSkill.bind(this, 'attacker'),
@@ -26,7 +26,7 @@ export default class DamageCalculator {
 
     this.defenderHeroView = new HeroView({
       hero: this.defenderHero,
-      skill: 'Armorer',
+      skills: ['Armorer'],
       containerElId: 'defender-hero',
       onStatUpdate: this.updateHeroStat.bind(this, 'defender'),
       onSkillSelect: this.selectSkill.bind(this, 'defender'),

@@ -7,7 +7,7 @@ export default class HeroView {
   constructor(viewData) {
     const {
       hero,
-      skill,
+      skills,
       containerElId,
       onStatUpdate,
       onSkillSelect,
@@ -15,7 +15,7 @@ export default class HeroView {
     } = viewData;
 
     this.hero = hero;
-    this.skill = skill;
+    this.skills = skills;
     this.containerElId = containerElId;
     this.hasGeneratedHtml = false;
     this.onStatUpdate = onStatUpdate;
@@ -63,14 +63,20 @@ export default class HeroView {
     `;
   }
 
-  createHeroSkillHtml() {
+  createHeroSkillsHtml() {
+    return this.skills.reduce((acc, skill) => {
+      return acc += this.createHeroSkillHtml(skill);
+    }, '');
+  }
+
+  createHeroSkillHtml(skill) {
     const skillLevelMap = {
       1: 'Basic',
       2: 'Advanced',
       3: 'Expert'
     };
 
-    const heroSkillLevel = this.hero.skills[this.skill.toLowerCase()];
+    const heroSkillLevel = this.hero.skills[skill.toLowerCase()];
 
     const createHeroSkillImage = (skill, level, isActive) => {
       const activeClass = isActive ? 'active' : '';
@@ -89,17 +95,19 @@ export default class HeroView {
     let imagesHtml = '';
 
     for(let i = 0; i < Object.keys(skillLevelMap).length; i++) {
-      imagesHtml += createHeroSkillImage(this.skill, i+1, i + 1 === heroSkillLevel);
+      imagesHtml += createHeroSkillImage(skill, i+1, i + 1 === heroSkillLevel);
     }
 
     return `
-      <div class="skills-container">
-        ${imagesHtml}
-      </div>
+      <div class="skill">
+        <div class="skill-images">
+          ${imagesHtml}
+        </div>
 
-      <div class="skill-info">
-        <p>${this.skill}</p>
-        <p>${skillLevelMap[heroSkillLevel] || 'None'}</p>
+        <div class="skill-info">
+          <p>${skill}</p>
+          <p>${skillLevelMap[heroSkillLevel] || 'None'}</p>
+        </div>
       </div>
     `;
   }
@@ -164,7 +172,7 @@ export default class HeroView {
         </div>
 
         <div class="skills">
-          ${this.createHeroSkillHtml()}
+          ${this.createHeroSkillsHtml()}
         </div>
 
         <div class="specialitys">
