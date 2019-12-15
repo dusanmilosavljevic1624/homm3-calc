@@ -23,7 +23,7 @@ class DamageService {
     const armorerReduction = defendingHero.armorerBonus;
     const armorerSpecialityBonus = defendingHero.armorerSpecialityBonus
     const shieldSpellReduction = this.calculateShieldSpellReduction(defendingUnit.spells.shield ? 3 : 0);
-    const airShieldSpellReduction = this.calculateAirShieldSpellReduction(defendingUnit.spells.airshieldma ? 3 : 0);
+    const airShieldSpellReduction = this.calculateAirShieldSpellReduction(defendingUnit.spells.airshield ? 3 : 0);
     const meleePenaltyReduction = attackingUnit.meleePenalty;
 
     const minTotalDamage = attackingUnit.count * minBaseDamage * (1 + attackSkillBonus + offenseBonus + offenseSpecialityBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - shieldSpellReduction) * (1 - meleePenaltyReduction);
