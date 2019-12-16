@@ -1,6 +1,6 @@
 # HoMM3 Damage Calculator
 
-You can find the app [here](https://dusanmilosavljevic1624.github.io/homm3-calc/)!
+You can find the app <a href="https://dusanmilosavljevic1624.github.io/homm3-calc/" target="_blank">here</a>[]()!
 
 ## What does it do?
 Damage calculator will help you find out how much damage your units will deal or take when combined with different spells, specialty's and skills. Discover great combos and learn something new about this amazing game :)
@@ -23,7 +23,7 @@ As for the fellow developers, pull requests are more than welcome. For major cha
 Feel free to reach out if you have any questions.
 
 ## How to run the app locally
-Before you get started, please install [NodeJS](https://nodejs.org/en/download/). Once you have that handled, open up your terminal and cd to the root of the project and run he following scripts: 
+Before you get started, please install <a href="https://nodejs.org/en/download/" target="_blank">NodeJS</a>. Once you have that handled, open up your terminal and cd to the root of the project and run he following scripts: 
 ```python
 npm run install
 npm run start
