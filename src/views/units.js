@@ -35,7 +35,7 @@ export default class UnitsView {
 					</div>
 
 					<div class="unit-image">
-						<img src="./img/${unit.name.replace(' ', '_')}.gif" />
+						<img src="./img/${this.generateImageName(unit.name)}.gif" />
 					</div>
 
 					<div class="unit-list-item-info">
@@ -69,5 +69,16 @@ export default class UnitsView {
 	init(elementId, onUnitSelected) {
 		this.containerElement = document.getElementById(elementId);
 		this.onUnitSelected = onUnitSelected;
+	}
+
+	generateImageName(unitName) {
+		let splitWords = unitName.split(' ');
+		const hasMultipleWords = splitWords.length > 1;
+
+		if(!hasMultipleWords) return unitName;
+
+		splitWords = splitWords.map(word => `${word[0].toUpperCase()}${word.slice(1, word.length)}`);
+
+		return splitWords.join('_');
 	}
 }
