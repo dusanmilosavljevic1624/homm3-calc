@@ -11,7 +11,7 @@ module.exports = {
 	watch: true,
 	mode: 'development',
 	devServer: {
-		contentBase: './dist',
+		contentBase: '.',
 		hot: true,
 		inline: true
 	},
@@ -28,10 +28,6 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new HtmlWebpackPlugin({
-			template: './index.html',
-			inject: true
-		}),
 		new CopyPlugin([
 			{ from: 'img', to: 'img' }
 		])
