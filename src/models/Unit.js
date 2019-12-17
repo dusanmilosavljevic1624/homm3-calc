@@ -60,7 +60,14 @@ export default class Unit {
   }
 
   get image() {
-    return `./img/${this.name.replace(' ', '_')}.gif`;
+    let splitWords = this.name.split(' ');
+    const hasMultipleWords = splitWords.length > 1;
+
+    if (!hasMultipleWords) return this.name;
+
+    splitWords = splitWords.map((word) => `${word[0].toUpperCase()}${word.slice(1, word.length)}`);
+
+    return `${splitWords.join('_')}.gif`;
   }
 
   get slug() {

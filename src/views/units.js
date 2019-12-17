@@ -10,6 +10,7 @@ export default class UnitsView {
   }
 
   createUnitList() {
+    /* eslint-disable-next-line max-len, no-return-assign, no-param-reassign */
     const unitsHtml = Object.keys(this.units).reduce((acc, unitKey) => acc += this.createUnitlistItem(this.units[unitKey]), '');
 
     this.containerElement.innerHTML = `
@@ -19,6 +20,7 @@ export default class UnitsView {
 		`;
   }
 
+  /* eslint-disable-next-line class-methods-use-this */
   createUnitlistItem(unit) {
     return `
 			<div class="unit-list-item d-flex flex-column col-md-6 text-center">
@@ -33,7 +35,7 @@ export default class UnitsView {
 					</div>
 
 					<div class="unit-image">
-						<img src="./img/${this.generateImageName(unit.name)}.gif" />
+						<img src="./img/${unit.image}" />
 					</div>
 
 					<div class="unit-list-item-info">
@@ -54,7 +56,7 @@ export default class UnitsView {
   bindListeners() {
     const buttons = document.getElementsByClassName('unit-selector');
 
-    for (let i = 0; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length; i += 1) {
       const { onUnitSelected } = this;
       const { position, slug } = buttons[i].dataset;
 
@@ -67,16 +69,5 @@ export default class UnitsView {
   init(elementId, onUnitSelected) {
     this.containerElement = document.getElementById(elementId);
     this.onUnitSelected = onUnitSelected;
-  }
-
-  generateImageName(unitName) {
-    let splitWords = unitName.split(' ');
-    const hasMultipleWords = splitWords.length > 1;
-
-    if (!hasMultipleWords) return unitName;
-
-    splitWords = splitWords.map((word) => `${word[0].toUpperCase()}${word.slice(1, word.length)}`);
-
-    return splitWords.join('_');
   }
 }

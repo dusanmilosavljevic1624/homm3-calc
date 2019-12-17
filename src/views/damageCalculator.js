@@ -110,6 +110,7 @@ export default class DamageCalculator {
     `;
   }
 
+  /* eslint-disable-next-line class-methods-use-this */
   createSpellsHtml(position, unitSpells) {
     const spells = spellService.getSpellsByType(position);
 
@@ -129,11 +130,11 @@ export default class DamageCalculator {
         </div>
       `;
 
-      return acc += spellHtml;
+      return acc + spellHtml;
     }, '');
   }
 
-  createUnitHtml(position, unit) {
+  createUnitHtml(position, unit) { /* eslint-disable max-len */
     const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
     const activeUnit = position === 'attacker' ? this.attackerUnit : this.defenderUnit;
 
@@ -162,7 +163,7 @@ export default class DamageCalculator {
             <div class="unit-count">
               <input class="unit-count-field" type="number" value="${unit.count}" max="9999" data-position="${position}" />
             </div>
-            <img src="${unit.image}" />
+            <img src="./img/${unit.image}" />
           </div>
 
           <div class="stats">
@@ -184,7 +185,7 @@ export default class DamageCalculator {
   bindListeners() {
     const spells = document.getElementsByClassName('spell');
 
-    for (let i = 0; i < spells.length; i++) {
+    for (let i = 0; i < spells.length; i += 1) {
       const button = spells[i];
       const { spell, position } = button.dataset;
 
@@ -193,7 +194,7 @@ export default class DamageCalculator {
 
     const unitCounts = document.getElementsByClassName('unit-count-field');
 
-    for (let i = 0; i < unitCounts.length; i++) {
+    for (let i = 0; i < unitCounts.length; i += 1) {
       const field = unitCounts[i];
       field.onchange = (event) => {
         const { value, dataset } = event.target;
