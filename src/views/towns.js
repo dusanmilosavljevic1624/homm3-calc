@@ -9,10 +9,10 @@ export default class TownsView {
 	createTownHtml(town) {
 		let selectedClass = '';
 
-		if(this.activeTown.slug === town.slug) {
+		if (this.activeTown.slug === town.slug) {
 			selectedClass = 'selected';
-		} 
-		
+		}
+
 		return `
 			<div class="town-list-item ${selectedClass}" data-town="${town.slug.toUpperCase()}">
 				<img src="./img/${town.img}" />
@@ -35,7 +35,7 @@ export default class TownsView {
 	bindListeners(onTownSelect, onSelectUnit) {
 		const townListItems = document.getElementsByClassName('town-list-item');
 
-		for(let i =0 ; i < townListItems.length; i += 1) {
+		for (let i = 0; i < townListItems.length; i += 1) {
 			townListItems[i].onclick = () => {
 				const { town } = townListItems[i].dataset;
 

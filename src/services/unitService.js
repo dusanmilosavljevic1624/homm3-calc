@@ -20,9 +20,9 @@ class UnitService {
 
 function createTownMap() {
   return Object.keys(TOWNS).reduce((acc, townKey) => {
-    const units = TOWNS[townKey].units;
+    const { units } = TOWNS[townKey];
 
-    Object.keys(units).forEach(unitKey => {
+    Object.keys(units).forEach((unitKey) => {
       acc[townKey] = acc[townKey] || [];
       acc[townKey][unitKey] = new Unit(units[unitKey]);
     });
@@ -33,7 +33,7 @@ function createTownMap() {
 
 function createUnitMap() {
   return Object.keys(TOWNS).reduce((acc, townKey) => {
-    Object.keys(TOWNS[townKey].units).forEach(unitKey => {
+    Object.keys(TOWNS[townKey].units).forEach((unitKey) => {
       const unit = new Unit(TOWNS[townKey].units[unitKey]);
 
       acc[unit.slug] = unit;

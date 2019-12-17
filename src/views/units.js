@@ -3,26 +3,24 @@ import tippy from 'tippy.js';
 import unitService from '../services/unitService';
 
 export default class UnitsView {
-	showUnits(town) {
-		this.units = unitService.getTownUnits(town);
-		this.createUnitList();
-		this.bindListeners();
-	}
+  showUnits(town) {
+    this.units = unitService.getTownUnits(town);
+    this.createUnitList();
+    this.bindListeners();
+  }
 
-	createUnitList() {
-		const unitsHtml = Object.keys(this.units).reduce((acc, unitKey) => {
-			return acc += this.createUnitlistItem(this.units[unitKey]);
-		}, '');
+  createUnitList() {
+    const unitsHtml = Object.keys(this.units).reduce((acc, unitKey) => acc += this.createUnitlistItem(this.units[unitKey]), '');
 
-		this.containerElement.innerHTML = `
+    this.containerElement.innerHTML = `
 			<div id="unit-list" class="row">
 				${unitsHtml}
 			</div>
 		`;
-	}
+  }
 
-	createUnitlistItem(unit) {
-		return `
+  createUnitlistItem(unit) {
+    return `
 			<div class="unit-list-item d-flex flex-column col-md-6 text-center">
 				<div class="unit-list-item-header">
 					<p>${unit.name}</p>
@@ -51,34 +49,34 @@ export default class UnitsView {
 				</div>
 			</div>
 		`;
-	}
+  }
 
-	bindListeners() {
-		const buttons = document.getElementsByClassName('unit-selector');
+  bindListeners() {
+    const buttons = document.getElementsByClassName('unit-selector');
 
-		for(let i = 0; i < buttons.length; i++) {
-			const { onUnitSelected } = this;
-			const { position, slug } = buttons[i].dataset;
+    for (let i = 0; i < buttons.length; i++) {
+      const { onUnitSelected } = this;
+      const { position, slug } = buttons[i].dataset;
 
-			buttons[i].onclick = onUnitSelected.bind(null, { position, slug });
-		}
+      buttons[i].onclick = onUnitSelected.bind(null, { position, slug });
+    }
 
-		tippy('.unit-selector');
-	}
+    tippy('.unit-selector');
+  }
 
-	init(elementId, onUnitSelected) {
-		this.containerElement = document.getElementById(elementId);
-		this.onUnitSelected = onUnitSelected;
-	}
+  init(elementId, onUnitSelected) {
+    this.containerElement = document.getElementById(elementId);
+    this.onUnitSelected = onUnitSelected;
+  }
 
-	generateImageName(unitName) {
-		let splitWords = unitName.split(' ');
-		const hasMultipleWords = splitWords.length > 1;
+  generateImageName(unitName) {
+    let splitWords = unitName.split(' ');
+    const hasMultipleWords = splitWords.length > 1;
 
-		if(!hasMultipleWords) return unitName;
+    if (!hasMultipleWords) return unitName;
 
-		splitWords = splitWords.map(word => `${word[0].toUpperCase()}${word.slice(1, word.length)}`);
+    splitWords = splitWords.map((word) => `${word[0].toUpperCase()}${word.slice(1, word.length)}`);
 
-		return splitWords.join('_');
-	}
+    return splitWords.join('_');
+  }
 }

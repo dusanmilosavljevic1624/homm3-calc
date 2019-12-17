@@ -35,4 +35,4 @@ export default {
     type: 'defender',
     slug: 'airshield'
   }
-}
+};

@@ -11,9 +11,9 @@ class SpecialityService {
 
   getSpecialitys() {
     return {
-      ...unitSpecialitys.getSpecialitys(),
-      ...spellSpecialitys.getSpecialitys(),
-      ...skillSpecialtys.getSpecialitys()
+      ...this.unitSpecialitys.getSpecialitys(),
+      ...this.spellSpecialitys.getSpecialitys(),
+      ...this.skillSpecialtys.getSpecialitys()
     };
   }
 
