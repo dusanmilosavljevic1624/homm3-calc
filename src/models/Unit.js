@@ -63,7 +63,7 @@ export default class Unit {
     let splitWords = this.name.split(' ');
     const hasMultipleWords = splitWords.length > 1;
 
-    if (!hasMultipleWords) return this.name;
+    if (!hasMultipleWords) return `${this.name}.gif`;
 
     splitWords = splitWords.map((word) => `${word[0].toUpperCase()}${word.slice(1, word.length)}`);
 
