@@ -3,7 +3,9 @@
 import specialityService from './specialityService';
 
 export default {
-  detailedTotalDamageCalculation
+  detailedTotalDamageCalculation,
+  calculateSpecialtyAttackBonus,
+  calculateSpecialtyDefenseBonus
 };
 
 function detailedTotalDamageCalculation(
