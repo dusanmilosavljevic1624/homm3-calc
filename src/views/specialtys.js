@@ -21,13 +21,13 @@ export default class SpecialtysView {
   }
 
   toggle() {
-    if(!this.createdHtml) return this.createSpecialityDrawer();
+    if (!this.createdHtml) return this.createSpecialityDrawer();
 
     const containerElSelector = `#${this.parentElId} #${this.containerElId}`;
     const containerEl = document.querySelector(containerElSelector);
     const containerClasses = containerEl.classList;
 
-    if(this.shown) {
+    if (this.shown) {
       containerClasses.add('d-none');
       this.shown = false;
     } else {
@@ -35,7 +35,7 @@ export default class SpecialtysView {
       this.shown = true;
     }
   }
-  
+
   createSkillSpecialtyHtml() {
     const specialtys = this.skillSpecialtys;
 
@@ -98,7 +98,7 @@ export default class SpecialtysView {
 
         this.createdHtml = false;
         onSpecialtySelected(specialty);
-      }      
+      }
     }
   }
 
@@ -121,7 +121,7 @@ export default class SpecialtysView {
       <div class="unit-specialtys">
         ${this.createHeroUnitSpecialityHtml()}
       </div>
-    `; 
+    `;
 
     const selector = `#${this.parentElId} #${this.containerElId}`;
     document.querySelector(selector).appendChild(drawerElement);

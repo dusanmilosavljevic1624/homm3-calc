@@ -18,7 +18,7 @@ export default class Results {
       offenseBonusText,
       armorerReductionText,
       offenseSpecialityBonusHtml,
-      archeryBonus, 
+      archeryBonus,
       archerySpecialtyBonus,
       armorerSpecialityBonusHtml,
       totalOffenseBonusText,
@@ -103,7 +103,14 @@ function createResultsHeader(detailedDamageInfo) {
 }
 
 function createResultsHeaderItem(damageDetails) {
-  const { title, minDamage, maxDamage, averageDamage, kills } = damageDetails;
+  const {
+    title,
+    minDamage,
+    maxDamage,
+    averageDamage,
+    kills
+  } = damageDetails;
+
   const minDamageText = Math.floor(minDamage);
   const maxDamageText = Math.floor(maxDamage);
   const averageDamageText = Math.floor(averageDamage).toPrecision();

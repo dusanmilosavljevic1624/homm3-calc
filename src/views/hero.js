@@ -43,7 +43,7 @@ export default class HeroView {
         data-stat="${statSlug}"
         data-amount="${amount}"
         data-tippy-content="${prefix} ${statSlug} by ${Math.abs(amount)}">
-        ${isPositive ? '+' : '-' }${Math.abs(amount)}
+        ${isPositive ? '+' : '-'}${Math.abs(amount)}
       </button>
     `;
   }
@@ -94,8 +94,8 @@ export default class HeroView {
 
     let imagesHtml = '';
 
-    for(let i = 0; i < Object.keys(skillLevelMap).length; i++) {
-      imagesHtml += createHeroSkillImage(skill, i+1, i + 1 === heroSkillLevel);
+    for (let i = 0; i < Object.keys(skillLevelMap).length; i++) {
+      imagesHtml += createHeroSkillImage(skill, i + 1, i + 1 === heroSkillLevel);
     }
 
     return `
@@ -113,14 +113,14 @@ export default class HeroView {
   }
 
   bindStatListeners() {
-    const btnSelector = `#${this.containerElId} .hero-stat-btn`; 
+    const btnSelector = `#${this.containerElId} .hero-stat-btn`;
     const statButtons = document.querySelectorAll(btnSelector);
 
-    for(let i = 0; i < statButtons.length; i++) {
-      statButtons[i].onclick = event => { 
+    for (let i = 0; i < statButtons.length; i++) {
+      statButtons[i].onclick = event => {
         const { onStatUpdate } = this;
         const { stat, amount } = statButtons[i].dataset;
-        
+
         onStatUpdate(stat, amount);
       }
     }

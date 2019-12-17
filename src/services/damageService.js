@@ -12,16 +12,18 @@ class DamageService {
     const totalDefense = defendingHero.defense + defendingUnit.totalDefenseSkill + defenderSpecialtyDefenseBonus;
 
     let { minBaseDamage, maxBaseDamage } = attackingUnit;
-    minBaseDamage = minBaseDamage * this.calculateBlessSpecialityBonus(attackingHero, attackingUnit);
-    maxBaseDamage = maxBaseDamage * this.calculateBlessSpecialityBonus(attackingHero, attackingUnit);
+    minBaseDamage *= this.calculateBlessSpecialityBonus(attackingHero, attackingUnit);
+    maxBaseDamage *= this.calculateBlessSpecialityBonus(attackingHero, attackingUnit);
 
     const attackSkillBonus = this.calculateAttackSkillBonus(totalAttack, totalDefense);
 
-    const { offenseBonus, offenseSpecialityBonus, archeryBonus, archerySpecialtyBonus } = attackingHero;
+    const {
+      offenseBonus, offenseSpecialityBonus, archeryBonus, archerySpecialtyBonus
+    } = attackingHero;
 
     const defenseSkillReduction = this.calculateDefenseSkillReduction(totalAttack, totalDefense);
     const armorerReduction = defendingHero.armorerBonus;
-    const armorerSpecialityBonus = defendingHero.armorerSpecialityBonus
+    const { armorerSpecialityBonus } = defendingHero;
     const shieldSpellReduction = this.calculateShieldSpellReduction(defendingUnit.spells.shield ? 3 : 0);
     const airShieldSpellReduction = this.calculateAirShieldSpellReduction(defendingUnit.spells.airshield ? 3 : 0);
     const meleePenaltyReduction = attackingUnit.meleePenalty;
@@ -32,7 +34,7 @@ class DamageService {
     let minTotalRangedDamage = 0;
     let maxTotalRangedDamage = 0;
 
-    if(attackingUnit.isRanged) {
+    if (attackingUnit.isRanged) {
       minTotalRangedDamage = attackingUnit.count * minBaseDamage * (1 + attackSkillBonus + archeryBonus + archerySpecialtyBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - airShieldSpellReduction);
       maxTotalRangedDamage = attackingUnit.count * maxBaseDamage * (1 + attackSkillBonus + archeryBonus + archerySpecialtyBonus) * (1 - defenseSkillReduction) * (1 - armorerReduction) * (1 - armorerSpecialityBonus) * (1 - airShieldSpellReduction);
     }
@@ -71,18 +73,18 @@ class DamageService {
 
     const specialty = specialityService.getSpeciality(specialitySlug);
 
-    if(specialty.type !== 'unit') return 0;
+    if (specialty.type !== 'unit') return 0;
 
     const affectsUnit = specialty.affectsUnit(unitSlug);
-    if(!affectsUnit) return 0;
+    if (!affectsUnit) return 0;
 
-    if(specialty.scalingType === 'flat') {
+    if (specialty.scalingType === 'flat') {
       return specialty.scalingStats.attack || 0;
     }
 
-    if(specialty.scalingType === 'level') {
+    if (specialty.scalingType === 'level') {
       const { scalingStartLevel } = specialty;
-      if(hero.level <= scalingStartLevel) return 0;
+      if (hero.level <= scalingStartLevel) return 0;
 
       const levelDifference = hero.level - scalingStartLevel;
 
@@ -96,18 +98,18 @@ class DamageService {
 
     const specialty = specialityService.getSpeciality(specialitySlug);
 
-    if(specialty.type !== 'unit') return 0;
+    if (specialty.type !== 'unit') return 0;
 
     const affectsUnit = specialty.affectsUnit(unitSlug);
-    if(!affectsUnit) return 0;
+    if (!affectsUnit) return 0;
 
-    if(specialty.scalingType === 'flat') {
+    if (specialty.scalingType === 'flat') {
       return specialty.scalingStats.defense || 0;
     }
 
-    if(specialty.scalingType === 'level') {
+    if (specialty.scalingType === 'level') {
       const { scalingStartLevel } = specialty;
-      if(hero.level <= scalingStartLevel) return 0;
+      if (hero.level <= scalingStartLevel) return 0;
 
       const levelDifference = hero.level - scalingStartLevel;
 
@@ -116,7 +118,7 @@ class DamageService {
   }
 
   calculateBlessSpecialityBonus(attackingHero, attackingUnit) {
-    if(attackingHero.hasBlessSpeciality && attackingUnit.spells.bless) {
+    if (attackingHero.hasBlessSpeciality && attackingUnit.spells.bless) {
       return 1 + ((attackingHero.level / attackingUnit.level) * 0.03);
     }
 
@@ -130,32 +132,32 @@ class DamageService {
     return {
       min: minKills,
       max: maxKills
-    }
+    };
   }
-  
+
   calculateAttackSkillBonus(attack, defense) {
-    const bonus =  0.05 * (attack - defense);
-  
-    if(bonus < 0) return 0;
-  
+    const bonus = 0.05 * (attack - defense);
+
+    if (bonus < 0) return 0;
+
     return bonus > 3 ? 3 : bonus;
   }
 
   calculateDefenseSkillReduction(attack, defense) {
     const reduction = 0.025 * (defense - attack);
-  
-    if(reduction > 0.7) return 0.7;
-  
-    return reduction < 0 ? 0 : reduction; 
+
+    if (reduction > 0.7) return 0.7;
+
+    return reduction < 0 ? 0 : reduction;
   }
 
   calculateAirShieldSpellReduction(spellLevel = 0) {
-    if(spellLevel === 0) return 0;
+    if (spellLevel === 0) return 0;
     return spellLevel > 1 ? 0.5 : 0.25;
   }
-  
+
   calculateShieldSpellReduction(spellLevel = 0) {
-    if(spellLevel === 0) return 0;
+    if (spellLevel === 0) return 0;
     return spellLevel > 1 ? 0.3 : 0.15;
   }
 }

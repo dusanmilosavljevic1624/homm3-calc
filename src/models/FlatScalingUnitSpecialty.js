@@ -1,4 +1,4 @@
-import UnitSpecialty from '../models/UnitSpecialty';
+import UnitSpecialty from './UnitSpecialty';
 
 export default class FlatScalingUnitSpecialty extends UnitSpecialty {
   constructor(slug, name, image, scalingStats, affectedUnits) {

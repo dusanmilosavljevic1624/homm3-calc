@@ -9,7 +9,9 @@ import LevelScalingUnitSpecialty from '../models/LevelScalingUnitSpecialty';
 export default {
   ARCHERS: new LevelScalingUnitSpecialty('archers', 'Archers', 'Archer.gif', 2, ['archer', 'marksman']),
   BASILISKS: new LevelScalingUnitSpecialty('basilisks', 'Basilisks', 'Basilisk.gif', 4, ['basilisk', 'greater_basilisk']),
-  BEHEMOTHS: new FlatScalingUnitSpecialty('behemoths', 'Behemoths', 'Behemoth.gif', { attack: 5, defense: 5, minDamage: 10, maxDamage: 10 }, ['behemoth', 'ancient_behemoth']),
+  BEHEMOTHS: new FlatScalingUnitSpecialty('behemoths', 'Behemoths', 'Behemoth.gif', {
+    attack: 5, defense: 5, minDamage: 10, maxDamage: 10
+  }, ['behemoth', 'ancient_behemoth']),
   BEHOLDERS: new LevelScalingUnitSpecialty('beholders', 'Beholders', 'Beholder.gif', 2, ['beholder', 'evil_eye']),
   BLACK_KNIGHTS: new LevelScalingUnitSpecialty('black_knights', 'Black Knights', 'Black_Knight.gif', 6, ['black_knight', 'dread_knight']),
   CAVALIERS: new LevelScalingUnitSpecialty('cavaliers', 'Cavaliers', 'Cavalier.gif', 6, ['cavalier', 'champion']),
@@ -19,10 +21,14 @@ export default {
   DEVILS: new FlatScalingUnitSpecialty('devils', 'Devils', 'Devil.gif', { attack: 4, defense: 2, speed: 1 }, ['devil', 'arch_devil']),
   DRAGONS: new FlatScalingUnitSpecialty('dragons', 'Dragons', 'Black_Dragon.gif', { attack: 5, defense: 5 }, ['red_dragon', 'black_dragon', 'green_dragon', 'gold_dragon', 'bone_dragon', 'ghost_dragon']),
   DWARVES: new LevelScalingUnitSpecialty('dwarves', 'Dwarves', 'Dwarf.gif', 2, ['dwarf', 'battle_dwarf']),
-  EARTH_ELEMENTALS: new FlatScalingUnitSpecialty('earth_elementals', 'Earth Elementals', 'Earth_Elemental.gif', { attack: 2, defense: 1, minDamage: 5, maxDamage: 5 }, ['earth_elemental', 'magma_elemental']),
+  EARTH_ELEMENTALS: new FlatScalingUnitSpecialty('earth_elementals', 'Earth Elementals', 'Earth_Elemental.gif', {
+    attack: 2, defense: 1, minDamage: 5, maxDamage: 5
+  }, ['earth_elemental', 'magma_elemental']),
   EFREETI: new LevelScalingUnitSpecialty('efreeti', 'Efreeti', 'Efreet.gif', 6, ['efreet', 'efreet_sultan']),
   ELVES: new LevelScalingUnitSpecialty('elves', 'Elves', 'Wood_Elf.gif', 3, ['elf', 'grand_elf']),
-  FIRE_ELEMENTALS: new FlatScalingUnitSpecialty('fire_elementals', 'Fire Elementals', 'Fire_Elemental.gif', { attack: 1, defense: 2, minDamage: 2, maxDamage: 2 }, ['fire_elemental', 'energy_elemental']),
+  FIRE_ELEMENTALS: new FlatScalingUnitSpecialty('fire_elementals', 'Fire Elementals', 'Fire_Elemental.gif', {
+    attack: 1, defense: 2, minDamage: 2, maxDamage: 2
+  }, ['fire_elemental', 'energy_elemental']),
   GARGOYLES: new LevelScalingUnitSpecialty('gargoyles', 'Gargoyles', 'Stone_Gargoyle.gif', 2, ['stone_gargoyle', 'obsidian_gargoyle']),
   GENIES: new LevelScalingUnitSpecialty('genies', 'Genies', 'Genie.gif', 5, ['genie', 'master_genie']),
   GNOLLS: new LevelScalingUnitSpecialty('gnolls', 'Gnolls', 'Gnoll.gif', 1, ['gnoll', 'gnoll_marauder']),
@@ -57,4 +63,4 @@ export default {
   WIGHTS: new LevelScalingUnitSpecialty('wights', 'Wights', 'Wight.gif', 3, ['wight', 'wrath']),
   WOLF_RIDERS: new LevelScalingUnitSpecialty('wolf_riders', 'Wolf Riders', 'Wolf_Rider.gif', 2, ['wolf_rider', 'wolf_raider']),
   WYWERNS: new LevelScalingUnitSpecialty('wyverns', 'Wyverns', 'Wyvern.gif', 6, ['wyvern', 'wyvern_monarch'])
-}
+};

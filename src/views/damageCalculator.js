@@ -1,3 +1,4 @@
+import tippy from 'tippy.js';
 import Hero from '../models/Hero';
 import HeroView from './hero';
 import ResultsView from './results';
@@ -5,14 +6,13 @@ import ResultsView from './results';
 import unitService from '../services/unitService';
 import spellService from '../services/spellService';
 import damageService from '../services/damageService';
-import tippy from 'tippy.js';
 
 export default class DamageCalculator {
   init(containerEl) {
     this.attackerUnit = unitService.getUnit('INFERNAL_TROGLODYTE');
-    this.attackerHero = new Hero('Christian', 0, 0, 1, 'bless', { 'offense': 3, archery: 3 });
+    this.attackerHero = new Hero('Christian', 0, 0, 1, 'bless', { offense: 3, archery: 3 });
 
-    this.defenderHero = new Hero('Ciele', 0, 0, 1, 'armorer', { 'armorer': 3 });
+    this.defenderHero = new Hero('Ciele', 0, 0, 1, 'armorer', { armorer: 3 });
     this.defenderUnit = unitService.getUnit('IMP');
 
     this.attackerHeroView = new HeroView({
@@ -32,8 +32,8 @@ export default class DamageCalculator {
       onSkillSelect: this.selectSkill.bind(this, 'defender'),
       onSpecialtySelect: this.selectSpecialty.bind(this, 'defender')
     });
-    
-    this.containerEl = document.getElementById(containerEl); 
+
+    this.containerEl = document.getElementById(containerEl);
 
     this.render();
   }
@@ -45,9 +45,9 @@ export default class DamageCalculator {
   }
 
   selectUnit(unitInfo) {
-    if(unitInfo.position === 'attacker') {
+    if (unitInfo.position === 'attacker') {
       this.attackerUnit = unitService.getUnit(unitInfo.slug);
-    } else if(unitInfo.position === 'defender') {
+    } else if (unitInfo.position === 'defender') {
       this.defenderUnit = unitService.getUnit(unitInfo.slug);
     }
 
@@ -66,7 +66,7 @@ export default class DamageCalculator {
     const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
     const skillSlug = skill.toLowerCase();
 
-    if(activeHero.skills[skillSlug] === Number(level)) {
+    if (activeHero.skills[skillSlug] === Number(level)) {
       activeHero.skills[skillSlug] = null;
     } else {
       activeHero.skills[skillSlug] = Number(level);
@@ -80,7 +80,7 @@ export default class DamageCalculator {
     const isSpellActive = activeUnit.spells[spell];
 
     activeUnit.spells[spell] = isSpellActive ? null : 3;
-    
+
     this.render();
   }
 
@@ -91,7 +91,7 @@ export default class DamageCalculator {
 
     this.render();
   }
-  
+
   createUnitsHtml() {
     return `
       <div class="row text-center">
@@ -147,7 +147,7 @@ export default class DamageCalculator {
 
       return `
         <p>${title}: ${baseDmg}${isBuffed ? statBonus : ''}</p>
-      `
+      `;
     };
 
     const buffedAttack = unit.totalAttackSkill + activeHero.attack + specialtyAttackBonus;
@@ -184,7 +184,7 @@ export default class DamageCalculator {
   bindListeners() {
     const spells = document.getElementsByClassName('spell');
 
-    for(let i = 0; i < spells.length; i++) {
+    for (let i = 0; i < spells.length; i++) {
       const button = spells[i];
       const { spell, position } = button.dataset;
 
@@ -195,7 +195,7 @@ export default class DamageCalculator {
 
     for (let i = 0; i < unitCounts.length; i++) {
       const field = unitCounts[i];
-      field.onchange = event => {
+      field.onchange = (event) => {
         const { value, dataset } = event.target;
         const { position } = dataset;
 
@@ -204,7 +204,7 @@ export default class DamageCalculator {
         activeUnit.count = value;
 
         this.render();
-      }
+      };
     }
 
     this.attackerHeroView.bindListeners();
