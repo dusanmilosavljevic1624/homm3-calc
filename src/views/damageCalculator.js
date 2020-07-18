@@ -10,14 +10,14 @@ import damageService from '../services/damageService';
 
 export default class DamageCalculator {
 	init(containerEl) {
-		this.attackerUnit = unitService.getUnit('INFERNAL_TROGLODYTE');
+		this.attackerUnit = unitService.getUnit('INFERNAL_TROGLODYTE', 'SOD');
 		this.attackerHero = new Hero('Christian', 0, 0, 1, 'bless', {
 			offense: 3,
 			archery: 3,
 		});
 
 		this.defenderHero = new Hero('Ciele', 0, 0, 1, 'armorer', { armorer: 3 });
-		this.defenderUnit = unitService.getUnit('IMP');
+		this.defenderUnit = unitService.getUnit('IMP', 'SOD');
 
 		this.attackerHeroView = new HeroView({
 			hero: this.attackerHero,
@@ -48,11 +48,11 @@ export default class DamageCalculator {
 		this.bindListeners();
 	}
 
-	selectUnit(unitInfo) {
+	selectUnit(unitInfo, version) {
 		if (unitInfo.position === 'attacker') {
-			this.attackerUnit = unitService.getUnit(unitInfo.slug);
+			this.attackerUnit = unitService.getUnit(unitInfo.slug, version);
 		} else if (unitInfo.position === 'defender') {
-			this.defenderUnit = unitService.getUnit(unitInfo.slug);
+			this.defenderUnit = unitService.getUnit(unitInfo.slug, version);
 		}
 
 		this.render();

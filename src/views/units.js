@@ -4,7 +4,7 @@ import unitService from '../services/unitService';
 
 export default class UnitsView {
 	showUnits(town) {
-		this.units = unitService.getTownUnits(town);
+		this.units = unitService.getTownUnits(town, 'SOD');
 		this.createUnitList();
 		this.bindListeners();
 	}

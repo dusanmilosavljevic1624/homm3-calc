@@ -1,8 +1,8 @@
-import towns from '../data/shadow_of_death/towns';
+import unitService from '../services/unitService';
 
 export default class TownsView {
 	constructor() {
-		this.towns = towns;
+		this.towns = unitService.getTowns();
 		this.activeTown = this.towns.CASTLE;
 	}
 
@@ -47,10 +47,13 @@ export default class TownsView {
 		}
 	}
 
-	init(containerId, onTownSelect, onSelectUnit) {
+	init(containerId, onTownSelect) {
+		this.towns = unitService.getTowns();
 		this.containerEl = document.getElementById(containerId);
 		this.containerEl.innerHTML = this.createTownsHtml();
-		this.bindListeners(onTownSelect);
+		this.activeTown = this.towns.CASTLE;
+		this.containerEl.innerHTML = this.createTownsHtml();
 		onTownSelect('CASTLE');
+		this.bindListeners(onTownSelect);
 	}
 }
