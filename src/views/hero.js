@@ -1,43 +1,46 @@
+/* eslint-disable no-shadow */
+import tippy from 'tippy.js';
+
 import specialtyService from '../services/specialityService';
 
 import SpecialityDrawerView from './specialtys';
-import tippy from 'tippy.js';
 
 export default class HeroView {
-  constructor(viewData) {
-    const {
-      hero,
-      skills,
-      containerElId,
-      onStatUpdate,
-      onSkillSelect,
-      onSpecialtySelect
-    } = viewData;
+	constructor(viewData) {
+		const {
+			hero,
+			skills,
+			containerElId,
+			onStatUpdate,
+			onSkillSelect,
+			onSpecialtySelect,
+		} = viewData;
 
-    this.hero = hero;
-    this.skills = skills;
-    this.containerElId = containerElId;
-    this.hasGeneratedHtml = false;
-    this.onStatUpdate = onStatUpdate;
-    this.onSkillSelect = onSkillSelect;
-    this.onSpecialtySelect = onSpecialtySelect;
+		this.hero = hero;
+		this.skills = skills;
+		this.containerElId = containerElId;
+		this.hasGeneratedHtml = false;
+		this.onStatUpdate = onStatUpdate;
+		this.onSkillSelect = onSkillSelect;
+		this.onSpecialtySelect = onSpecialtySelect;
 
-    this.specialityDrawer = new SpecialityDrawerView({
-      parentElId: this.containerElId,
-      onSpecialtySelected: this.selectSpecialty.bind(this)
-    });
-  }
+		this.specialityDrawer = new SpecialityDrawerView({
+			parentElId: this.containerElId,
+			onSpecialtySelected: this.selectSpecialty.bind(this),
+		});
+	}
 
-  selectSpecialty(specialty) {
-    const { onSpecialtySelect } = this;
-    onSpecialtySelect(specialty);
-  }
+	selectSpecialty(specialty) {
+		const { onSpecialtySelect } = this;
+		onSpecialtySelect(specialty);
+	}
 
-  createHeroStatButtonHtml(statSlug, amount) {
-    const isPositive = amount > 0;
-    const prefix = isPositive ? 'Increase' : 'Decrease';
+	/* eslint-disable-next-line class-methods-use-this */
+	createHeroStatButtonHtml(statSlug, amount) {
+		const isPositive = amount > 0;
+		const prefix = isPositive ? 'Increase' : 'Decrease';
 
-    return `
+		return `
       <button
         class="btn hero-stat-btn"
         data-stat="${statSlug}"
@@ -46,12 +49,12 @@ export default class HeroView {
         ${isPositive ? '+' : '-'}${Math.abs(amount)}
       </button>
     `;
-  }
+	}
 
-  createHeroStatHtml(stat) {
-    const statSlug = stat.toLowerCase();
+	createHeroStatHtml(stat) {
+		const statSlug = stat.toLowerCase();
 
-    return `
+		return `
       <p>
         <span>${stat}: ${this.hero[statSlug]}</span>
 
@@ -61,28 +64,28 @@ export default class HeroView {
         ${this.createHeroStatButtonHtml(statSlug, -5)}
       </p>
     `;
-  }
+	}
 
-  createHeroSkillsHtml() {
-    return this.skills.reduce((acc, skill) => {
-      return acc += this.createHeroSkillHtml(skill);
-    }, '');
-  }
+	createHeroSkillsHtml() {
+		/* eslint-disable-next-line no-return-assign, no-param-reassign */
+		const reducer = (acc, skill) => (acc += this.createHeroSkillHtml(skill));
+		return this.skills.reduce(reducer, '');
+	}
 
-  createHeroSkillHtml(skill) {
-    const skillLevelMap = {
-      1: 'Basic',
-      2: 'Advanced',
-      3: 'Expert'
-    };
+	createHeroSkillHtml(skill) {
+		const skillLevelMap = {
+			1: 'Basic',
+			2: 'Advanced',
+			3: 'Expert',
+		};
 
-    const heroSkillLevel = this.hero.skills[skill.toLowerCase()];
+		const heroSkillLevel = this.hero.skills[skill.toLowerCase()];
 
-    const createHeroSkillImage = (skill, level, isActive) => {
-      const activeClass = isActive ? 'active' : '';
-      const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
+		const createHeroSkillImage = (skill, level, isActive) => {
+			const activeClass = isActive ? 'active' : '';
+			const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
 
-      return `
+			return `
         <img
           data-skill=${skill}
           data-level=${level}
@@ -90,15 +93,19 @@ export default class HeroView {
           data-tippy-content="${tooltipPrefix} ${skillLevelMap[level]} ${skill}"
           src="./img/${skillLevelMap[level]}_${skill}.png"
         />`;
-    };
+		};
 
-    let imagesHtml = '';
+		let imagesHtml = '';
 
-    for (let i = 0; i < Object.keys(skillLevelMap).length; i++) {
-      imagesHtml += createHeroSkillImage(skill, i + 1, i + 1 === heroSkillLevel);
-    }
+		for (let i = 0; i < Object.keys(skillLevelMap).length; i += 1) {
+			imagesHtml += createHeroSkillImage(
+				skill,
+				i + 1,
+				i + 1 === heroSkillLevel
+			);
+		}
 
-    return `
+		return `
       <div class="skill">
         <div class="skill-images">
           ${imagesHtml}
@@ -110,58 +117,60 @@ export default class HeroView {
         </div>
       </div>
     `;
-  }
+	}
 
-  bindStatListeners() {
-    const btnSelector = `#${this.containerElId} .hero-stat-btn`;
-    const statButtons = document.querySelectorAll(btnSelector);
+	bindStatListeners() {
+		const btnSelector = `#${this.containerElId} .hero-stat-btn`;
+		const statButtons = document.querySelectorAll(btnSelector);
 
-    for (let i = 0; i < statButtons.length; i++) {
-      statButtons[i].onclick = event => {
-        const { onStatUpdate } = this;
-        const { stat, amount } = statButtons[i].dataset;
+		for (let i = 0; i < statButtons.length; i += 1) {
+			statButtons[i].onclick = () => {
+				const { onStatUpdate } = this;
+				const { stat, amount } = statButtons[i].dataset;
 
-        onStatUpdate(stat, amount);
-      }
-    }
+				onStatUpdate(stat, amount);
+			};
+		}
 
-    tippy('.hero-stat-btn');
-  }
+		tippy('.hero-stat-btn');
+	}
 
-  bindSkillListeners() {
-    const skillBtnSelector = `#${this.containerElId} .hero-skill-btn`;
-    const skillButtons = document.querySelectorAll(skillBtnSelector);
+	bindSkillListeners() {
+		const skillBtnSelector = `#${this.containerElId} .hero-skill-btn`;
+		const skillButtons = document.querySelectorAll(skillBtnSelector);
 
-    for (let i = 0; i < skillButtons.length; i++) {
-      skillButtons[i].onclick = event => {
-        const { onSkillSelect } = this;
-        const { level, skill } = skillButtons[i].dataset;
+		for (let i = 0; i < skillButtons.length; i += 1) {
+			skillButtons[i].onclick = () => {
+				const { onSkillSelect } = this;
+				const { level, skill } = skillButtons[i].dataset;
 
-        onSkillSelect(skill, level);
-      }
-    }
+				onSkillSelect(skill, level);
+			};
+		}
 
-    tippy('.hero-skill-btn');
-  }
+		tippy('.hero-skill-btn');
+	}
 
-  bindSpecialityDrawerListeners() {
-    const drawerSelector = `#${this.containerElId} .active-specialty`;
-    const specialityDrawerToggler = document.querySelector(drawerSelector);
-    specialityDrawerToggler.onclick = this.specialityDrawer.toggle.bind(this.specialityDrawer);
-    tippy('.active-specialty');
-  }
+	bindSpecialityDrawerListeners() {
+		const drawerSelector = `#${this.containerElId} .active-specialty`;
+		const specialityDrawerToggler = document.querySelector(drawerSelector);
+		specialityDrawerToggler.onclick = this.specialityDrawer.toggle.bind(
+			this.specialityDrawer
+		);
+		tippy('.active-specialty');
+	}
 
-  bindListeners() {
-    this.bindStatListeners();
-    this.bindSkillListeners();
-    this.bindSpecialityDrawerListeners();
-  }
+	bindListeners() {
+		this.bindStatListeners();
+		this.bindSkillListeners();
+		this.bindSpecialityDrawerListeners();
+	}
 
-  generateHtml() {
-    const speciality = specialtyService.getSpeciality(this.hero.speciality);
-    this.hasGeneratedHtml = true;
+	generateHtml() {
+		const speciality = specialtyService.getSpeciality(this.hero.speciality);
+		this.hasGeneratedHtml = true;
 
-    return `
+		return `
       <div id="${this.containerElId}" class="hero text-center">
         <h3>Hero</h3>
 
@@ -178,7 +187,11 @@ export default class HeroView {
         <div class="specialitys">
           <div class="active-specialty" data-tippy-content="Change specialty">
             <div class="image-container">
-              <img id="speciality-drawer-test" class="img-fluid" src="./img/${speciality.image}" />
+							<img
+								id="speciality-drawer-test"
+								class="img-fluid"
+								src="./img/${speciality.image}"
+							/>
             </div>
 
             <div class="content">
@@ -191,5 +204,5 @@ export default class HeroView {
         </div>
       </div>
     `;
-  }
+	}
 }

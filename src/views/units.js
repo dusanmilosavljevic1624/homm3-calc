@@ -3,26 +3,29 @@ import tippy from 'tippy.js';
 import unitService from '../services/unitService';
 
 export default class UnitsView {
-  showUnits(town) {
-    this.units = unitService.getTownUnits(town);
-    this.createUnitList();
-    this.bindListeners();
-  }
+	showUnits(town) {
+		this.units = unitService.getTownUnits(town);
+		this.createUnitList();
+		this.bindListeners();
+	}
 
-  createUnitList() {
-    /* eslint-disable-next-line max-len, no-return-assign, no-param-reassign */
-    const unitsHtml = Object.keys(this.units).reduce((acc, unitKey) => acc += this.createUnitlistItem(this.units[unitKey]), '');
+	createUnitList() {
+		/* eslint-disable max-len, no-return-assign, no-param-reassign */
+		const unitsHtml = Object.keys(this.units).reduce(
+			(acc, unitKey) => (acc += this.createUnitlistItem(this.units[unitKey])),
+			''
+		);
 
-    this.containerElement.innerHTML = `
+		this.containerElement.innerHTML = `
 			<div id="unit-list" class="row">
 				${unitsHtml}
 			</div>
 		`;
-  }
+	}
 
-  /* eslint-disable-next-line class-methods-use-this */
-  createUnitlistItem(unit) {
-    return `
+	/* eslint-disable-next-line class-methods-use-this */
+	createUnitlistItem(unit) {
+		return `
 			<div class="unit-list-item d-flex flex-column col-md-6 text-center">
 				<div class="unit-list-item-header">
 					<p>${unit.name}</p>
@@ -51,23 +54,23 @@ export default class UnitsView {
 				</div>
 			</div>
 		`;
-  }
+	}
 
-  bindListeners() {
-    const buttons = document.getElementsByClassName('unit-selector');
+	bindListeners() {
+		const buttons = document.getElementsByClassName('unit-selector');
 
-    for (let i = 0; i < buttons.length; i += 1) {
-      const { onUnitSelected } = this;
-      const { position, slug } = buttons[i].dataset;
+		for (let i = 0; i < buttons.length; i += 1) {
+			const { onUnitSelected } = this;
+			const { position, slug } = buttons[i].dataset;
 
-      buttons[i].onclick = onUnitSelected.bind(null, { position, slug });
-    }
+			buttons[i].onclick = onUnitSelected.bind(null, { position, slug });
+		}
 
-    tippy('.unit-selector');
-  }
+		tippy('.unit-selector');
+	}
 
-  init(elementId, onUnitSelected) {
-    this.containerElement = document.getElementById(elementId);
-    this.onUnitSelected = onUnitSelected;
-  }
+	init(elementId, onUnitSelected) {
+		this.containerElement = document.getElementById(elementId);
+		this.onUnitSelected = onUnitSelected;
+	}
 }

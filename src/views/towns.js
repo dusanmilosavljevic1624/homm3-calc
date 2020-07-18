@@ -22,7 +22,7 @@ export default class TownsView {
 
 	createTownsHtml() {
 		const townsHtml = Object.keys(this.towns).reduce((acc, townKey) => {
-			return acc += this.createTownHtml(this.towns[townKey]);
+			return (acc += this.createTownHtml(this.towns[townKey]));
 		}, '');
 
 		return `
@@ -43,7 +43,7 @@ export default class TownsView {
 				this.activeTown = this.towns[town.toUpperCase()];
 				this.containerEl.innerHTML = this.createTownsHtml();
 				this.bindListeners(onTownSelect, onSelectUnit);
-			}
+			};
 		}
 	}
 

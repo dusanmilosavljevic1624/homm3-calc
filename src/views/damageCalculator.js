@@ -1,4 +1,5 @@
 import tippy from 'tippy.js';
+
 import Hero from '../models/Hero';
 import HeroView from './hero';
 import ResultsView from './results';
@@ -8,92 +9,111 @@ import spellService from '../services/spellService';
 import damageService from '../services/damageService';
 
 export default class DamageCalculator {
-  init(containerEl) {
-    this.attackerUnit = unitService.getUnit('INFERNAL_TROGLODYTE');
-    this.attackerHero = new Hero('Christian', 0, 0, 1, 'bless', { offense: 3, archery: 3 });
+	init(containerEl) {
+		this.attackerUnit = unitService.getUnit('INFERNAL_TROGLODYTE');
+		this.attackerHero = new Hero('Christian', 0, 0, 1, 'bless', {
+			offense: 3,
+			archery: 3,
+		});
 
-    this.defenderHero = new Hero('Ciele', 0, 0, 1, 'armorer', { armorer: 3 });
-    this.defenderUnit = unitService.getUnit('IMP');
+		this.defenderHero = new Hero('Ciele', 0, 0, 1, 'armorer', { armorer: 3 });
+		this.defenderUnit = unitService.getUnit('IMP');
 
-    this.attackerHeroView = new HeroView({
-      hero: this.attackerHero,
-      skills: ['Offense', 'Archery'],
-      containerElId: 'attacker-hero',
-      onStatUpdate: this.updateHeroStat.bind(this, 'attacker'),
-      onSkillSelect: this.selectSkill.bind(this, 'attacker'),
-      onSpecialtySelect: this.selectSpecialty.bind(this, 'attacker')
-    });
+		this.attackerHeroView = new HeroView({
+			hero: this.attackerHero,
+			skills: ['Offense', 'Archery'],
+			containerElId: 'attacker-hero',
+			onStatUpdate: this.updateHeroStat.bind(this, 'attacker'),
+			onSkillSelect: this.selectSkill.bind(this, 'attacker'),
+			onSpecialtySelect: this.selectSpecialty.bind(this, 'attacker'),
+		});
 
-    this.defenderHeroView = new HeroView({
-      hero: this.defenderHero,
-      skills: ['Armorer'],
-      containerElId: 'defender-hero',
-      onStatUpdate: this.updateHeroStat.bind(this, 'defender'),
-      onSkillSelect: this.selectSkill.bind(this, 'defender'),
-      onSpecialtySelect: this.selectSpecialty.bind(this, 'defender')
-    });
+		this.defenderHeroView = new HeroView({
+			hero: this.defenderHero,
+			skills: ['Armorer'],
+			containerElId: 'defender-hero',
+			onStatUpdate: this.updateHeroStat.bind(this, 'defender'),
+			onSkillSelect: this.selectSkill.bind(this, 'defender'),
+			onSpecialtySelect: this.selectSpecialty.bind(this, 'defender'),
+		});
 
-    this.containerEl = document.getElementById(containerEl);
+		this.containerEl = document.getElementById(containerEl);
 
-    this.render();
-  }
+		this.render();
+	}
 
-  render() {
-    this.containerEl.innerHTML = this.createUnitsHtml();
-    this.renderResults();
-    this.bindListeners();
-  }
+	render() {
+		this.containerEl.innerHTML = this.createUnitsHtml();
+		this.renderResults();
+		this.bindListeners();
+	}
 
-  selectUnit(unitInfo) {
-    if (unitInfo.position === 'attacker') {
-      this.attackerUnit = unitService.getUnit(unitInfo.slug);
-    } else if (unitInfo.position === 'defender') {
-      this.defenderUnit = unitService.getUnit(unitInfo.slug);
-    }
+	selectUnit(unitInfo) {
+		if (unitInfo.position === 'attacker') {
+			this.attackerUnit = unitService.getUnit(unitInfo.slug);
+		} else if (unitInfo.position === 'defender') {
+			this.defenderUnit = unitService.getUnit(unitInfo.slug);
+		}
 
-    this.render();
-  }
+		this.render();
+	}
 
-  updateHeroStat(position, stat, amount) {
-    const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
+	updateHeroStat(position, stat, amount) {
+		const activeHero = this.getHeroByPosition(position);
+		activeHero[stat] += Number(amount);
 
-    activeHero[stat] += Number(amount);
+		this.render();
+	}
 
-    this.render();
-  }
+	selectSkill(position, skill, level) {
+		const activeHero = this.getHeroByPosition(position);
+		const skillSlug = skill.toLowerCase();
 
-  selectSkill(position, skill, level) {
-    const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
-    const skillSlug = skill.toLowerCase();
+		if (activeHero.skills[skillSlug] === Number(level)) {
+			activeHero.skills[skillSlug] = null;
+		} else {
+			activeHero.skills[skillSlug] = Number(level);
+		}
 
-    if (activeHero.skills[skillSlug] === Number(level)) {
-      activeHero.skills[skillSlug] = null;
-    } else {
-      activeHero.skills[skillSlug] = Number(level);
-    }
+		this.render();
+	}
 
-    this.render();
-  }
+	selectSpell(position, spell) {
+		const activeUnit = this.getUnitByPosition(position);
+		const isSpellActive = activeUnit.spells[spell];
 
-  selectSpell(position, spell) {
-    const activeUnit = position === 'attacker' ? this.attackerUnit : this.defenderUnit;
-    const isSpellActive = activeUnit.spells[spell];
+		activeUnit.spells[spell] = isSpellActive ? null : 3;
 
-    activeUnit.spells[spell] = isSpellActive ? null : 3;
+		this.render();
+	}
 
-    this.render();
-  }
+	selectSpecialty(position, speciality) {
+		const activeHero = this.getHeroByPosition(position);
+		activeHero.speciality = speciality;
 
-  selectSpecialty(position, speciality) {
-    const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
+		this.render();
+	}
 
-    activeHero.speciality = speciality;
+	getHeroByPosition(position) {
+		const heroPositionMap = {
+			attacker: this.attackerHero,
+			defender: this.defenderHero,
+		};
 
-    this.render();
-  }
+		return heroPositionMap[position];
+	}
 
-  createUnitsHtml() {
-    return `
+	getUnitByPosition(position) {
+		const unitPositionMap = {
+			attacker: this.attackerUnit,
+			defender: this.defenderUnit,
+		};
+
+		return unitPositionMap[position];
+	}
+
+	createUnitsHtml() {
+		return `
       <div class="row text-center">
         <div class="col-md-6">
           ${this.attackerHeroView.generateHtml()}
@@ -108,19 +128,19 @@ export default class DamageCalculator {
         <div id="results"></div>
       </div>
     `;
-  }
+	}
 
-  /* eslint-disable-next-line class-methods-use-this */
-  createSpellsHtml(position, unitSpells) {
-    const spells = spellService.getSpellsByType(position);
+	/* eslint-disable-next-line class-methods-use-this */
+	createSpellsHtml(position, unitSpells) {
+		const spells = spellService.getSpellsByType(position);
 
-    return Object.keys(spells).reduce((acc, spellKey) => {
-      const { image, slug } = spells[spellKey];
-      const isActive = !!unitSpells[slug];
-      const activeClass = isActive ? 'active' : '';
-      const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
+		return Object.keys(spells).reduce((acc, spellKey) => {
+			const { image, slug } = spells[spellKey];
+			const isActive = !!unitSpells[slug];
+			const activeClass = isActive ? 'active' : '';
+			const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
 
-      const spellHtml = `
+			const spellHtml = `
         <div
           class="spell ${activeClass}"
           data-position="${position}"
@@ -130,39 +150,55 @@ export default class DamageCalculator {
         </div>
       `;
 
-      return acc + spellHtml;
-    }, '');
-  }
+			return acc + spellHtml;
+		}, '');
+	}
 
-  createUnitHtml(position, unit) { /* eslint-disable max-len */
-    const activeHero = position === 'attacker' ? this.attackerHero : this.defenderHero;
-    const activeUnit = position === 'attacker' ? this.attackerUnit : this.defenderUnit;
+	createUnitHtml(position, unit) {
+		/* eslint-disable max-len */
+		const activeHero = this.getHeroByPosition(position);
+		const activeUnit = this.getUnitByPosition(position);
 
-    const specialtyAttackBonus = damageService.calculateSpecialtyAttackBonus(activeHero, activeUnit);
-    const specialtyDefenseBonus = damageService.calculateSpecialtyDefenseBonus(activeHero, activeUnit);
+		const specialtyAttackBonus = damageService.calculateSpecialtyAttackBonus(
+			activeHero,
+			activeUnit
+		);
+		const specialtyDefenseBonus = damageService.calculateSpecialtyDefenseBonus(
+			activeHero,
+			activeUnit
+		);
 
-    const createStatHtml = (title, baseDmg, buffedDmg) => {
-      const isBuffed = buffedDmg > baseDmg;
+		const createStatHtml = (title, baseDmg, buffedDmg) => {
+			const isBuffed = buffedDmg > baseDmg;
 
-      const statBonus = `<span class="stat-bonus">(${buffedDmg})</span>`;
+			const statBonus = `<span class="stat-bonus">(${buffedDmg})</span>`;
 
-      return `
+			return `
         <p>${title}: ${baseDmg}${isBuffed ? statBonus : ''}</p>
       `;
-    };
+		};
 
-    const buffedAttack = unit.totalAttackSkill + activeHero.attack + specialtyAttackBonus;
-    const buffedDefense = unit.totalDefenseSkill + activeHero.defense + specialtyDefenseBonus;
+		const buffedAttack =
+			unit.totalAttackSkill + activeHero.attack + specialtyAttackBonus;
+		const buffedDefense =
+			unit.totalDefenseSkill + activeHero.defense + specialtyDefenseBonus;
 
-    return `
+		return `
       <div id="${position}">
         <p>${position}: ${unit.name}</p>
 
         <div class="content">
           <div class="image-container">
             <div class="unit-count">
-              <input class="unit-count-field" type="number" value="${unit.count}" max="9999" data-position="${position}" />
-            </div>
+							<input
+								class="unit-count-field"
+								type="number"
+								value="${unit.count}"
+								max="9999"
+								data-position="${position}"
+							/>
+						</div>
+
             <img src="./img/${unit.image}" />
           </div>
 
@@ -180,49 +216,47 @@ export default class DamageCalculator {
         </div>
       </div>
     `;
-  }
+	}
 
-  bindListeners() {
-    const spells = document.getElementsByClassName('spell');
+	bindListeners() {
+		const spells = document.getElementsByClassName('spell');
 
-    for (let i = 0; i < spells.length; i += 1) {
-      const button = spells[i];
-      const { spell, position } = button.dataset;
+		for (let i = 0; i < spells.length; i += 1) {
+			const button = spells[i];
+			const { spell, position } = button.dataset;
 
-      button.onclick = this.selectSpell.bind(this, position, spell);
-    }
+			button.onclick = this.selectSpell.bind(this, position, spell);
+		}
 
-    const unitCounts = document.getElementsByClassName('unit-count-field');
+		const unitCounts = document.getElementsByClassName('unit-count-field');
 
-    for (let i = 0; i < unitCounts.length; i += 1) {
-      const field = unitCounts[i];
-      field.onchange = (event) => {
-        const { value, dataset } = event.target;
-        const { position } = dataset;
+		for (let i = 0; i < unitCounts.length; i += 1) {
+			const field = unitCounts[i];
+			field.onchange = (event) => {
+				const { value, dataset } = event.target;
+				const activeUnit = this.getUnitByPosition(dataset.position);
 
-        const activeUnit = position === 'attacker' ? this.attackerUnit : this.defenderUnit;
+				activeUnit.count = value;
 
-        activeUnit.count = value;
+				this.render();
+			};
+		}
 
-        this.render();
-      };
-    }
+		this.attackerHeroView.bindListeners();
+		this.defenderHeroView.bindListeners();
 
-    this.attackerHeroView.bindListeners();
-    this.defenderHeroView.bindListeners();
+		tippy('.spell');
+	}
 
-    tippy('.spell');
-  }
+	renderResults() {
+		const detailedDamageInfo = damageService.detailedTotalDamageCalculation(
+			this.attackerHero,
+			this.defenderHero,
+			this.attackerUnit,
+			this.defenderUnit
+		);
 
-  renderResults() {
-    const detailedDamageInfo = damageService.detailedTotalDamageCalculation(
-      this.attackerHero,
-      this.defenderHero,
-      this.attackerUnit,
-      this.defenderUnit
-    );
-
-    this.resultsView = new ResultsView('results');
-    this.resultsView.render(detailedDamageInfo);
-  }
+		this.resultsView = new ResultsView('results');
+		this.resultsView.render(detailedDamageInfo);
+	}
 }

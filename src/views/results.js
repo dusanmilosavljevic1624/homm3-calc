@@ -1,43 +1,43 @@
 export default class Results {
-  constructor(containerElId) {
-    this.containerEl = document.getElementById(containerElId);
-  }
+	constructor(containerElId) {
+		this.containerEl = document.getElementById(containerElId);
+	}
 
-  render(detailedDamageInfo) {
-    const {
-      minDamageText,
-      maxDamageText,
-      minTotalRangedDamage,
-      maxTotalRangedDamage,
-      averageDamage,
-      averageRangedDamage,
-      kills,
-      rangedKills,
-      attackSkillBonusText,
-      defenseSkillBonusText,
-      offenseBonusText,
-      armorerReductionText,
-      offenseSpecialityBonusHtml,
-      archeryBonus,
-      archerySpecialtyBonus,
-      armorerSpecialityBonusHtml,
-      totalOffenseBonusText,
-      totalArmorerBonusText,
-      meleePenaltyReduction
-    } = formatDamageOutput(detailedDamageInfo);
+	render(detailedDamageInfo) {
+		const {
+			minDamageText,
+			maxDamageText,
+			minTotalRangedDamage,
+			maxTotalRangedDamage,
+			averageDamage,
+			averageRangedDamage,
+			kills,
+			rangedKills,
+			attackSkillBonusText,
+			defenseSkillBonusText,
+			offenseBonusText,
+			armorerReductionText,
+			offenseSpecialityBonusHtml,
+			archeryBonus,
+			// archerySpecialtyBonus,
+			armorerSpecialityBonusHtml,
+			totalOffenseBonusText,
+			totalArmorerBonusText,
+			meleePenaltyReduction,
+		} = formatDamageOutput(detailedDamageInfo);
 
-    const headerData = {
-      minDamageText,
-      maxDamageText,
-      minTotalRangedDamage,
-      maxTotalRangedDamage,
-      averageDamage,
-      averageRangedDamage,
-      kills,
-      rangedKills
-    };
+		const headerData = {
+			minDamageText,
+			maxDamageText,
+			minTotalRangedDamage,
+			maxTotalRangedDamage,
+			averageDamage,
+			averageRangedDamage,
+			kills,
+			rangedKills,
+		};
 
-    this.containerEl.innerHTML = `
+		this.containerEl.innerHTML = `
       ${createResultsHeader(headerData)}
 
       <div id="results-bonuses">
@@ -59,43 +59,47 @@ export default class Results {
         <p>Melee penalty: <span>${meleePenaltyReduction * 100}%</span></p>
       </div>
     `;
-  }
+	}
 }
 
 function createResultsHeader(detailedDamageInfo) {
-  const {
-    minDamageText,
-    maxDamageText,
-    averageDamage,
-    averageRangedDamage,
-    kills,
-    rangedKills,
-    minTotalRangedDamage,
-    maxTotalRangedDamage,
-  } = detailedDamageInfo;
+	const {
+		minDamageText,
+		maxDamageText,
+		averageDamage,
+		averageRangedDamage,
+		kills,
+		rangedKills,
+		minTotalRangedDamage,
+		maxTotalRangedDamage,
+	} = detailedDamageInfo;
 
-  const meleeHeaderData = {
-    title: 'Melee damage',
-    minDamage: minDamageText,
-    maxDamage: maxDamageText,
-    averageDamage,
-    kills
-  };
+	const meleeHeaderData = {
+		title: 'Melee damage',
+		minDamage: minDamageText,
+		maxDamage: maxDamageText,
+		averageDamage,
+		kills,
+	};
 
-  const rangedHeaderData = {
-    title: 'Ranged damage',
-    minDamage: minTotalRangedDamage,
-    maxDamage: maxTotalRangedDamage,
-    averageDamage: averageRangedDamage,
-    kills: rangedKills
-  };
+	const rangedHeaderData = {
+		title: 'Ranged damage',
+		minDamage: minTotalRangedDamage,
+		maxDamage: maxTotalRangedDamage,
+		averageDamage: averageRangedDamage,
+		kills: rangedKills,
+	};
 
-  const meleeHeader = createResultsHeaderItem(meleeHeaderData);
-  const rangedHeader = maxTotalRangedDamage > 0 ? createResultsHeaderItem(rangedHeaderData) : '';
+	const meleeHeader = createResultsHeaderItem(meleeHeaderData);
+	let rangedHeader = '';
 
-  const headerHtml = rangedHeader + meleeHeader;
+	if (maxTotalRangedDamage > 0) {
+		rangedHeader = createResultsHeaderItem(rangedHeaderData);
+	}
 
-  return `
+	const headerHtml = rangedHeader + meleeHeader;
+
+	return `
     <div id="results-header">
       ${headerHtml}
     </div>
@@ -103,22 +107,21 @@ function createResultsHeader(detailedDamageInfo) {
 }
 
 function createResultsHeaderItem(damageDetails) {
-  const {
-    title,
-    minDamage,
-    maxDamage,
-    averageDamage,
-    kills
-  } = damageDetails;
+	const { title, minDamage, maxDamage, averageDamage, kills } = damageDetails;
 
-  const minDamageText = Math.floor(minDamage);
-  const maxDamageText = Math.floor(maxDamage);
-  const averageDamageText = Math.floor(averageDamage).toPrecision();
+	const minDamageText = Math.floor(minDamage);
+	const maxDamageText = Math.floor(maxDamage);
+	const averageDamageText = Math.floor(averageDamage).toPrecision();
 
-  const rangeText = minDamage === maxDamage ? `${maxDamageText}` : `${minDamageText}-${maxDamageText}`;
-  const killsText = kills.min === kills.max ? `${kills.max}` : `${kills.min}-${kills.max}`;
+	const rangeText =
+		minDamage === maxDamage
+			? `${maxDamageText}`
+			: `${minDamageText}-${maxDamageText}`;
 
-  return `
+	const killsText =
+		kills.min === kills.max ? `${kills.max}` : `${kills.min}-${kills.max}`;
+
+	return `
     <h5>${title}</h5>
 
     <div id="results-damage">
@@ -130,68 +133,79 @@ function createResultsHeaderItem(damageDetails) {
 }
 
 function formatDamageOutput(detailedDamageInfo) {
-  const {
-    minTotalDamage,
-    maxTotalDamage,
-    kills,
-    minTotalRangedDamage,
-    maxTotalRangedDamage,
-    rangedKills,
-    attackSkillBonus,
-    offenseBonus,
-    offenseSpecialityBonus,
-    archeryBonus,
-    defenseSkillReduction,
-    armorerReduction,
-    armorerSpecialityBonus,
-    meleePenaltyReduction
-  } = detailedDamageInfo;
+	const {
+		minTotalDamage,
+		maxTotalDamage,
+		kills,
+		minTotalRangedDamage,
+		maxTotalRangedDamage,
+		rangedKills,
+		attackSkillBonus,
+		offenseBonus,
+		offenseSpecialityBonus,
+		archeryBonus,
+		defenseSkillReduction,
+		armorerReduction,
+		armorerSpecialityBonus,
+		meleePenaltyReduction,
+	} = detailedDamageInfo;
 
-  const minDamageText = Math.floor(minTotalDamage);
-  const maxDamageText = Math.floor(maxTotalDamage);
-  const averageDamage = Math.floor((detailedDamageInfo.minTotalDamage + detailedDamageInfo.maxTotalDamage) / 2);
+	const minDamageText = Math.floor(minTotalDamage);
+	const maxDamageText = Math.floor(maxTotalDamage);
+	const averageDamage = Math.floor(
+		(detailedDamageInfo.minTotalDamage + detailedDamageInfo.maxTotalDamage) / 2
+	);
 
-  const averageRangedDamage = Math.floor((detailedDamageInfo.minTotalRangedDamage + detailedDamageInfo.maxTotalRangedDamage) / 2);
+	const averageRangedDamage = Math.floor(
+		(detailedDamageInfo.minTotalRangedDamage +
+			detailedDamageInfo.maxTotalRangedDamage) /
+			2
+	);
 
-  const attackSkillBonusText = `${(attackSkillBonus * 100).toFixed(1)}`
-  const defenseSkillBonusText = `${(defenseSkillReduction * 100).toFixed(1)}`
+	const attackSkillBonusText = `${(attackSkillBonus * 100).toFixed(1)}`;
+	const defenseSkillBonusText = `${(defenseSkillReduction * 100).toFixed(1)}`;
 
-  const offenseBonusText = `${(offenseBonus * 100).toFixed(1)}`;
-  const offenseSpecialityBonusText = `${((offenseSpecialityBonus * 100)).toFixed(1)}%`;
-  const armorerReductionText = `${(armorerReduction * 100).toFixed(1)}`;
-  const armorerSpecialityBonusText = `${((armorerSpecialityBonus) * 100).toFixed(2)}%`
+	const offenseBonusText = `${(offenseBonus * 100).toFixed(1)}`;
+	const offenseSpecialityBonusText = `${(offenseSpecialityBonus * 100).toFixed(
+		1
+	)}%`;
+	const armorerReductionText = `${(armorerReduction * 100).toFixed(1)}`;
+	const armorerSpecialityBonusText = `${(armorerSpecialityBonus * 100).toFixed(
+		2
+	)}%`;
 
-  const offenseSpecialityBonusHtml = `<p>Offense speciality: <span>${offenseSpecialityBonusText}</span></p>`;
-  const armorerSpecialityBonusHtml = `<p>Armorer speciality: <span>${armorerSpecialityBonusText}</span></p>`;
+	const offenseSpecialityBonusHtml = `<p>Offense speciality: <span>${offenseSpecialityBonusText}</span></p>`;
+	const armorerSpecialityBonusHtml = `<p>Armorer speciality: <span>${armorerSpecialityBonusText}</span></p>`;
 
-  const totalOffenseBonus = (Math.abs(offenseSpecialityBonus) + Math.abs(offenseBonus)) * 100;
-  const totalOffenseBonusText = `${totalOffenseBonus.toFixed(1)}`;
+	const totalOffenseBonus =
+		(Math.abs(offenseSpecialityBonus) + Math.abs(offenseBonus)) * 100;
+	const totalOffenseBonusText = `${totalOffenseBonus.toFixed(1)}`;
 
-  const totalArmorerBonus = armorerReduction + armorerSpecialityBonus;
-  const totalArmorerBonusText = `${(totalArmorerBonus * 100).toFixed(2)}`;
+	const totalArmorerBonus = armorerReduction + armorerSpecialityBonus;
+	const totalArmorerBonusText = `${(totalArmorerBonus * 100).toFixed(2)}`;
 
-  return {
-    minDamageText,
-    maxDamageText,
-    minTotalRangedDamage,
-    maxTotalRangedDamage,
-    averageDamage,
-    averageRangedDamage,
-    kills,
-    rangedKills,
-    attackSkillBonusText,
-    defenseSkillBonusText,
-    offenseBonusText,
-    offenseSpecialityBonusText,
-    armorerReductionText,
-    armorerSpecialityBonusText,
-    offenseSpecialityBonusHtml,
-    archeryBonus,
-    armorerSpecialityBonusHtml,
-    totalOffenseBonus,
-    totalOffenseBonusText,
-    totalArmorerBonus,
-    totalArmorerBonusText,
-    meleePenaltyReduction
-  };
+	return {
+		minDamageText,
+		maxDamageText,
+		minTotalRangedDamage,
+		maxTotalRangedDamage,
+		averageDamage,
+		averageRangedDamage,
+		kills,
+		rangedKills,
+		attackSkillBonusText,
+		defenseSkillBonusText,
+		offenseBonusText,
+		offenseSpecialityBonusText,
+		armorerReductionText,
+		armorerSpecialityBonusText,
+		offenseSpecialityBonusHtml,
+		archeryBonus,
+		armorerSpecialityBonusHtml,
+		totalOffenseBonus,
+		totalOffenseBonusText,
+		totalArmorerBonus,
+		totalArmorerBonusText,
+		meleePenaltyReduction,
+	};
 }
