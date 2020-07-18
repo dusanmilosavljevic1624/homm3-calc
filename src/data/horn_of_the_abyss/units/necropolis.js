@@ -141,7 +141,7 @@ export default {
 		health: 120,
 		speed: 7,
 		growth: 2,
-		aiValue: 2084,
+		aiValue: 2087,
 		cost: 1200,
 	},
 	DREAD_KNIGHT: {

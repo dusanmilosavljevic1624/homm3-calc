@@ -86,7 +86,7 @@ export default {
 		defense: 10,
 		minDamage: 7,
 		maxDamage: 9,
-		health: 40,
+		health: 35,
 		speed: 5,
 		growth: 4,
 		aiValue: 445,
@@ -154,7 +154,7 @@ export default {
 		health: 90,
 		speed: 13,
 		growth: 2,
-		aiValue: 1848,
+		aiValue: 2343,
 		cost: 1100,
 	},
 	DEVIL: {
