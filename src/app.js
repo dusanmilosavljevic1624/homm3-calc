@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 
 			switcher.classList.add('selected');
-			unitService.gameVersion = event.target.dataset.version;
+			unitService.gameVersion = switcher.dataset.version;
 			init();
 		});
 	}
