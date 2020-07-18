@@ -7,6 +7,8 @@ import DUNGEON_UNITS from './units/dungeon';
 import STRONGHOLD_UNITS from './units/stronghold';
 import FORTRESS_UNITS from './units/fortress';
 import CONFLUX_UNITS from './units/conflux';
+import COVE_UNITS from './units/cove';
+import NEUTRAL_UNITS from './units/neutral';
 
 export default {
 	CASTLE: {
@@ -54,9 +56,14 @@ export default {
 		slug: 'conflux',
 		units: CONFLUX_UNITS,
 	},
-	CONFLUXIAN: {
-		img: 'conflux.gif',
-		slug: 'confluxian',
-		units: CONFLUX_UNITS,
+	COVE: {
+		img: 'cove.gif',
+		slug: 'cove',
+		units: COVE_UNITS,
+	},
+	NEUTRAL: {
+		img: 'neutral.gif',
+		slug: 'neutral',
+		units: NEUTRAL_UNITS,
 	},
 };

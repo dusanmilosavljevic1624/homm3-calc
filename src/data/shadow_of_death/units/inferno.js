@@ -86,7 +86,7 @@ export default {
 		defense: 10,
 		minDamage: 7,
 		maxDamage: 9,
-		health: 40,
+		health: 35,
 		speed: 5,
 		growth: 4,
 		aiValue: 445,

@@ -63,7 +63,7 @@ export default {
 		speed: 5,
 		growth: 6,
 		aiValue: 315,
-		cost: 375,
+		cost: 305,
 	},
 	ICE_ELEMENTAL: {
 		name: 'Ice Elemental',
@@ -76,7 +76,7 @@ export default {
 		speed: 6,
 		growth: 6,
 		aiValue: 380,
-		cost: 240,
+		cost: 375,
 		isRanged: true,
 	},
 	FIRE_ELEMENTAL: {
@@ -160,7 +160,7 @@ export default {
 	FIREBIRD: {
 		name: 'Firebird',
 		level: 7,
-		attack: 186,
+		attack: 18,
 		defense: 18,
 		minDamage: 30,
 		maxDamage: 40,
@@ -174,7 +174,7 @@ export default {
 		name: 'Phoenix',
 		level: 7,
 		attack: 21,
-		defense: 20,
+		defense: 18,
 		minDamage: 30,
 		maxDamage: 40,
 		health: 200,

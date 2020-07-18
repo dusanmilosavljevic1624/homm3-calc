@@ -163,7 +163,7 @@ export default {
 		name: 'Behemoth',
 		level: 7,
 		attack: 17,
-		defense: 13,
+		defense: 17,
 		minDamage: 30,
 		maxDamage: 50,
 		health: 160,
@@ -174,7 +174,7 @@ export default {
 	},
 	ANCIENT_BEHEMOTH: {
 		name: 'Ancient Behemoth',
-		level: 6,
+		level: 7,
 		attack: 19,
 		defense: 19,
 		minDamage: 30,

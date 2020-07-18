@@ -59,7 +59,7 @@ export default {
 		minDamage: 3,
 		maxDamage: 5,
 		health: 22,
-		speed: 7,
+		speed: 5,
 		growth: 7,
 		aiValue: 336,
 		cost: 250,
@@ -161,7 +161,7 @@ export default {
 		speed: 11,
 		growth: 2,
 		aiValue: 1589,
-		cost: 1200,
+		cost: 1050,
 	},
 	RED_DRAGON: {
 		name: 'Red Dragon',

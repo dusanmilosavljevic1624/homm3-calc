@@ -7,6 +7,7 @@ import DUNGEON_UNITS from './units/dungeon';
 import STRONGHOLD_UNITS from './units/stronghold';
 import FORTRESS_UNITS from './units/fortress';
 import CONFLUX_UNITS from './units/conflux';
+import NEUTRAL_UNITS from './units/neutral';
 
 export default {
 	CASTLE: {
@@ -53,5 +54,10 @@ export default {
 		img: 'conflux.gif',
 		slug: 'conflux',
 		units: CONFLUX_UNITS,
+	},
+	NEUTRAL: {
+		img: 'neutral.gif',
+		slug: 'neutral',
+		units: NEUTRAL_UNITS,
 	},
 };
