@@ -1,4 +1,4 @@
-import TOWNS from '../data/towns';
+import TOWNS from '../data/shadow_of_death/towns';
 import Unit from '../models/Unit';
 
 class UnitService {

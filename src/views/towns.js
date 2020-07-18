@@ -1,4 +1,4 @@
-import towns from '../data/towns';
+import towns from '../data/shadow_of_death/towns';
 
 export default class TownsView {
 	constructor() {
