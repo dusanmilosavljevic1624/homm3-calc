@@ -15,8 +15,12 @@
 }
 
 .unit-list-item {
-	border: 2px solid rosybrown;
+	border: 1px solid rosybrown;
 	padding: 0;
+
+	&:nth-of-type(-n + 2) {
+		border-top: 0;
+	}
 }
 
 .unit-list-item-header {
