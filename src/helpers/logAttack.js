@@ -1,11 +1,11 @@
 export default (attacker, defender, attackingUnit, defendingUnit, damage) => {
-  const attackerSpells = Object.keys(attackingUnit.spells);
-  const defenderSpells = Object.keys(defendingUnit.spells);
+	const attackerSpells = Object.keys(attackingUnit.spells);
+	const defenderSpells = Object.keys(defendingUnit.spells);
 
-  const attackerSkills = Object.keys(attacker.skills);
-  const defenderSkills = Object.keys(defender.skills);
+	const attackerSkills = Object.keys(attacker.skills);
+	const defenderSkills = Object.keys(defender.skills);
 
-  console.log(`
+	console.log(`
 		${attacker.name} - ${attackingUnit.count} x ${attackingUnit.name}
 		SPECIALITY - ${attacker.speciality}
 		SPELLS - ${attackerSpells.length > 0 ? attackerSpells : 'None'}
