@@ -1,5 +1,5 @@
 #units-container {
-	height: 100vh;
+	height: calc(100vh - 50px);
 	overflow-y: scroll;
 
 	&::-webkit-scrollbar {
@@ -32,7 +32,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		
+
 		img {
 			align-self: center;
 			display: block;
@@ -48,7 +48,7 @@
 	text-align: left;
 
 	p span {
-		float: right;	
+		float: right;
 	}
 }
 
@@ -67,7 +67,7 @@
 	justify-content: center;
 	align-items: center;
 	opacity: 0;
-	transition: all .5s ease-in-out;
+	transition: all 0.5s ease-in-out;
 
 	&:hover {
 		opacity: 1;
@@ -75,8 +75,8 @@
 
 	button {
 		margin-bottom: 10px;
-		background: linear-gradient(to right, #FCF6BA, #BF953F);
-		border: 1px solid #BF953F;
+		background: linear-gradient(to right, #fcf6ba, #bf953f);
+		border: 1px solid #bf953f;
 		color: #000;
 		font-weight: bold;
 	}

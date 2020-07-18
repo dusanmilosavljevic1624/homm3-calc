@@ -1,276 +1,285 @@
 #calculator-container {
-  height: 100vh;
-  overflow-y: scroll;
+	height: calc(100vh - 50px);
+	overflow-y: scroll;
 }
 
-#attacker, #defender {
-  display: flex;
-  flex-direction: column;
+#attacker,
+#defender {
+	display: flex;
+	flex-direction: column;
 
-  .content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+	.content {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
 
-    .image-container {
-      position: relative;
-      display: flex;
-      align-content: center;
-      justify-items: center;
+		.image-container {
+			position: relative;
+			display: flex;
+			align-content: center;
+			justify-items: center;
 
-      img {
-        align-self: center;
-        display: block;
-        max-width: 90%;
-        height: auto;
-      }
+			img {
+				align-self: center;
+				display: block;
+				max-width: 90%;
+				height: auto;
+			}
 
-      .unit-count-field {
-        position: absolute;
-        bottom: 15px;
-        right: -50px;
-        width: 50px;
-        color: #fff;
-        text-align: center;
-        background: rgb(2,0,36);
-        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(82,82,125,1) 0%, rgba(32,30,69,1) 100%);
-      }
-    }
-  }
+			.unit-count-field {
+				position: absolute;
+				bottom: 15px;
+				right: -50px;
+				width: 50px;
+				color: #fff;
+				text-align: center;
+				background: rgb(2, 0, 36);
+				background: radial-gradient(
+					circle,
+					rgba(2, 0, 36, 1) 0%,
+					rgba(82, 82, 125, 1) 0%,
+					rgba(32, 30, 69, 1) 100%
+				);
+			}
+		}
+	}
 
-  .stats {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    padding: 10px 0;
+	.stats {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		padding: 10px 0;
 
-    p {
-      margin: 0;
-    }
+		p {
+			margin: 0;
+		}
 
-    .stat-bonus {
-      color: lightgreen;
-    }
-  }
+		.stat-bonus {
+			color: lightgreen;
+		}
+	}
 
-  .spells {
-    display: flex;
-    justify-content: center;
+	.spells {
+		display: flex;
+		justify-content: center;
 
-    .spell {
-      padding: 10px;
-      cursor: pointer;
+		.spell {
+			padding: 10px;
+			cursor: pointer;
 
-      &.active img, &:hover img {
-        filter: grayscale(0);
-      }
+			&.active img,
+			&:hover img {
+				filter: grayscale(0);
+			}
 
-      img {
-        filter: grayscale(100%);
-      }
-    }
-  }
+			img {
+				filter: grayscale(100%);
+			}
+		}
+	}
 }
 
 .hero {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid rosybrown;
-  padding: 10px 0 0 0;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid rosybrown;
+	padding: 10px 0 0 0;
 
-  .stats {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+	.stats {
+		margin-bottom: 15px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 
-    button {
-      background: linear-gradient(to right, #FCF6BA, #BF953F);
-      border: none;
-      padding: 0 3px;
-      font-weight: bold;
-    }
+		button {
+			background: linear-gradient(to right, #fcf6ba, #bf953f);
+			border: none;
+			padding: 0 3px;
+			font-weight: bold;
+		}
 
-    p {
-      margin: 0 0 5px 0;
+		p {
+			margin: 0 0 5px 0;
 
-      span {
-        display: inline-block;
-        width: 100px;
-      }
-    }
-  }
+			span {
+				display: inline-block;
+				width: 100px;
+			}
+		}
+	}
 
-  .skills {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 140px;
-    border-top: 1px solid rosybrown;
+	.skills {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		height: 140px;
+		border-top: 1px solid rosybrown;
 
-    .skill {
-      display: flex;
-    }
+		.skill {
+			display: flex;
+		}
 
-    .skill-images {
-      padding: 10px;
-    }
+		.skill-images {
+			padding: 10px;
+		}
 
-    .skill-info {
-      padding: 10px 0;
-      border-left: 1px solid rosybrown;
-      padding: 10px;
+		.skill-info {
+			padding: 10px 0;
+			border-left: 1px solid rosybrown;
+			padding: 10px;
 
-      p {
-        text-align: left;
-        margin-bottom: 0;
+			p {
+				text-align: left;
+				margin-bottom: 0;
 
-        &:first-of-type {
-          color: rosybrown;
-        }
-      }
-    }
+				&:first-of-type {
+					color: rosybrown;
+				}
+			}
+		}
 
-    img {
-      margin-right: 5px;
-      width: 40px;
-      filter: grayscale(100%);
-      cursor: pointer;
+		img {
+			margin-right: 5px;
+			width: 40px;
+			filter: grayscale(100%);
+			cursor: pointer;
 
-      &.active {
-        filter: grayscale(0);
-      }
-    }
-  }
+			&.active {
+				filter: grayscale(0);
+			}
+		}
+	}
 
-  .specialitys {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rosybrown;
+	.specialitys {
+		display: flex;
+		flex-direction: column;
+		border: 1px solid rosybrown;
 
-    .active-specialty {
-      display: flex;
-      cursor: pointer;
-    }
+		.active-specialty {
+			display: flex;
+			cursor: pointer;
+		}
 
-    .image-container {
-      border-right: 1px solid rosybrown;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 80px;
-      height: 80px;
+		.image-container {
+			border-right: 1px solid rosybrown;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 80px;
+			height: 80px;
 
-      img {
-        max-height: 100%;      }
-    }
+			img {
+				max-height: 100%;
+			}
+		}
 
-    .content {
-      padding: 10px;
-      text-align: left;
+		.content {
+			padding: 10px;
+			text-align: left;
 
-      p {
-        margin-bottom: 0;
-        font-size: 16px;
+			p {
+				margin-bottom: 0;
+				font-size: 16px;
 
-        &:first-of-type {
-          color: rosybrown;
-        }
-      }
-    }
-  }
+				&:first-of-type {
+					color: rosybrown;
+				}
+			}
+		}
+	}
 
-  #speciality-container {
-    position: relative;
+	#speciality-container {
+		position: relative;
 
-    #speciality-drawer {
-      z-index: 10;
-      position: absolute;
-      top: calc(100% + 2px);
-      left: 0;
-      right: 0;
-      padding: 5px;
-      background-color: #352222d1;
-      overflow-y: scroll;
+		#speciality-drawer {
+			z-index: 10;
+			position: absolute;
+			top: calc(100% + 2px);
+			left: 0;
+			right: 0;
+			padding: 5px;
+			background-color: #352222d1;
+			overflow-y: scroll;
 
-      p {
-        margin-bottom: 10px;
-      }
+			p {
+				margin-bottom: 10px;
+			}
 
-      .spell-specialtys {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        align-items: center;
-        justify-items: center;
-        margin-bottom: 10px;
-        row-gap: 10px;
-      }
+			.spell-specialtys {
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				align-items: center;
+				justify-items: center;
+				margin-bottom: 10px;
+				row-gap: 10px;
+			}
 
-      .skill-specialtys {
-        margin-bottom: 10px;
-      }
+			.skill-specialtys {
+				margin-bottom: 10px;
+			}
 
-      .hero-skill-specialty,
-      .hero-spell-specialty,
-      .hero-unit-specialty {
-        cursor: pointer;
-        transition: all .3s ease-in-out;
+			.hero-skill-specialty,
+			.hero-spell-specialty,
+			.hero-unit-specialty {
+				cursor: pointer;
+				transition: all 0.3s ease-in-out;
 
-        &:hover {
-          transform: scale(1.2);
-        }
-      }
+				&:hover {
+					transform: scale(1.2);
+				}
+			}
 
-      .hero-skill-specialty {
-        width: 60px;
-        margin: 0 10px;
-        cursor: pointer;
-      }
+			.hero-skill-specialty {
+				width: 60px;
+				margin: 0 10px;
+				cursor: pointer;
+			}
 
-      .hero-spell-specialty {
-        margin: 0 5px;
-      }
+			.hero-spell-specialty {
+				margin: 0 5px;
+			}
 
-      .unit-specialtys {
-        display: grid;
-        max-height: 300px;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        align-items: center;
-        justify-content: center;
-        justify-items: center;
+			.unit-specialtys {
+				display: grid;
+				max-height: 300px;
+				grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+				align-items: center;
+				justify-content: center;
+				justify-items: center;
 
-        .hero-unit-specialty {
-          max-height: 70px;
-          padding: 5px 0;
-        }
-      }
-    }
-  }
+				.hero-unit-specialty {
+					max-height: 70px;
+					padding: 5px 0;
+				}
+			}
+		}
+	}
 }
 
 #results {
-  margin: 40px auto 0 auto;
-  width: 80%;
+	margin: 40px auto 0 auto;
+	width: 80%;
 
-  #results-damage {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-  }
+	#results-damage {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr;
+	}
 
-  #results-bonuses {
-    margin-bottom: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
+	#results-bonuses {
+		margin-bottom: 15px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
 
-  h5, p {
-    margin: 0;
-    border: 1px solid rosybrown;
-  }
+	h5,
+	p {
+		margin: 0;
+		border: 1px solid rosybrown;
+	}
 
-  h5 {
-    line-height: 30px;
-  }
+	h5 {
+		line-height: 30px;
+	}
 }

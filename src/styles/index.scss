@@ -1,20 +1,23 @@
-@import "~bootstrap/scss/bootstrap";
-@import "~tippy.js/dist/tippy.css";
+@import '~bootstrap/scss/bootstrap';
+@import '~tippy.js/dist/tippy.css';
+
+@import './variables';
 
 @import './unit-list';
 @import './towns';
 @import './damage-calculator';
+@import './navigation';
 
 body {
-  background-color: #352222d1;
-  color: #ccc;
+	background-color: #352222d1;
+	color: #ccc;
 }
 
 input[type='number'] {
-  -moz-appearance:textfield;
+	-moz-appearance: textfield;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+	-webkit-appearance: none;
 }

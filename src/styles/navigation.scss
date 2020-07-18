@@ -1,0 +1,42 @@
+#navigation {
+	padding: 0 15px;
+	height: $navigation_height;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 3px solid rosybrown;
+
+	h1 {
+		margin: 0;
+		font-size: 18px;
+		font-weight: normal;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 14px;
+		font-weight: normal;
+
+		img {
+			height: 40px;
+			margin: 0 5px;
+		}
+	}
+
+	#navigation-left {
+		display: flex;
+		align-items: center;
+	}
+
+	#version-switches {
+		margin-right: 15px;
+
+		img {
+			margin-right: 10px;
+			border-radius: 50%;
+			height: 40px;
+			width: 40px;
+			cursor: pointer;
+		}
+	}
+}

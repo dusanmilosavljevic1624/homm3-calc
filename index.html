@@ -1,41 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>HoMM3 Damage Calculator</title>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=UA-37017258-7"
+		></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>HoMM3 Damage Calculator</title>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-37017258-7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+			gtag('config', 'UA-37017258-7');
+		</script>
+	</head>
 
-    gtag('config', 'UA-37017258-7');
-  </script>
-</head>
+	<body>
+		<div id="navigation">
+			<div id="navigation-left">
+				<div id="version-switches">
+					<img
+						class="tooltip-btn"
+						src="./img/shadow_of_death_icon.png"
+						data-tippy-content="Use Shadow of Death values"
+					/>
 
-<body>
-	<div class="container-fluid">
-		<div class="row">
-			<div id="towns-container" class="col-lg-1">
-				<div id="towns"></div>
+					<img
+						class="tooltip-btn"
+						src="./img/hota_icon.png"
+						data-tippy-content="Use Horn of the Abyss values"
+					/>
+				</div>
+
+				<h1>Heroes of might and magic 3 damage calculator</h1>
 			</div>
 
-			<div id="units-container" class="col-lg-4 col-xl-5">
-				<div id="units"></div>
-			</div>
+			<h2>
+				Made with love for <img src="./img/Ancient_Behemoth.gif" /> by
+				<a href="#">Dušan Milosavljević</a>
+			</h2>
+		</div>
 
-			<div id="calculator-container" class="col-lg-7 col-xl-6">
-					<div id="damage-calculator"></div> 
+		<div class="container-fluid">
+			<div class="row">
+				<div id="towns-container" class="col-lg-1">
+					<div id="towns"></div>
+				</div>
+
+				<div id="units-container" class="col-lg-4 col-xl-5">
+					<div id="units"></div>
+				</div>
+
+				<div id="calculator-container" class="col-lg-7 col-xl-6">
+					<div id="damage-calculator"></div>
+				</div>
 			</div>
 		</div>
-	</div>
 
-
-	<script src="./dist/bundle.js"></script>
-</body>
-
+		<script src="./dist/bundle.js"></script>
+	</body>
 </html>
