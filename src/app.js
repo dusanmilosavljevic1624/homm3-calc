@@ -16,11 +16,23 @@ document.addEventListener('DOMContentLoaded', () => {
 	init();
 	tippy('.tooltip-btn');
 
-	const versionSwitchers = document.querySelectorAll('#version-switches img');
+	const versionSwitchers = document.querySelectorAll(
+		'#version-switches .tooltip-btn'
+	);
 
 	/* eslint-disable-next-line no-restricted-syntax */
 	for (const switcher of versionSwitchers) {
 		switcher.addEventListener('click', (event) => {
+			const switchers = document.querySelectorAll(
+				'#version-switches .tooltip-btn'
+			);
+
+			/* eslint-disable-next-line no-restricted-syntax */
+			for (const switcherImg of switchers) {
+				switcherImg.classList.remove('selected');
+			}
+
+			switcher.classList.add('selected');
 			unitService.gameVersion = event.target.dataset.version;
 			init();
 		});

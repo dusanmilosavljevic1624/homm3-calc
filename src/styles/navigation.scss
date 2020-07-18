@@ -30,10 +30,32 @@
 
 	#version-switches {
 		margin-right: 15px;
+		display: flex;
+		align-items: center;
+
+		.img-container {
+			position: relative;
+
+			&.selected:after {
+				border-radius: 50%;
+				content: '✓';
+				position: absolute;
+				top: 0;
+				left: 0;
+				display: flex;
+				justify-content: center;
+				height: 40px;
+				width: 40px;
+				align-items: center;
+				color: #bf953f;
+				font-size: 30px;
+				background: rgba(0, 0, 0, 0.6);
+			}
+		}
 
 		img {
-			margin-right: 10px;
 			border-radius: 50%;
+			margin-right: 10px;
 			height: 40px;
 			width: 40px;
 			cursor: pointer;
