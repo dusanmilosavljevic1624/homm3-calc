@@ -44,11 +44,7 @@ export default class SpecialtyModal {
       <p>Units</p>
       <div class="unit-specialtys">
         ${this.createHeroUnitSpecialityHtml()}
-			</div>
-			
-			<div class="footer">
-				<button id="specialty-modal-close-btn">Close</button>
-			</div>
+			</div>			
 		`;
 
 		tippy('.hero-skill-specialty');
