@@ -201,30 +201,20 @@ export default class HeroView {
         <div class="stats">
           ${this.createHeroStatHtml('Attack')}
           ${this.createHeroStatHtml('Defense')}
-          ${this.createHeroStatHtml('Level')}
+					${this.createHeroStatHtml('Level')}
+					
+					<div
+						class="active-specialty active-hero-specialty"
+						data-tippy-content="Current specialty: ${
+							speciality.name
+						}<br><br>Change hero specialty">
+						<p>Specialty</p>
+						<img src="./img/${speciality.image}" />
+					</div>
         </div>
 
         <div class="skills">
           ${this.createHeroSkillsHtml()}
-        </div>
-
-        <div class="specialitys">
-          <div class="active-specialty" data-tippy-content="Change specialty">
-            <div class="image-container">
-							<img
-								id="speciality-drawer-test"
-								class="img-fluid"
-								src="./img/${speciality.image}"
-							/>
-            </div>
-
-            <div class="content">
-              <p>Speciality</p>
-              <p>${speciality.name}<p>
-            </div>
-          </div>
-   
-          <div id="speciality-container"></div>
         </div>
       </div>
     `;
