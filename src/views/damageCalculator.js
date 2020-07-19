@@ -58,9 +58,9 @@ export default class DamageCalculator {
 		this.render();
 	}
 
-	updateHeroStat(position, stat, amount) {
+	updateHeroStat(position, stat, value) {
 		const activeHero = this.getHeroByPosition(position);
-		activeHero[stat] += Number(amount);
+		activeHero[stat] = Number(value);
 
 		this.render();
 	}

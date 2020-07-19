@@ -87,11 +87,34 @@
 	padding: 10px 0 0 0;
 
 	.stats {
-		margin-bottom: 15px;
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-bottom: 15px;
+		padding: 0 10px;
+
+		& > div {
+			display: flex;
+			flex-direction: column;
+			width: 30%;
+			justify-content: space-between;
+			align-items: center;
+
+			img {
+				height: 50px;
+				width: 50px;
+			}
+
+			input {
+				width: 50px;
+				text-align: center;
+				background: #594949;
+				border: rosybrown;
+				outline: none;
+				color: #fff;
+				font-weight: bold;
+			}
+		}
 
 		button {
 			background: linear-gradient(to right, #fcf6ba, #bf953f);

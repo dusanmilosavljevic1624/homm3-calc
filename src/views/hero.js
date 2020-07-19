@@ -55,15 +55,20 @@ export default class HeroView {
 		const statSlug = stat.toLowerCase();
 
 		return `
-      <p>
-        <span>${stat}: ${this.hero[statSlug]}</span>
-
-        ${this.createHeroStatButtonHtml(statSlug, 1)}
-        ${this.createHeroStatButtonHtml(statSlug, -1)}
-        ${this.createHeroStatButtonHtml(statSlug, 5)}
-        ${this.createHeroStatButtonHtml(statSlug, -5)}
-      </p>
-    `;
+			<div class="hero-stat-container"
+				data-tippy-content="Type in hero ${stat}">
+				<p>${stat}</p>
+				<img src="./img/Hero_${stat}.png" />
+				<input
+					class="hero-stat-input"
+					data-stat="${statSlug}"
+					type="number"
+					min="0"
+					value="${this.hero[statSlug]}"
+					step="1"
+				>
+			</div>
+		`;
 	}
 
 	createHeroSkillsHtml() {
@@ -120,19 +125,20 @@ export default class HeroView {
 	}
 
 	bindStatListeners() {
-		const btnSelector = `#${this.containerElId} .hero-stat-btn`;
-		const statButtons = document.querySelectorAll(btnSelector);
+		const inputSelector = `#${this.containerElId} .hero-stat-input`;
+		const statInputs = document.querySelectorAll(inputSelector);
 
-		for (let i = 0; i < statButtons.length; i += 1) {
-			statButtons[i].onclick = () => {
+		/* eslint-disable-next-line no-restricted-syntax */
+		for (const statInput of statInputs) {
+			statInput.addEventListener('change', () => {
 				const { onStatUpdate } = this;
-				const { stat, amount } = statButtons[i].dataset;
-
-				onStatUpdate(stat, amount);
-			};
+				const newValue = statInput.value < 0 ? 0 : statInput.value;
+				onStatUpdate(statInput.dataset.stat, newValue);
+				statInput.focus();
+			});
 		}
 
-		tippy('.hero-stat-btn');
+		tippy('.hero-stat-container');
 	}
 
 	bindSkillListeners() {
@@ -172,8 +178,6 @@ export default class HeroView {
 
 		return `
       <div id="${this.containerElId}" class="hero text-center">
-        <h3>Hero</h3>
-
         <div class="stats">
           ${this.createHeroStatHtml('Attack')}
           ${this.createHeroStatHtml('Defense')}
