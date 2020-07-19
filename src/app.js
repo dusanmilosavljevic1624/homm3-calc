@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	/* eslint-disable-next-line no-restricted-syntax */
 	for (const switcher of versionSwitchers) {
-		switcher.addEventListener('click', (event) => {
+		switcher.addEventListener('click', () => {
 			const switchers = document.querySelectorAll(
 				'#version-switches .tooltip-btn'
 			);

@@ -5,7 +5,7 @@ import Unit from '../models/Unit';
 
 class UnitService {
 	constructor() {
-		this.gameVersion = 'SOD';
+		this.gameVersion = 'HOTA';
 		this.units = createUnitMap();
 		this.townUnits = createTownMap();
 	}
