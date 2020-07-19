@@ -14,12 +14,14 @@ export default class HeroView {
 			onStatUpdate,
 			onSkillSelect,
 			onSpecialtySelect,
+			title,
 		} = viewData;
 
 		this.hero = hero;
 		this.skills = skills;
 		this.containerElId = containerElId;
 		this.hasGeneratedHtml = false;
+		this.title = title;
 		this.onStatUpdate = onStatUpdate;
 		this.onSkillSelect = onSkillSelect;
 		this.onSpecialtySelect = onSpecialtySelect;
@@ -177,7 +179,9 @@ export default class HeroView {
 		this.hasGeneratedHtml = true;
 
 		return `
-      <div id="${this.containerElId}" class="hero text-center">
+			<div id="${this.containerElId}" class="hero text-center">
+				<p class="hero-title">${this.title}</p>
+
         <div class="stats">
           ${this.createHeroStatHtml('Attack')}
           ${this.createHeroStatHtml('Defense')}
