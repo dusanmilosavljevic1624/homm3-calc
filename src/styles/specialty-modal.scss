@@ -1,0 +1,90 @@
+#specialty-modal {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(#000, 0.75);
+	transition: all 0.5s ease-in-out;
+	display: none;
+
+	&.shown {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	#specialty-modal-content {
+		padding: 15px;
+		max-width: 786px;
+		max-height: 80vh;
+		border: 1px solid rosybrown;
+		overflow-y: auto;
+		background: #352222d1;
+
+		.skill-specialtys {
+			margin-bottom: 20px;
+
+			img {
+				height: 70px;
+				width: 70px;
+				margin-right: 10px;
+				cursor: pointer;
+				transition: all 0.5s ease-in-out;
+
+				&:hover {
+					transform: scale(1.1);
+				}
+			}
+		}
+
+		.spell-specialtys {
+			margin-bottom: 20px;
+
+			img {
+				margin-right: 10px;
+				cursor: pointer;
+				transition: all 0.5s ease-in-out;
+
+				&:hover {
+					transform: scale(1.1);
+				}
+			}
+		}
+
+		.unit-specialtys {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+			align-items: center;
+			justify-content: center;
+			justify-items: center;
+
+			.hero-unit-specialty {
+				max-height: 70px;
+				padding: 5px 0;
+				cursor: pointer;
+				transition: all 0.5s ease-in-out;
+
+				&:hover {
+					transform: scale(1.1);
+				}
+			}
+		}
+
+		.footer {
+			padding: 30px 0 10px 0;
+
+			button {
+				border: 1px solid #bf953f;
+				padding: 5px 10px;
+				background: linear-gradient(to right, #fcf6ba, #bf953f);
+				color: #000;
+				font-weight: bold;
+				font-size: 18px;
+				text-transform: uppercase;
+				line-height: 1.5;
+				border-radius: 0.25rem;
+			}
+		}
+	}
+}

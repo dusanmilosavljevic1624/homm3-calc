@@ -26,9 +26,10 @@ export default class DamageCalculator {
 			skills: ['Offense', 'Archery'],
 			containerElId: 'attacker-hero',
 			title: 'Attacking hero',
+			position: 'attacker',
 			onStatUpdate: this.updateHeroStat.bind(this, 'attacker'),
 			onSkillSelect: this.selectSkill.bind(this, 'attacker'),
-			onSpecialtySelect: this.selectSpecialty.bind(this, 'attacker'),
+			onSpecialtySelect: this.selectSpecialty.bind(this),
 		});
 
 		this.defenderHeroView = new HeroView({
@@ -36,9 +37,10 @@ export default class DamageCalculator {
 			skills: ['Armorer'],
 			containerElId: 'defender-hero',
 			title: 'Defending hero',
+			position: 'defender',
 			onStatUpdate: this.updateHeroStat.bind(this, 'defender'),
 			onSkillSelect: this.selectSkill.bind(this, 'defender'),
-			onSpecialtySelect: this.selectSpecialty.bind(this, 'defender'),
+			onSpecialtySelect: this.selectSpecialty.bind(this),
 		});
 
 		this.containerEl = document.getElementById(containerEl);

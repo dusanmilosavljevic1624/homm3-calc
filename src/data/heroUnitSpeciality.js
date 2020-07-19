@@ -324,7 +324,7 @@ export default {
 		2,
 		['wolf_rider', 'wolf_raider']
 	),
-	WYWERNS: new LevelScalingUnitSpecialty(
+	WYVERNS: new LevelScalingUnitSpecialty(
 		'wyverns',
 		'Wyverns',
 		'Wyvern.gif',

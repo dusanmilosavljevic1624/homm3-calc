@@ -4,6 +4,7 @@ import tippy from 'tippy.js';
 import specialtyService from '../services/specialityService';
 
 import SpecialityDrawerView from './specialtys';
+import SpecialtyModal from './specialtyModal';
 
 export default class HeroView {
 	constructor(viewData) {
@@ -15,6 +16,7 @@ export default class HeroView {
 			onSkillSelect,
 			onSpecialtySelect,
 			title,
+			position,
 		} = viewData;
 
 		this.hero = hero;
@@ -22,6 +24,7 @@ export default class HeroView {
 		this.containerElId = containerElId;
 		this.hasGeneratedHtml = false;
 		this.title = title;
+		this.position = position;
 		this.onStatUpdate = onStatUpdate;
 		this.onSkillSelect = onSkillSelect;
 		this.onSpecialtySelect = onSpecialtySelect;
@@ -30,11 +33,17 @@ export default class HeroView {
 			parentElId: this.containerElId,
 			onSpecialtySelected: this.selectSpecialty.bind(this),
 		});
+
+		this.specialtyModal = new SpecialtyModal({
+			parentElId: 'specialty-modal',
+			position: this.position,
+			onSpecialtySelected: this.selectSpecialty.bind(this, this.position),
+		});
 	}
 
-	selectSpecialty(specialty) {
+	selectSpecialty(position, specialty) {
 		const { onSpecialtySelect } = this;
-		onSpecialtySelect(specialty);
+		onSpecialtySelect(position, specialty);
 	}
 
 	/* eslint-disable-next-line class-methods-use-this */
@@ -162,9 +171,16 @@ export default class HeroView {
 	bindSpecialityDrawerListeners() {
 		const drawerSelector = `#${this.containerElId} .active-specialty`;
 		const specialityDrawerToggler = document.querySelector(drawerSelector);
-		specialityDrawerToggler.onclick = this.specialityDrawer.toggle.bind(
-			this.specialityDrawer
+
+		// specialityDrawerToggler.onclick = this.specialityDrawer.toggle.bind(
+		// this.specialityDrawer
+		// );
+
+		specialityDrawerToggler.onclick = this.specialtyModal.show.bind(
+			this.specialtyModal,
+			this.position
 		);
+
 		tippy('.active-specialty');
 	}
 
