@@ -180,7 +180,7 @@ export default class DamageCalculator {
 			const statBonus = `<span class="stat-bonus">(${buffedDmg})</span>`;
 
 			return `
-        <p>${title}: ${baseDmg}${isBuffed ? statBonus : ''}</p>
+        <p>${title}: <span>${baseDmg}${isBuffed ? statBonus : ''}</span></p>
       `;
 		};
 
@@ -191,7 +191,7 @@ export default class DamageCalculator {
 
 		return `
       <div id="${position}">
-        <p>${position}: ${unit.name}</p>
+        <p>${unit.name}</p>
 
         <div class="content">
           <div class="image-container">
@@ -213,7 +213,7 @@ export default class DamageCalculator {
             ${createStatHtml('Defense', unit.defense, buffedDefense)}
             ${createStatHtml('Min Damage', unit.minDamage, unit.minTotalDamage)}
             ${createStatHtml('Max Damage', unit.maxDamage, unit.maxTotalDamage)}
-            <p>Health: ${unit.health}</p>
+            <p>Health: <span>${unit.health}</span></p>
           </div>
         </div>
 

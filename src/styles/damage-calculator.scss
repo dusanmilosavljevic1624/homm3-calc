@@ -18,28 +18,29 @@
 	}
 
 	.content {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
 		border: 1px solid rosybrown;
 		border-top: 0;
+		display: grid;
+		grid-template-columns: 40% 60%;
+		justify-items: center;
+		align-items: center;
 
 		.image-container {
 			position: relative;
-			display: flex;
-			align-content: center;
-			justify-items: center;
+			display: block;
+			align-self: center;
 
 			img {
 				align-self: center;
 				display: block;
 				max-width: 90%;
+				max-height: 100px;
 				height: auto;
 			}
 
 			.unit-count-field {
 				position: absolute;
-				bottom: 15px;
+				bottom: -5px;
 				right: -50px;
 				width: 50px;
 				color: #fff;
@@ -60,9 +61,14 @@
 		flex-direction: column;
 		justify-content: space-evenly;
 		padding: 10px 0;
+		width: 100%;
+		padding: 10px 15%;
 
 		p {
 			margin: 0;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
 		}
 
 		.stat-bonus {
