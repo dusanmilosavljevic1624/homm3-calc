@@ -33,7 +33,7 @@
 			img {
 				align-self: center;
 				display: block;
-				max-width: 90%;
+				max-width: 65px;
 				max-height: 100px;
 				height: auto;
 			}
@@ -62,13 +62,17 @@
 		justify-content: space-evenly;
 		padding: 10px 0;
 		width: 100%;
-		padding: 10px 15%;
+		padding: 10px 10%;
 
 		p {
 			margin: 0;
 			width: 100%;
 			display: flex;
 			justify-content: space-between;
+
+			span {
+				font-weight: bold;
+			}
 		}
 
 		.stat-bonus {
@@ -329,12 +333,42 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		grid-template-rows: 1fr;
+
+		p {
+			font-size: 18px;
+			display: flex;
+			justify-content: space-between;
+			padding: 0 15px;
+
+			span {
+				font-weight: bold;
+				color: yellow;
+			}
+		}
 	}
 
 	#results-bonuses {
 		margin-bottom: 15px;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
+
+		p {
+			display: flex;
+			justify-content: space-between;
+			padding: 0 15px;
+
+			span {
+				font-weight: bold;
+			}
+
+			&:nth-of-type(2n-1) span {
+				color: lightgreen;
+			}
+
+			&:nth-of-type(2n) span {
+				color: #d84242;
+			}
+		}
 	}
 
 	h5,

@@ -2,6 +2,8 @@
 	border: 3px solid rosybrown;
 	border-top: 0;
 	padding: 0;
+	height: calc(100vh - 50px);
+	overflow-y: auto;
 }
 
 #towns {

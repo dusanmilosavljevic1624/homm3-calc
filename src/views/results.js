@@ -43,8 +43,8 @@ export default class Results {
       <div id="results-bonuses">
         <h5>Bonuses</h5>
         <h5>Reductions</h5>
-        <p>Attack skill: ${attackSkillBonusText}%</p>
-        <p>Defense skill: ${defenseSkillBonusText}%</p>
+        <p>Attack skill: <span>${attackSkillBonusText}%</span></p>
+        <p>Defense skill: <span>${defenseSkillBonusText}%</span></p>
 
         <p>Offense: <span>${offenseBonusText}%</span></p>
         <p>Armorer: <span>${armorerReductionText}%</span></p>
@@ -125,8 +125,8 @@ function createResultsHeaderItem(damageDetails) {
     <h5>${title}</h5>
 
     <div id="results-damage">
-      <p>Range: ${rangeText}</p>
-      <p>Avg: <span>${averageDamageText}</span></p>
+      <p>Range: <span>${rangeText}</span></p>
+      <p>Average: <span>${averageDamageText}</span></p>
       <p>Kills: <span>${killsText}</span></p>
     </div>
   `;
