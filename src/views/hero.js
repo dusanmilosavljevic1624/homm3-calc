@@ -77,6 +77,7 @@ export default class HeroView {
 					min="0"
 					value="${this.hero[statSlug]}"
 					step="1"
+					tabindex="1"
 				>
 			</div>
 		`;
