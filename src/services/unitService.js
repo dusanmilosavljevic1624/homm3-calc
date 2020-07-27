@@ -26,6 +26,51 @@ class UnitService {
 
 		return versionMap[this.gameVersion];
 	}
+
+	get allDragonUnits() {
+		return [
+			this.getUnit('GREEN_DRAGON'),
+			this.getUnit('GOLD_DRAGON'),
+			this.getUnit('BONE_DRAGON'),
+			this.getUnit('GHOST_DRAGON'),
+			this.getUnit('RED_DRAGON'),
+			this.getUnit('BLACK_DRAGON'),
+			this.getUnit('FAERIE_DRAGON'),
+			this.getUnit('RUST_DRAGON'),
+			this.getUnit('AZURE_DRAGON'),
+			this.getUnit('CRYSTAL_DRAGON'),
+		];
+	}
+
+	get allBehemothUnits() {
+		return [this.getUnit('BEHEMOTH'), this.getUnit('ANCIENT_BEHEMOTH')];
+	}
+
+	get allHydraUnits() {
+		return [this.getUnit('HYDRA'), this.getUnit('CHAOS_HYDRA')];
+	}
+
+	get allPhoenixUnits() {
+		return [this.getUnit('FIREBIRD'), this.getUnit('PHOENIX')];
+	}
+
+	get allHaspidUnits() {
+		return this.gameVersion === 'HOTA'
+			? [this.getUnit('SEA_SERPENT'), this.getUnit('HASPID')]
+			: [];
+	}
+
+	get allDevilUnits() {
+		return [this.getUnit('DEVIL'), this.getUnit('ARCH_DEVIL')];
+	}
+
+	get allAngelUnits() {
+		return [this.getUnit('ANGEL'), this.getUnit('ARCHANGEL')];
+	}
+
+	get allGiantUnits() {
+		return [this.getUnit('GIANT'), this.getUnit('TITAN')];
+	}
 }
 
 function createTownMap() {

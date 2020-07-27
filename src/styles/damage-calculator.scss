@@ -77,14 +77,19 @@
 
 		.stat-bonus {
 			color: lightgreen;
+
+			&.reduced {
+				color: #d84242;
+			}
 		}
 	}
 
 	.spells {
-		display: flex;
-		justify-content: center;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
 		border: 1px solid rosybrown;
 		border-top: 1px solid rosybrown;
+		justify-content: center;
 
 		.spell {
 			padding: 10px;
@@ -97,6 +102,8 @@
 
 			img {
 				filter: grayscale(100%);
+				max-width: 65px;
+				max-height: 50px;
 			}
 		}
 	}
@@ -177,10 +184,9 @@
 	}
 
 	.skills {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		justify-content: center;
-		height: 140px;
 		border-top: 1px solid rosybrown;
 
 		.skill {
@@ -188,7 +194,9 @@
 		}
 
 		.skill-images {
-			padding: 10px;
+			padding: 5px 15px;
+			display: flex;
+			justify-content: space-between;
 		}
 
 		.skill-info {
@@ -207,8 +215,7 @@
 		}
 
 		img {
-			margin-right: 5px;
-			width: 40px;
+			width: 27%;
 			filter: grayscale(100%);
 			cursor: pointer;
 

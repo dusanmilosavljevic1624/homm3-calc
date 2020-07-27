@@ -97,17 +97,17 @@ export default class HeroView {
 		};
 
 		const heroSkillLevel = this.hero.skills[skill.toLowerCase()];
-
 		const createHeroSkillImage = (skill, level, isActive) => {
 			const activeClass = isActive ? 'active' : '';
 			const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
+			const skillName = skill.split('_').join(' ');
 
 			return `
         <img
           data-skill=${skill}
           data-level=${level}
           class="hero-skill-btn ${activeClass}"
-          data-tippy-content="${tooltipPrefix} ${skillLevelMap[level]} ${skill}"
+          data-tippy-content="${tooltipPrefix} ${skillLevelMap[level]} ${skillName}"
           src="./img/${skillLevelMap[level]}_${skill}.png"
         />`;
 		};
@@ -126,11 +126,6 @@ export default class HeroView {
       <div class="skill">
         <div class="skill-images">
           ${imagesHtml}
-        </div>
-
-        <div class="skill-info">
-          <p>${skill}</p>
-          <p>${skillLevelMap[heroSkillLevel] || 'None'}</p>
         </div>
       </div>
     `;

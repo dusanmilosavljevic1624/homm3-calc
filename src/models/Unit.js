@@ -34,28 +34,37 @@ export default class Unit {
 	}
 
 	get blessedBaseDamage() {
-		return this.maxDamage + 1;
+		return this.spells.bless > 1 ? this.maxDamage + 1 : this.maxDamage;
+	}
+
+	get cursedBaseDamage() {
+		const dmg = this.spells.curse > 1 ? this.minDamage - 1 : this.minDamage;
+		return dmg > 0 ? dmg : 1;
 	}
 
 	get minBaseDamage() {
+		if (this.spells.curse) return this.cursedBaseDamage;
 		if (this.spells.bless) return this.blessedBaseDamage;
 
 		return this.minDamage < 1 ? 1 : this.minDamage;
 	}
 
 	get maxBaseDamage() {
+		if (this.spells.curse) return this.cursedBaseDamage;
 		if (this.spells.bless) return this.blessedBaseDamage;
 
 		return this.maxDamage;
 	}
 
 	get minTotalDamage() {
-		if (this.spells.bless) return this.spellDamageBonus + this.maxDamage;
+		if (this.spells.curse) return this.cursedBaseDamage;
+		if (this.spells.bless) return this.blessedBaseDamage;
 
 		return this.spellDamageBonus + this.minDamage;
 	}
 
 	get maxTotalDamage() {
+		if (this.spells.curse) return this.cursedBaseDamage;
 		return this.spellDamageBonus + this.maxDamage;
 	}
 
@@ -78,37 +87,74 @@ export default class Unit {
 
 	get meleePenalty() {
 		if (!this.isRanged) return 0;
-		if (
-			this.specials.length > 0 &&
-			!this.specials.indexOf('no_melee_penalty') !== -1
-		)
-			return 0;
+
+		/* eslint-disable-next-line operator-linebreak */
+		const isImmuneToMeleePenalty =
+			!this.specials.indexOf('no_melee_penalty') !== -1;
+
+		if (isImmuneToMeleePenalty) return 0;
 
 		return 0.5;
 	}
 
 	get totalAttackSkill() {
-		return this.spellAttackBonus + this.attack;
+		const totalAttack = this.spellAttackBonus + this.attack;
+		return totalAttack < 0 ? 0 : totalAttack;
 	}
 
 	get totalDefenseSkill() {
+		if (this.spells.frenzy) return 0;
 		return this.spellDefenseBonus + this.defense;
 	}
 
 	get spellDamageBonus() {
-		return this.spells.bless ? 1 : 0;
+		if (this.spells.curse) return this.spells.curse > 1 ? -1 : 0;
+		return this.spells.bless && this.spells.bless > 1 ? 1 : 0;
 	}
 
 	get spellAttackBonus() {
+		let total = 0;
+
 		if (this.isRanged) {
-			return this.spells.precision ? 6 : 0;
+			const precisionBonus = this.spells.precision > 1 ? 6 : 3;
+			total += this.spells.precision ? precisionBonus : 0;
 		}
 
-		return this.spells.bloodlust ? 6 : 0;
+		if (this.spells.bloodlust) {
+			total += this.spells.bloodlust > 1 ? 6 : 3;
+		}
+
+		if (this.spells.prayer) {
+			total += this.spells.prayer > 1 ? 4 : 2;
+		}
+
+		if (this.spells.weakness) {
+			total -= this.spells.weakness > 1 ? 6 : 3;
+		}
+
+		if (this.spells.frenzy) {
+			const multipliersBySpellLevel = {
+				1: 1,
+				2: 1.5,
+				3: 2,
+			};
+
+			const totalDefense = this.spellDefenseBonus + this.defense;
+			total += totalDefense * multipliersBySpellLevel[this.spells.frenzy];
+		}
+
+		return total;
 	}
 
 	get spellDefenseBonus() {
-		if (this.spells.stoneskin) return 6;
-		return 0;
+		let total = 0;
+
+		if (this.spells.stoneskin) total += this.spells.stoneskin > 1 ? 6 : 3;
+
+		if (this.spells.prayer) {
+			total += this.spells.prayer > 1 ? 4 : 2;
+		}
+
+		return total;
 	}
 }

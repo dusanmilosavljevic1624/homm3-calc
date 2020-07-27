@@ -14,16 +14,25 @@ export default class DamageCalculator {
 		this.attackerHero = new Hero('Christian', 0, 0, 1, 'elves', {
 			offense: 0,
 			archery: 0,
+			earth_magic: 0,
 		});
 
 		this.defenderHero = new Hero('Ciele', 0, 0, 1, 'air_shield', {
 			armorer: 0,
 		});
+
 		this.defenderUnit = unitService.getUnit('IMP', 'SOD');
 
 		this.attackerHeroView = new HeroView({
 			hero: this.attackerHero,
-			skills: ['Offense', 'Archery'],
+			skills: [
+				'Earth_Magic',
+				'Water_Magic',
+				'Air_Magic',
+				'Fire_Magic',
+				'Offense',
+				'Archery',
+			],
 			containerElId: 'attacker-hero',
 			title: 'Attacking hero',
 			position: 'attacker',
@@ -34,7 +43,13 @@ export default class DamageCalculator {
 
 		this.defenderHeroView = new HeroView({
 			hero: this.defenderHero,
-			skills: ['Armorer'],
+			skills: [
+				'Earth_Magic',
+				'Water_Magic',
+				'Air_Magic',
+				'Fire_Magic',
+				'Armorer',
+			],
 			containerElId: 'defender-hero',
 			title: 'Defending hero',
 			position: 'defender',
@@ -71,24 +86,81 @@ export default class DamageCalculator {
 		this.render();
 	}
 
+	/* eslint-disable-next-line consistent-return */
 	selectSkill(position, skill, level) {
-		const activeHero = this.getHeroByPosition(position);
 		const skillSlug = skill.toLowerCase();
 
-		if (activeHero.skills[skillSlug] === Number(level)) {
-			activeHero.skills[skillSlug] = null;
-		} else {
-			activeHero.skills[skillSlug] = Number(level);
+		if (
+			position === 'defender' &&
+			(skill === 'Fire_Magic' || skill === 'Water_Magic')
+		) {
+			const defenderHero = this.getHeroByPosition('defender');
+			const attackerUnit = this.getUnitByPosition('attacker');
+
+			const shouldDisable = defenderHero.skills[skillSlug] === Number(level);
+			defenderHero.skills[skillSlug] = shouldDisable ? null : Number(level);
+
+			if (attackerUnit.spells.curse) {
+				attackerUnit.spells.curse = shouldDisable
+					? 1
+					: defenderHero.skills[skillSlug];
+			}
+
+			if (attackerUnit.spells.weakness) {
+				attackerUnit.spells.weakness = shouldDisable
+					? 1
+					: defenderHero.skills[skillSlug];
+			}
+
+			return this.render();
+		}
+
+		const activeHero = this.getHeroByPosition(position);
+		const activeUnit = this.getUnitByPosition(position);
+
+		const shouldDisable = activeHero.skills[skillSlug] === Number(level);
+		activeHero.skills[skillSlug] = shouldDisable ? null : Number(level);
+
+		const spellsBySchool = {
+			water_magic: ['bless', 'weakness', 'prayer'],
+			earth_magic: ['shield', 'stone_skin'],
+			air_magic: ['airshield', 'precision'],
+			fire_magic: ['curse', 'bloodlust', 'slayer', 'frenzy'],
+		};
+
+		if (spellsBySchool[skillSlug]) {
+			spellsBySchool[skillSlug].forEach((spell) => {
+				if (activeUnit.spells[spell]) {
+					activeUnit.spells[spell] = shouldDisable
+						? 1
+						: activeHero.skills[skillSlug];
+				}
+			});
 		}
 
 		this.render();
 	}
 
-	selectSpell(position, spell) {
+	selectSpell(position, spell, school) {
+		let activeHero = this.getHeroByPosition(position);
+		// handle spells that use opposing hero skills
+		if (
+			position === 'attacker' &&
+			(spell === 'curse' || spell === 'weakness')
+		) {
+			activeHero = this.getHeroByPosition('defender');
+		}
+
 		const activeUnit = this.getUnitByPosition(position);
+
 		const isSpellActive = activeUnit.spells[spell];
 
-		activeUnit.spells[spell] = isSpellActive ? null : 3;
+		if (spell === 'curse') activeUnit.spells.bless = null;
+		if (spell === 'bless') activeUnit.spells.curse = null;
+
+		activeUnit.spells[spell] = isSpellActive
+			? null
+			: activeHero.skills[school] || 1;
 
 		this.render();
 	}
@@ -141,7 +213,7 @@ export default class DamageCalculator {
 		const spells = spellService.getSpellsByType(position);
 
 		return Object.keys(spells).reduce((acc, spellKey) => {
-			const { image, slug } = spells[spellKey];
+			const { image, slug, school } = spells[spellKey];
 			const isActive = !!unitSpells[slug];
 			const activeClass = isActive ? 'active' : '';
 			const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
@@ -150,7 +222,8 @@ export default class DamageCalculator {
         <div
           class="spell ${activeClass}"
           data-position="${position}"
-          data-spell="${slug}"
+					data-spell="${slug}"
+					data-school="${school}"
           data-tippy-content="${tooltipPrefix} ${slug}">
           <img src="./img/${image}"/>
         </div>
@@ -176,16 +249,35 @@ export default class DamageCalculator {
 
 		const createStatHtml = (title, baseDmg, buffedDmg) => {
 			const isBuffed = buffedDmg > baseDmg;
+			const isReduced = buffedDmg < baseDmg;
 
-			const statBonus = `<span class="stat-bonus">(${buffedDmg})</span>`;
+			const statBonusClasses = `stat-bonus ${isBuffed ? 'buffed' : ''} ${
+				isReduced ? 'reduced' : ''
+			}`;
+
+			const statBonus = `<span class="${statBonusClasses}">(${buffedDmg})</span>`;
 
 			return `
-        <p>${title}: <span>${baseDmg}${isBuffed ? statBonus : ''}</span></p>
+				<p>
+				${title}: <span>${baseDmg}${isBuffed || isReduced ? statBonus : ''}</span></p>
       `;
 		};
 
+		let slayerAttackBonus = 0;
+
+		if (position === 'attacker') {
+			slayerAttackBonus = damageService.calculateSlayerAttackSkillBonus(
+				this.getUnitByPosition('attacker'),
+				this.getUnitByPosition('defender')
+			);
+		}
+
 		const buffedAttack =
-			unit.totalAttackSkill + activeHero.attack + specialtyAttackBonus;
+			unit.totalAttackSkill +
+			activeHero.attack +
+			slayerAttackBonus +
+			specialtyAttackBonus;
+
 		const buffedDefense =
 			unit.totalDefenseSkill + activeHero.defense + specialtyDefenseBonus;
 
@@ -229,9 +321,9 @@ export default class DamageCalculator {
 
 		for (let i = 0; i < spells.length; i += 1) {
 			const button = spells[i];
-			const { spell, position } = button.dataset;
+			const { spell, position, school } = button.dataset;
 
-			button.onclick = this.selectSpell.bind(this, position, spell);
+			button.onclick = this.selectSpell.bind(this, position, spell, school);
 		}
 
 		const unitCounts = document.getElementsByClassName('unit-count-field');

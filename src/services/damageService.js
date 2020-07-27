@@ -1,11 +1,12 @@
 /* eslint-disable max-len */
-
 import specialityService from './specialityService';
+import unitService from './unitService';
 
 export default {
 	detailedTotalDamageCalculation,
 	calculateSpecialtyAttackBonus,
 	calculateSpecialtyDefenseBonus,
+	calculateSlayerAttackSkillBonus,
 };
 
 function detailedTotalDamageCalculation(
@@ -32,10 +33,17 @@ function detailedTotalDamageCalculation(
 		defendingUnit
 	);
 
+	const slayerAttackBonus = calculateSlayerAttackSkillBonus(
+		attackingUnit,
+		defendingUnit
+	);
+
 	const totalAttack =
 		attackingHero.attack +
 		attackingUnit.totalAttackSkill +
+		slayerAttackBonus +
 		attackerSpecialtyAttackBonus;
+
 	const totalDefense =
 		defendingHero.defense +
 		defendingUnit.totalDefenseSkill +
@@ -58,13 +66,14 @@ function detailedTotalDamageCalculation(
 		totalAttack,
 		totalDefense
 	);
+
 	const armorerReduction = defendingHero.armorerBonus;
 	const { armorerSpecialityBonus } = defendingHero;
 	const shieldSpellReduction = calculateShieldSpellReduction(
-		defendingUnit.spells.shield ? 3 : 0
+		defendingUnit.spells.shield ? defendingHero.skills.earth_magic || 1 : 0
 	);
 	const airShieldSpellReduction = calculateAirShieldSpellReduction(
-		defendingUnit.spells.airshield ? 3 : 0
+		defendingUnit.spells.airshield ? defendingHero.skills.air_magic || 1 : 0
 	);
 	const meleePenaltyReduction = attackingUnit.meleePenalty;
 
@@ -77,6 +86,7 @@ function detailedTotalDamageCalculation(
 		(1 - armorerSpecialityBonus) *
 		(1 - shieldSpellReduction) *
 		(1 - meleePenaltyReduction);
+
 	const maxTotalDamage =
 		attackingUnit.count *
 		maxBaseDamage *
@@ -99,6 +109,7 @@ function detailedTotalDamageCalculation(
 			(1 - armorerReduction) *
 			(1 - armorerSpecialityBonus) *
 			(1 - airShieldSpellReduction);
+
 		maxTotalRangedDamage =
 			attackingUnit.count *
 			maxBaseDamage *
@@ -142,6 +153,7 @@ function detailedTotalDamageCalculation(
 		armorerReduction,
 		armorerSpecialityBonus,
 		meleePenaltyReduction,
+		slayerAttackBonus,
 	};
 }
 
@@ -251,4 +263,40 @@ function calculateAirShieldSpellReduction(spellLevel = 0) {
 function calculateShieldSpellReduction(spellLevel = 0) {
 	if (spellLevel === 0) return 0;
 	return spellLevel > 1 ? 0.3 : 0.15;
+}
+
+function calculateSlayerAttackSkillBonus(attackingUnit, defendingUnit) {
+	if (!attackingUnit.spells.slayer) return 0;
+
+	const spellLevel = attackingUnit.spells.slayer || 0;
+
+	let affectedUnits = [];
+
+	if (spellLevel === 3) {
+		affectedUnits = [...unitService.allGiantUnits];
+	}
+
+	if (spellLevel >= 2) {
+		affectedUnits = [
+			...affectedUnits,
+			...unitService.allAngelUnits,
+			...unitService.allDevilUnits,
+		];
+	}
+
+	if (spellLevel >= 1) {
+		affectedUnits = [
+			...affectedUnits,
+			...unitService.allDragonUnits,
+			...unitService.allBehemothUnits,
+			...unitService.allHydraUnits,
+			...unitService.allPhoenixUnits,
+			...unitService.allHaspidUnits,
+		];
+	}
+
+	const affectedUnitNames = affectedUnits.map((unit) => unit.name);
+	const isAffected = affectedUnitNames.includes(defendingUnit.name);
+
+	return isAffected ? 8 : 0;
 }
