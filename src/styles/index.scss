@@ -22,3 +22,30 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 }
+
+#mobile-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 999;
+	padding: 0 15px;
+	background: cadetblue;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+	p {
+		color: #fff;
+		font-size: 18px;
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	#mobile-overlay {
+		display: none;
+	}
+}
