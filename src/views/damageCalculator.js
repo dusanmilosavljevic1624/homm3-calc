@@ -213,10 +213,10 @@ export default class DamageCalculator {
 		const spells = spellService.getSpellsByType(position);
 
 		return Object.keys(spells).reduce((acc, spellKey) => {
-			const { image, slug, school } = spells[spellKey];
+			const { image, slug, school, effects } = spells[spellKey];
 			const isActive = !!unitSpells[slug];
 			const activeClass = isActive ? 'active' : '';
-			const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
+			// const tooltipPrefix = isActive ? 'Turn off' : 'Turn on';
 
 			const spellHtml = `
         <div
@@ -224,13 +224,31 @@ export default class DamageCalculator {
           data-position="${position}"
 					data-spell="${slug}"
 					data-school="${school}"
-          data-tippy-content="${tooltipPrefix} ${slug}">
+					data-tippy-content="${this.generateSpellTooltip(spells[spellKey])}">
           <img src="./img/${image}"/>
         </div>
       `;
 
 			return acc + spellHtml;
 		}, '');
+	}
+
+	/* eslint-disable-next-line */
+	generateSpellTooltip(spell) {
+		const effects = Object.keys(spell.effects)
+			.map((key) => {
+				return `<b>${key}</b><p>${spell.effects[key]}</p>`;
+			})
+			.join('');
+
+		return `
+			<div class='spell-tooltip'>
+				<div class='spell-tooltip-header'>
+					<b>${spell.name}</b>
+				</div>
+				${effects}
+			</div>
+		`;
 	}
 
 	createUnitHtml(position, unit) {
