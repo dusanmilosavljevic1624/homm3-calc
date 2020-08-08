@@ -28,7 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	declineTutorialButton.addEventListener('click', () => {
 		welcomeModal.classList.remove('shown');
-		ga('send', 'event', 'Tutorial', 'declined');
+		if (ga) {
+			ga('send', 'event', 'Tutorial', 'declined');
+		}
 
 		if (!window.localStorage) return;
 
@@ -86,7 +88,9 @@ function shouldShowWelcome() {
 }
 
 function showIntro() {
-	ga('send', 'event', 'Tutorial', 'shown');
+	if (ga) {
+		ga('send', 'event', 'Tutorial', 'shown');
+	}
 
 	const intro = introJs();
 	intro.setOptions({
@@ -135,7 +139,9 @@ function showIntro() {
 	});
 
 	intro.oncomplete(() => {
-		ga('send', 'event', 'Tutorial', 'completed');
+		if (ga) {
+			ga('send', 'event', 'Tutorial', 'completed');
+		}
 
 		if (window.localStorage) {
 			window.localStorage.setItem('tutorial-shown', true);
