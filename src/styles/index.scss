@@ -1,5 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~tippy.js/dist/tippy.css';
+@import '~intro.js/introjs.css';
+@import '~intro.js/themes/introjs-dark.css';
 
 @import './variables';
 
@@ -8,6 +10,26 @@
 @import './damage-calculator';
 @import './navigation';
 @import './specialty-modal';
+
+.introjs-button {
+	background: #434a54;
+	border: 2px solid #366cb9;
+	text-shadow: none !important;
+
+	&:hover {
+		border-color: #366cb9;
+		background: #2a3038;
+
+		a {
+			color: #fff;
+		}
+	}
+
+	&.introjs-disabled,
+	&.introjs-hidden {
+		display: none;
+	}
+}
 
 body {
 	background-color: #352222d1;
@@ -46,6 +68,59 @@ input::-webkit-inner-spin-button {
 
 		a {
 			color: yellow;
+		}
+	}
+}
+
+#welcome-modal {
+	position: fixed;
+	top: 100%;
+	left: 10%;
+	transition: all 0.5s ease-in-out;
+	display: flex;
+	z-index: 9999;
+	transition: all 0.3s linear;
+
+	&.shown {
+		align-items: center;
+		justify-content: center;
+		top: 20%;
+		left: 10%;
+		right: auto;
+		bottom: auto;
+	}
+
+	.content {
+		width: 768px;
+		padding: 30px;
+		text-align: center;
+		border-radius: 50px;
+		box-sizing: border-box;
+		border: 2px solid darkgoldenrod;
+		background: rgba(0, 0, 0, 0.75);
+
+		h1 {
+			margin-bottom: 20px;
+			font-size: 24px;
+		}
+
+		p {
+			margin-bottom: 30px;
+			font-size: 20px;
+		}
+
+		button {
+			width: 60px;
+			margin: 0 20px;
+			border: 1px solid #bf953f;
+			padding: 5px 10px;
+			background: linear-gradient(to right, #fcf6ba, #bf953f);
+			color: #000;
+			font-weight: bold;
+			font-size: 18px;
+			text-transform: uppercase;
+			line-height: 1.5;
+			border-radius: 0.25rem;
 		}
 	}
 }
