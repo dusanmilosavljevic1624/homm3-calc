@@ -1,9 +1,11 @@
-const { ga } = window;
+const { gtag } = window;
 
 export default {
 	logEvent(eventCategory, eventLabel) {
-		if (!ga) return;
+		if (!gtag) return;
 
-		ga('send', 'event', eventCategory, eventLabel);
+		gtag('event', eventLabel, {
+			event_category: eventCategory,
+		});
 	},
 };

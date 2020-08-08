@@ -640,7 +640,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst { ga } = window;\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n\tlogEvent(eventCategory, eventLabel) {\n\t\tif (!ga) return;\n\n\t\tga('send', 'event', eventCategory, eventLabel);\n\t},\n});\n\n\n//# sourceURL=webpack:///./src/services/analyticsService.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst { gtag } = window;\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n\tlogEvent(eventCategory, eventLabel) {\n\t\tif (!gtag) return;\n\n\t\tgtag('event', eventLabel, {\n\t\t\tevent_category: eventCategory,\n\t\t});\n\t},\n});\n\n\n//# sourceURL=webpack:///./src/services/analyticsService.js?");
 
 /***/ }),
 
