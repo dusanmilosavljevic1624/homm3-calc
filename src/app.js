@@ -8,6 +8,7 @@ import TownsView from './views/towns';
 import DamageCalculatorView from './views/damageCalculator';
 
 import unitService from './services/unitService';
+import analyticsService from './services/analyticsService';
 
 document.addEventListener('DOMContentLoaded', () => {
 	const unitsView = new UnitsView();
@@ -28,9 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	declineTutorialButton.addEventListener('click', () => {
 		welcomeModal.classList.remove('shown');
-		if (ga) {
-			ga('send', 'event', 'Tutorial', 'declined');
-		}
+
+		analyticsService.logEvent('Tutorial', 'declined');
 
 		if (!window.localStorage) return;
 
@@ -88,9 +88,7 @@ function shouldShowWelcome() {
 }
 
 function showIntro() {
-	if (ga) {
-		ga('send', 'event', 'Tutorial', 'shown');
-	}
+	analyticsService.logEvent('Tutorial', 'shown');
 
 	const intro = introJs();
 	intro.setOptions({
@@ -139,9 +137,7 @@ function showIntro() {
 	});
 
 	intro.oncomplete(() => {
-		if (ga) {
-			ga('send', 'event', 'Tutorial', 'completed');
-		}
+		analyticsService.logEvent('Tutorial', 'completed');
 
 		if (window.localStorage) {
 			window.localStorage.setItem('tutorial-shown', true);
