@@ -82,7 +82,7 @@ export default class SpecialtyModal {
 				data-specialty="${speciality.slug}"
 				data-position="${this.position}"
         class="hero-specialty hero-skill-specialty"
-        data-tippy-content="Select ${speciality.name}" />
+        data-tippy-content="${this.createSpecialtyTooltip(speciality)}" />
     `;
 
 		return Object.keys(specialtys).reduce((acc, specialtyKey) => {
@@ -101,7 +101,7 @@ export default class SpecialtyModal {
         class="hero-specialty hero-unit-specialty"
 				data-specialty="${speciality.slug}"
 				data-position="${this.position}"
-        data-tippy-content="Select ${speciality.name}" />
+        data-tippy-content="${this.createSpecialtyTooltip(speciality)}" />
     `;
 
 		return Object.keys(specialitys).reduce((acc, specialityKey) => {
@@ -120,7 +120,7 @@ export default class SpecialtyModal {
 				data-specialty="${speciality.slug}"
 				data-position="${this.position}"
         class="hero-specialty hero-spell-specialty"
-        data-tippy-content="Select ${speciality.name}" />
+        data-tippy-content="${this.createSpecialtyTooltip(speciality)}" />
     `;
 
 		return Object.keys(specialitys).reduce((acc, specialityKey) => {
@@ -128,5 +128,10 @@ export default class SpecialtyModal {
 			acc += createSpellSpecialityImage(specialitys[specialityKey]);
 			return acc;
 		}, '');
+	}
+
+	/* eslint-disable-next-line class-methods-use-this */
+	createSpecialtyTooltip(specialty) {
+		return `<p class='specialty-modal-tooltip-header'><b>${specialty.name}</b></p><p>${specialty.description}</p>`;
 	}
 }

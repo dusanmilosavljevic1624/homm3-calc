@@ -1,5 +1,7 @@
 import tippy from 'tippy.js';
 import introJs from 'intro.js';
+/* eslint-disable-next-line no-unused-vars */
+import 'simplebar';
 
 import './styles/index.scss';
 
