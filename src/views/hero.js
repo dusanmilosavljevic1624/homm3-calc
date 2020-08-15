@@ -190,6 +190,13 @@ export default class HeroView {
 		const speciality = specialtyService.getSpeciality(this.hero.speciality);
 		this.hasGeneratedHtml = true;
 
+		const specialtyTooltip = (specialty) => `
+			<div class='hero-specialty-tooltip'>
+				<p>Specialty: ${specialty.name}</p>
+				<p>${specialty.description}</p>
+			</div>
+		`;
+
 		return `
 			<div id="${this.containerElId}" class="hero text-center">
 				<p class="hero-title">${this.title}</p>
@@ -201,9 +208,8 @@ export default class HeroView {
 					
 					<div
 						class="active-specialty active-hero-specialty"
-						data-tippy-content="Current specialty: ${
-							speciality.name
-						}<br><br>Change hero specialty">
+						data-tippy-content="${specialtyTooltip(speciality)}"
+					>
 						<p>Specialty</p>
 						<img src="./img/${speciality.image}" />
 					</div>

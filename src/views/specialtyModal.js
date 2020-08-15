@@ -132,6 +132,14 @@ export default class SpecialtyModal {
 
 	/* eslint-disable-next-line class-methods-use-this */
 	createSpecialtyTooltip(specialty) {
-		return `<p class='specialty-modal-tooltip-header'><b>${specialty.name}</b></p><p>${specialty.description}</p>`;
+		return `
+			<div class='specialty-modal-tooltip-container'>
+				<p class='specialty-modal-tooltip-header'>
+					<b>${specialty.name}</b>
+				</p>
+
+				<p>${specialty.description}</p>
+			</div>
+		`;
 	}
 }
