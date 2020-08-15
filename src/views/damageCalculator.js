@@ -7,6 +7,7 @@ import ResultsView from './results';
 import unitService from '../services/unitService';
 import spellService from '../services/spellService';
 import damageService from '../services/damageService';
+import analyticsService from '../services/analyticsService';
 
 export default class DamageCalculator {
 	init(containerEl) {
@@ -70,13 +71,17 @@ export default class DamageCalculator {
 	}
 
 	selectUnit(unitInfo, version) {
-		if (unitInfo.position === 'attacker') {
-			this.attackerUnit = unitService.getUnit(unitInfo.slug, version);
-		} else if (unitInfo.position === 'defender') {
-			this.defenderUnit = unitService.getUnit(unitInfo.slug, version);
-		}
+		const unitMap = {
+			attacker: this.attackerUnit,
+			defender: this.defenderUnit,
+		};
+
+		const unit = unitService.getUnit(unitInfo.slug, version);
+		unitMap[unitInfo.position] = unit;
 
 		this.render();
+		const analyticsCategory = `${unitInfo.position} unit`;
+		analyticsService.logEvent(analyticsCategory, unit.name);
 	}
 
 	updateHeroStat(position, stat, value) {
@@ -138,6 +143,19 @@ export default class DamageCalculator {
 			});
 		}
 
+		if (!shouldDisable) {
+			const skillLevelMap = {
+				1: 'Basic',
+				2: 'Advanced',
+				3: 'Expert',
+			};
+
+			analyticsService.logEvent(
+				'Skill selected',
+				`${skillLevelMap[level]} ${skill}`
+			);
+		}
+
 		this.render();
 	}
 
@@ -162,6 +180,10 @@ export default class DamageCalculator {
 			? null
 			: activeHero.skills[school] || 1;
 
+		isSpellActive
+			? analyticsService.logEvent('Deselect spell', spell)
+			: analyticsService.logEvent('Select spell', spell);
+
 		this.render();
 	}
 
@@ -169,6 +191,7 @@ export default class DamageCalculator {
 		const activeHero = this.getHeroByPosition(position);
 		activeHero.speciality = speciality;
 
+		analyticsService.logEvent('Select specialty', speciality);
 		this.render();
 	}
 
