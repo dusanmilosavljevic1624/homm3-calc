@@ -137,7 +137,7 @@ export default class DamageCalculator {
 
 	/* eslint-disable-next-line consistent-return */
 	selectSkill(position, skill, level) {
-		const skillSlug = skill.name.toLowerCase();
+		const skillSlug = skill.toLowerCase();
 
 		if (
 			position === 'defender' &&
@@ -338,7 +338,7 @@ export default class DamageCalculator {
 
 			const statBonusClasses = `stat-bonus ${isBuffed ? 'buffed' : ''} ${
 				isReduced ? 'reduced' : ''
-			}`;
+				}`;
 
 			const statBonus = `<span class="${statBonusClasses}">(${buffedDmg})</span>`;
 
