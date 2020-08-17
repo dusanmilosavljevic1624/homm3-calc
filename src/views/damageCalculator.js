@@ -27,12 +27,36 @@ export default class DamageCalculator {
 		this.attackerHeroView = new HeroView({
 			hero: this.attackerHero,
 			skills: [
-				'Earth_Magic',
-				'Water_Magic',
-				'Air_Magic',
-				'Fire_Magic',
-				'Offense',
-				'Archery',
+				{
+					name: 'Earth Magic',
+					description:
+						'Allows heroes to cast earth school spells more effectively and at the reduced cost.',
+				},
+				{
+					name: 'Water Magic',
+					description:
+						'Allows heroes to cast water school spells more effectively and at the reduced cost.',
+				},
+				{
+					name: 'Air Magic',
+					description:
+						'Allows heroes to cast air school spells more effectively and at the reduced cost.',
+				},
+				{
+					name: 'Fire Magic',
+					description:
+						'Allows heroes to cast fire school spells more effectively and at the reduced cost.',
+				},
+				{
+					name: 'Offense',
+					description:
+						'Increases the base damage by 10%, 20% or 30% depending on the level of the skill.',
+				},
+				{
+					name: 'Archery',
+					description:
+						'Increases the damage done by range attacking creatures by 10%, 25%, 50% depending on the level of the skill.',
+				},
 			],
 			containerElId: 'attacker-hero',
 			title: 'Attacking hero',
@@ -45,11 +69,31 @@ export default class DamageCalculator {
 		this.defenderHeroView = new HeroView({
 			hero: this.defenderHero,
 			skills: [
-				'Earth_Magic',
-				'Water_Magic',
-				'Air_Magic',
-				'Fire_Magic',
-				'Armorer',
+				{
+					name: 'Earth Magic',
+					description:
+						'Allows heroes to cast earth school spells more effectively and at the reduced cost.',
+				},
+				{
+					name: 'Water Magic',
+					description:
+						'Allows heroes to cast water school spells more effectively and at the reduced cost.',
+				},
+				{
+					name: 'Air Magic',
+					description:
+						'Allows heroes to cast air school spells more effectively and at the reduced cost.',
+				},
+				{
+					name: 'Fire Magic',
+					description:
+						'Allows heroes to cast fire school spells more effectively and at the reduced cost.',
+				},
+				{
+					name: 'Armorer',
+					description:
+						'Reduces physical damage to creatures by 5%, 10%, 15% depending on the level of the skill.',
+				},
 			],
 			containerElId: 'defender-hero',
 			title: 'Defending hero',
@@ -93,7 +137,7 @@ export default class DamageCalculator {
 
 	/* eslint-disable-next-line consistent-return */
 	selectSkill(position, skill, level) {
-		const skillSlug = skill.toLowerCase();
+		const skillSlug = skill.name.toLowerCase();
 
 		if (
 			position === 'defender' &&
