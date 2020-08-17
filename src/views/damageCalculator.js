@@ -71,17 +71,17 @@ export default class DamageCalculator {
 	}
 
 	selectUnit(unitInfo, version) {
-		const unitMap = {
-			attacker: this.attackerUnit,
-			defender: this.defenderUnit,
-		};
+		const analyticsCategory = `${unitInfo.position} unit`;
 
-		const unit = unitService.getUnit(unitInfo.slug, version);
-		unitMap[unitInfo.position] = unit;
+		if (unitInfo.position === 'attacker') {
+			this.attackerUnit = unitService.getUnit(unitInfo.slug, version);
+			analyticsService.logEvent(analyticsCategory, this.attackerUnit.name);
+		} else if (unitInfo.position === 'defender') {
+			this.defenderUnit = unitService.getUnit(unitInfo.slug, version);
+			analyticsService.logEvent(analyticsCategory, this.defenderUnit.name);
+		}
 
 		this.render();
-		const analyticsCategory = `${unitInfo.position} unit`;
-		analyticsService.logEvent(analyticsCategory, unit.name);
 	}
 
 	updateHeroStat(position, stat, value) {
