@@ -6,7 +6,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "intro.js": "^2.9.3",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "simplebar": "^5.2.1",
     "tippy.js": "^5.1.2"
   },
